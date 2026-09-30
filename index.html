@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AWD GeoImpathon PS 3.4 | Irrigated vs Rain-Fed Agriculture Mapping & Smart Water Protocol</title>
+  <meta name="description" content="Interactive scrollytelling platform for GeoImpathon Problem Statement 3.4: Multi-temporal Sentinel-2 & CHIRPS classification of Irrigated vs Rain-Fed agriculture across Tamil Nadu paired with Alternate Wetting & Drying (AWD) field intelligence." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Leaflet.js CSS via CDN -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""
+  />
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- =====================================================================
+       SECTION 1: FRAME PRELOADER
+       ===================================================================== -->
+  <div id="preloader" class="preloader" role="status" aria-live="polite">
+    <div class="preloader__ambient"></div>
+    <div class="preloader__content">
+      <div class="preloader__badge">
+        <span class="pulse-dot"></span>
+        <span>GEOIMPATHON PROBLEM STATEMENT 3.4</span>
+      </div>
+      <div class="preloader__percentage-wrap">
+        <span id="preloader-percent" class="preloader__percent">0</span>
+        <span class="preloader__unit">%</span>
+      </div>
+      <p class="preloader__title">Calibrating Multi-Temporal Canopy &amp; Sub-Surface Telemetry</p>
+      <div class="preloader__bar-track">
+        <div id="preloader-bar" class="preloader__bar-fill"></div>
+      </div>
+      <div class="preloader__meta">
+        <span id="preloader-detail">Loading optical &amp; hydrological frame sequences (0 / 275)</span>
+        <span class="mono-tag">SENTINEL-2 L2A + AWD ENGINE</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       TOP FLOATING HUD NAVIGATION
+       ===================================================================== -->
+  <header class="hud-header" id="hud-header">
+    <div class="hud-header__brand">
+      <span class="hud-header__indicator"></span>
+      <span class="hud-header__code">PS 3.4</span>
+      <span class="hud-header__divider">/</span>
+      <span class="hud-header__title">Cauvery Delta Agro-Hydrology</span>
+    </div>
+    <nav class="hud-header__nav" aria-label="Scene navigation">
+      <a href="#scene-1" class="hud-nav-link active" data-scene="1">01. The Lie</a>
+      <a href="#scene-3" class="hud-nav-link" data-scene="3">02. ₹50 Pipe</a>
+      <a href="#scene-4" class="hud-nav-link" data-scene="4">03. AWD Engine</a>
+      <a href="#scene-5" class="hud-nav-link" data-scene="5">04. PS 3.4 GIS</a>
+      <a href="#scene-6" class="hud-nav-link" data-scene="6">05. Protocol</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- =====================================================================
+         SECTION 2: SCENE 1 & 2 — THE LIE & BENEATH THE SURFACE (0 - 250vh)
+         ===================================================================== -->
+    <section id="scene-1" class="scrolly-canvas-section scene-1-wrapper" aria-label="The Lie and Beneath the Surface">
+      <div class="sticky-canvas-container">
+        <canvas id="canvas-scene1" aria-label="Flooded paddy field frame sequence"></canvas>
+        <div class="canvas-vignette"></div>
+
+        <!-- HUD Scroll Hint -->
+        <div class="canvas-hud">
+          <div class="canvas-hud__scroll-hint" id="scroll-hint">
+            <span>Scroll to inspect sub-surface hydrology</span>
+            <div class="scroll-chevron"></div>
+          </div>
+        </div>
+
+        <!-- 0 - 35% Scroll Overlay: Centered Typography -->
+        <div id="scene1-overlay-early" class="scrolly-overlay overlay-centered is-visible">
+          <h1 class="hero-headline">
+            This looks healthy.<br />
+            <span class="text-emerald-glow">It isn't.</span>
+          </h1>
+          <p class="hero-subtext">
+            Across 21.58 lakh hectares of Tamil Nadu's rice belt, standing water is mistaken for crop vitality.
+          </p>
+        </div>
+
+        <!-- 55 - 90% Scroll Overlay: Frosted Glass Card -->
+        <div id="scene1-overlay-late" class="scrolly-overlay overlay-glass-wrap">
+          <article class="frosted-glass-card">
+            <div class="frosted-glass-card__header">
+              <span class="status-pill status-pill--danger">BIO-GEOCHEMICAL ALERT // CH₄ FLUX</span>
+              <span class="mono-code">GWP-20: 80x CO₂</span>
+            </div>
+            <h2 class="frosted-glass-card__title">Beneath the Mirror Surface</h2>
+            <p class="frosted-glass-card__body">
+              A flooded paddy drowns its roots and brews methane (CH<sub>4</sub>) — a greenhouse gas <strong>80x worse than CO<sub>2</sub></strong> over 20 years. Flooding is weed management, not crop biology.
+            </p>
+            <div class="frosted-glass-card__metrics">
+              <div class="mini-stat">
+                <span class="mini-stat__label">Root Zone O₂</span>
+                <span class="mini-stat__val text-danger">Hypoxic (&lt;0.5 mg/L)</span>
+              </div>
+              <div class="mini-stat">
+                <span class="mini-stat__label">Methanogenesis</span>
+                <span class="mini-stat__val text-warning">Active Anaerobic</span>
+              </div>
+              <div class="mini-stat">
+                <span class="mini-stat__label">True Water Need</span>
+                <span class="mini-stat__val text-emerald">Soil Moisture Only</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 3: SCENE 3 — THE ₹50 TRUTH-TELLER (Interactive Soil Cross-Section)
+         ===================================================================== -->
+    <section id="scene-3" class="scene-3-section" aria-label="The 50 Rupee Truth-Teller">
+      <div class="scene-3-sticky">
+        <div class="container scene-3-grid">
+          <!-- Narrative Column -->
+          <div class="scene-3-narrative">
+            <h2 class="section-title">The ₹50 Truth-Teller</h2>
+            <p class="microcopy-quote" id="pani-microcopy">
+              “The surface lies. The tube doesn't.”
+            </p>
+            <p class="section-desc">
+              A simple <strong>30 cm PVC Pani Pipe</strong>—with 10 cm protruding above the mud and 20 cm perforated inside the root zone—reveals the actual perched water table long after the surface dries and cracks.
+            </p>
+
+            <!-- Live Scroll-Synced Readout Panel -->
+            <div class="pani-telemetry-card">
+              <div class="pani-telemetry__row">
+                <div>
+                  <span class="telemetry-label">LIVE TUBE WATER TABLE</span>
+                  <div class="telemetry-big-val" id="soil-water-readout">+5.0 cm</div>
+                </div>
+                <div class="telemetry-badge-wrap">
+                  <span id="soil-state-badge" class="state-badge state-badge--flooded">SURFACE FLOODED</span>
+                </div>
+              </div>
+
+              <div class="pani-progress-wrap">
+                <div class="pani-progress-labels">
+                  <span>+5 cm (Ponded)</span>
+                  <span>0 cm (Surface)</span>
+                  <span>-15 cm (AWD Trigger)</span>
+                </div>
+                <div class="pani-progress-track">
+                  <div id="soil-progress-bar" class="pani-progress-fill" style="width: 0%;"></div>
+                </div>
+              </div>
+
+              <div class="pani-specs-grid">
+                <div class="spec-box">
+                  <span class="spec-box__title">Total Pipe Length</span>
+                  <span class="spec-box__value">30 cm PVC (Ø 15 cm)</span>
+                </div>
+                <div class="spec-box">
+                  <span class="spec-box__title">Above Ground</span>
+                  <span class="spec-box__value">10 cm Collar</span>
+                </div>
+                <div class="spec-box">
+                  <span class="spec-box__title">Root Zone Perforation</span>
+                  <span class="spec-box__value">20 cm (0.5 cm holes)</span>
+                </div>
+              </div>
+
+              <!-- Manual scrub override / helper -->
+              <div class="pani-interactive-control">
+                <label for="pani-manual-scrub" class="control-label">
+                  <span>Scroll page or drag to inspect water table drop:</span>
+                  <span id="pani-scrub-pct" class="mono-tag">0%</span>
+                </label>
+                <input
+                  type="range"
+                  id="pani-manual-scrub"
+                  min="0"
+                  max="100"
+                  value="0"
+                  aria-label="Inspect water table drop from +5cm to -15cm"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive SVG Soil Cross-Section Column -->
+          <div class="scene-3-diagram-wrap">
+            <div class="svg-card">
+              <div class="svg-card__top-bar">
+                <span class="mono-tag">CROSS-SECTION // PADDY RHIZOSPHERE &amp; PANI PIPE</span>
+                <span class="svg-legend-inline">
+                  <span class="legend-dot legend-dot--water"></span>Perched Water
+                  <span class="legend-dot legend-dot--roots"></span>Active Roots
+                </span>
+              </div>
+
+              <svg
+                id="soil-cross-section-svg"
+                viewBox="0 0 680 520"
+                role="img"
+                aria-label="Interactive soil cross section showing a 30cm perforated Pani pipe and water level dropping from +5cm to -15cm"
+              >
+                <defs>
+                  <!-- Sky / Atmospheric Gradient -->
+                  <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#07130e" />
+                    <stop offset="100%" stop-color="#0d2118" />
+                  </linearGradient>
+
+                  <!-- Topsoil Gradient -->
+                  <linearGradient id="topsoilGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#3a2c20" />
+                    <stop offset="100%" stop-color="#261c14" />
+                  </linearGradient>
+
+                  <!-- Subsoil Root Zone Gradient -->
+                  <linearGradient id="subsoilGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#261c14" />
+                    <stop offset="75%" stop-color="#1a130e" />
+                    <stop offset="100%" stop-color="#120d09" />
+                  </linearGradient>
+
+                  <!-- Water Table Gradient -->
+                  <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.65" />
+                    <stop offset="25%" stop-color="#0284c7" stop-opacity="0.55" />
+                    <stop offset="100%" stop-color="#0369a1" stop-opacity="0.80" />
+                  </linearGradient>
+
+                  <!-- Inside Tube Water Gradient (High Visibility) -->
+                  <linearGradient id="tubeWaterGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.95" />
+                    <stop offset="100%" stop-color="#0284c7" stop-opacity="0.95" />
+                  </linearGradient>
+
+                  <!-- PVC Pipe Wall Gradient -->
+                  <linearGradient id="pvcGrad" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stop-color="#94a3b8" />
+                    <stop offset="50%" stop-color="#cbd5e1" />
+                    <stop offset="100%" stop-color="#64748b" />
+                  </linearGradient>
+
+                  <!-- Clip path for soil zone -->
+                  <clipPath id="soilClip">
+                    <rect x="60" y="120" width="560" height="360" rx="8" />
+                  </clipPath>
+
+                  <!-- Clip path for inside of Pani Pipe -->
+                  <clipPath id="pipeInteriorClip">
+                    <rect x="296" y="110" width="88" height="300" />
+                  </clipPath>
+                </defs>
+
+                <!-- Background Frame -->
+                <rect x="0" y="0" width="680" height="520" fill="#060b08" />
+
+                <!-- Atmospheric Zone -->
+                <rect x="60" y="30" width="560" height="180" rx="8" fill="url(#skyGrad)" />
+
+                <!-- Subsoil & Root Zone (0cm = y:210 down to -25cm = y:460) -->
+                <rect id="svg-subsoil" x="60" y="210" width="560" height="260" fill="url(#subsoilGrad)" />
+
+                <!-- Topsoil Crust Layer (0cm to -5cm: y:210 to y:260) -->
+                <rect id="svg-topsoil" x="60" y="210" width="560" height="52" fill="url(#topsoilGrad)" />
+
+                <!-- Dynamic Soil Water Saturation Band (Moves from y:160 (+5cm) to y:360 (-15cm)) -->
+                <g clip-path="url(#soilClip)">
+                  <rect
+                    id="svg-soil-water-rect"
+                    x="60"
+                    y="160"
+                    width="560"
+                    height="320"
+                    fill="url(#waterGrad)"
+                  />
+                  <line
+                    id="svg-soil-water-line"
+                    x1="60"
+                    y1="160"
+                    x2="620"
+                    y2="160"
+                    stroke="#38bdf8"
+                    stroke-width="2"
+                    stroke-dasharray="6 4"
+                  />
+                </g>
+
+                <!-- Topsoil Cracks & Dry Crust Overlay (Opacity scales from 0 to 1 as water drops below 0cm) -->
+                <g id="svg-surface-cracks" opacity="0">
+                  <!-- Desiccated light crust tint -->
+                  <rect x="60" y="210" width="230" height="22" fill="#6b533b" opacity="0.55" />
+                  <rect x="390" y="210" width="230" height="22" fill="#6b533b" opacity="0.55" />
+                  <!-- Fissure V-cracks -->
+                  <path d="M 105 210 L 112 242 L 118 225 L 122 248 L 127 210 Z" fill="#140e09" />
+                  <path d="M 165 210 L 170 236 L 177 210 Z" fill="#140e09" />
+                  <path d="M 225 210 L 233 246 L 239 228 L 245 210 Z" fill="#140e09" />
+                  <path d="M 430 210 L 438 245 L 446 210 Z" fill="#140e09" />
+                  <path d="M 495 210 L 502 239 L 508 250 L 515 210 Z" fill="#140e09" />
+                  <path d="M 565 210 L 573 240 L 580 210 Z" fill="#140e09" />
+                </g>
+
+                <!-- Ground Surface Datum Line (0 cm = y:210) -->
+                <line x1="50" y1="210" x2="290" y2="210" stroke="#10b981" stroke-width="2" />
+                <line x1="390" y1="210" x2="630" y2="210" stroke="#10b981" stroke-width="2" />
+
+                <!-- Rice Hills & Root Systems (Left & Right of Pipe) -->
+                <!-- Left Rice Plant -->
+                <g id="rice-plant-left">
+                  <!-- Roots reaching down to y:385 (-17.5cm) -->
+                  <g stroke="#d97706" stroke-width="2" fill="none" opacity="0.85">
+                    <path d="M 180 210 C 175 260, 160 310, 155 375" />
+                    <path d="M 180 210 C 180 270, 185 330, 178 385" />
+                    <path d="M 180 210 C 190 255, 205 315, 210 370" />
+                    <path d="M 180 230 C 165 265, 148 295, 140 340" stroke-width="1.4" />
+                    <path d="M 180 240 C 195 275, 215 300, 222 348" stroke-width="1.4" />
+                  </g>
+                  <!-- Green Tillers / Leaves -->
+                  <g stroke="#10b981" stroke-width="3.5" fill="none" stroke-linecap="round">
+                    <path d="M 180 210 Q 155 130 130 75" />
+                    <path d="M 180 210 Q 175 120 168 58" />
+                    <path d="M 180 210 Q 186 120 195 62" />
+                    <path d="M 180 210 Q 205 135 225 82" />
+                  </g>
+                </g>
+
+                <!-- Right Rice Plant -->
+                <g id="rice-plant-right">
+                  <!-- Roots reaching down to y:385 (-17.5cm) -->
+                  <g stroke="#d97706" stroke-width="2" fill="none" opacity="0.85">
+                    <path d="M 500 210 C 490 260, 475 310, 470 372" />
+                    <path d="M 500 210 C 500 270, 505 330, 498 385" />
+                    <path d="M 500 210 C 512 255, 525 315, 532 368" />
+                    <path d="M 500 230 C 482 265, 468 295, 458 342" stroke-width="1.4" />
+                    <path d="M 500 240 C 515 275, 535 300, 542 348" stroke-width="1.4" />
+                  </g>
+                  <!-- Green Tillers / Leaves -->
+                  <g stroke="#10b981" stroke-width="3.5" fill="none" stroke-linecap="round">
+                    <path d="M 500 210 Q 475 130 452 78" />
+                    <path d="M 500 210 Q 495 120 488 58" />
+                    <path d="M 500 210 Q 508 120 518 62" />
+                    <path d="M 500 210 Q 525 135 548 82" />
+                  </g>
+                </g>
+
+                <!-- =========================================================
+                     30cm PERFORATED PANI PIPE (y:110 [+10cm] to y:410 [-20cm])
+                     1 cm = 10 px vertical scale!
+                     y: 110 = +10 cm (Top of pipe)
+                     y: 160 = +5 cm (Initial flood level)
+                     y: 210 = 0 cm (Soil Surface)
+                     y: 360 = -15 cm (AWD Threshold)
+                     y: 410 = -20 cm (Bottom of pipe)
+                     ========================================================= -->
+                <g id="pani-pipe-assembly">
+                  <!-- Dark Pipe Interior Cavity -->
+                  <rect x="296" y="110" width="88" height="300" fill="#091318" />
+
+                  <!-- Water Column Clearly Visible Inside the Tube -->
+                  <g clip-path="url(#pipeInteriorClip)">
+                    <rect
+                      id="svg-tube-water-rect"
+                      x="296"
+                      y="160"
+                      width="88"
+                      height="260"
+                      fill="url(#tubeWaterGrad)"
+                    />
+                    <!-- Glowing Meniscus Line Inside Pipe -->
+                    <ellipse
+                      id="svg-tube-meniscus"
+                      cx="340"
+                      cy="160"
+                      rx="43"
+                      ry="5"
+                      fill="#7dd3fc"
+                      stroke="#e0f2fe"
+                      stroke-width="1.5"
+                    />
+                  </g>
+
+                  <!-- Left & Right PVC Walls (10cm above ground + 20cm below ground = 30cm total) -->
+                  <rect x="288" y="110" width="8" height="300" fill="url(#pvcGrad)" rx="2" />
+                  <rect x="384" y="110" width="8" height="300" fill="url(#pvcGrad)" rx="2" />
+
+                  <!-- Top Pipe Rim -->
+                  <ellipse cx="340" cy="110" rx="52" ry="6" fill="#cbd5e1" stroke="#475569" stroke-width="1.5" />
+                  <ellipse cx="340" cy="110" rx="44" ry="4" fill="#091318" />
+
+                  <!-- Above-ground Solid Collar Label Bracket (y:110 to y:210 = 10cm) -->
+                  <line x1="276" y1="110" x2="276" y2="208" stroke="#94a3b8" stroke-width="1.5" />
+                  <line x1="271" y1="110" x2="281" y2="110" stroke="#94a3b8" stroke-width="1.5" />
+                  <line x1="271" y1="208" x2="281" y2="208" stroke="#94a3b8" stroke-width="1.5" />
+                  <text x="266" y="163" text-anchor="end" fill="#cbd5e1" font-family="JetBrains Mono" font-size="11">10cm Above</text>
+
+                  <!-- Below-ground Perforated Root Zone (y:210 to y:410 = 20cm) -->
+                  <line x1="276" y1="212" x2="276" y2="410" stroke="#10b981" stroke-width="1.5" />
+                  <line x1="271" y1="212" x2="281" y2="212" stroke="#10b981" stroke-width="1.5" />
+                  <line x1="271" y1="410" x2="281" y2="410" stroke="#10b981" stroke-width="1.5" />
+                  <text x="266" y="315" text-anchor="end" fill="#10b981" font-family="JetBrains Mono" font-size="11">20cm Perforated</text>
+
+                  <!-- Perforation Holes in Root Zone (5 rows x 3 cols + sidewall slots) -->
+                  <g fill="#38bdf8" stroke="#1e293b" stroke-width="1">
+                    <!-- Sidewall perforation cutouts -->
+                    <rect x="288" y="232" width="8" height="5" fill="#38bdf8" />
+                    <rect x="288" y="267" width="8" height="5" fill="#38bdf8" />
+                    <rect x="288" y="302" width="8" height="5" fill="#38bdf8" />
+                    <rect x="288" y="337" width="8" height="5" fill="#38bdf8" />
+                    <rect x="288" y="372" width="8" height="5" fill="#38bdf8" />
+
+                    <rect x="384" y="232" width="8" height="5" fill="#38bdf8" />
+                    <rect x="384" y="267" width="8" height="5" fill="#38bdf8" />
+                    <rect x="384" y="302" width="8" height="5" fill="#38bdf8" />
+                    <rect x="384" y="337" width="8" height="5" fill="#38bdf8" />
+                    <rect x="384" y="372" width="8" height="5" fill="#38bdf8" />
+
+                    <!-- Front wall perforation circles -->
+                    <circle cx="315" cy="235" r="4" opacity="0.7" />
+                    <circle cx="340" cy="235" r="4" opacity="0.7" />
+                    <circle cx="365" cy="235" r="4" opacity="0.7" />
+
+                    <circle cx="315" cy="270" r="4" opacity="0.7" />
+                    <circle cx="340" cy="270" r="4" opacity="0.7" />
+                    <circle cx="365" cy="270" r="4" opacity="0.7" />
+
+                    <circle cx="315" cy="305" r="4" opacity="0.7" />
+                    <circle cx="340" cy="305" r="4" opacity="0.7" />
+                    <circle cx="365" cy="305" r="4" opacity="0.7" />
+
+                    <circle cx="315" cy="340" r="4" opacity="0.7" />
+                    <circle cx="340" cy="340" r="4" opacity="0.7" />
+                    <circle cx="365" cy="340" r="4" opacity="0.7" />
+
+                    <circle cx="315" cy="375" r="4" opacity="0.7" />
+                    <circle cx="340" cy="375" r="4" opacity="0.7" />
+                    <circle cx="365" cy="375" r="4" opacity="0.7" />
+                  </g>
+
+                  <!-- -15cm Threshold Marker Line across the Pipe -->
+                  <line x1="284" y1="360" x2="415" y2="360" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 2" />
+                  <rect x="418" y="349" width="146" height="22" rx="4" fill="#271a05" stroke="#f59e0b" stroke-width="1" />
+                  <text x="426" y="364" fill="#fbbf24" font-family="JetBrains Mono" font-size="10.5" font-weight="600">-15cm AWD TRIGGER</text>
+
+                  <!-- Dynamic Floating Callout Pointer Attached to Water Meniscus -->
+                  <g id="svg-water-pointer" transform="translate(0, 160)">
+                    <line x1="340" y1="0" x2="415" y2="0" stroke="#38bdf8" stroke-width="2" />
+                    <circle cx="340" cy="0" r="4" fill="#e0f2fe" />
+                    <rect x="415" y="-13" width="165" height="26" rx="5" fill="#082f49" stroke="#38bdf8" stroke-width="1.5" />
+                    <text id="svg-pointer-text" x="425" y="4" fill="#e0f2fe" font-family="JetBrains Mono" font-size="11" font-weight="700">TUBE LEVEL: +5.0 cm</text>
+                  </g>
+                </g>
+
+                <!-- Depth Scale Ruler on Left Margin -->
+                <g font-family="JetBrains Mono" font-size="11" fill="#94a3b8">
+                  <line x1="60" y1="110" x2="60" y2="410" stroke="#334155" stroke-width="1.5" />
+
+                  <!-- +10cm -->
+                  <line x1="54" y1="110" x2="66" y2="110" stroke="#475569" stroke-width="1.5" />
+                  <text x="48" y="114" text-anchor="end">+10cm</text>
+
+                  <!-- +5cm -->
+                  <line x1="54" y1="160" x2="66" y2="160" stroke="#38bdf8" stroke-width="1.5" />
+                  <text x="48" y="164" text-anchor="end" fill="#38bdf8">+5cm</text>
+
+                  <!-- 0cm Surface -->
+                  <line x1="52" y1="210" x2="68" y2="210" stroke="#10b981" stroke-width="2" />
+                  <text x="48" y="214" text-anchor="end" fill="#10b981" font-weight="700">0cm</text>
+
+                  <!-- -5cm -->
+                  <line x1="54" y1="260" x2="66" y2="260" stroke="#475569" stroke-width="1.5" />
+                  <text x="48" y="264" text-anchor="end">-5cm</text>
+
+                  <!-- -10cm -->
+                  <line x1="54" y1="310" x2="66" y2="310" stroke="#475569" stroke-width="1.5" />
+                  <text x="48" y="314" text-anchor="end">-10cm</text>
+
+                  <!-- -15cm -->
+                  <line x1="52" y1="360" x2="68" y2="360" stroke="#f59e0b" stroke-width="2" />
+                  <text x="48" y="364" text-anchor="end" fill="#f59e0b" font-weight="700">-15cm</text>
+
+                  <!-- -20cm -->
+                  <line x1="54" y1="410" x2="66" y2="410" stroke="#475569" stroke-width="1.5" />
+                  <text x="48" y="414" text-anchor="end">-20cm</text>
+                </g>
+
+                <!-- Bottom Caption Inside SVG -->
+                <text x="340" y="495" text-anchor="middle" fill="#94a3b8" font-family="Plus Jakarta Sans" font-size="12.5">
+                  Even when topsoil cracks at 0 cm, roots actively draw moisture from the -15 cm perched water table.
+                </text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 4: SCENE 4 — PROOF IT WORKS (AWD Decision Engine & Replay)
+         ===================================================================== -->
+    <section id="scene-4" class="scene-4-section" aria-label="Proof It Works - AWD Decision Engine">
+      <div class="container">
+        <div class="section-header-centered">
+          <h2 class="section-title">Proof It Works: Safe AWD Simulator</h2>
+          <p class="section-desc">
+            Test how crop growth stage and Pani pipe depth govern irrigation scheduling under International Rice Research Institute (IRRI) Safe-AWD guidelines.
+          </p>
+        </div>
+
+        <div class="awd-engine-grid">
+          <!-- Interactive Decision Simulator Card -->
+          <div class="engine-card">
+            <div class="engine-card__header">
+              <span class="mono-tag">INTERACTIVE FIELD ADVISORY ENGINE</span>
+              <button type="button" id="awd-replay-btn" class="btn-replay">
+                <span class="replay-icon">↻</span> Replay Drying Cycle
+              </button>
+            </div>
+
+            <!-- 1. Crop Stage Selector -->
+            <div class="control-block">
+              <label class="control-block__label">1. Select Crop Phenology Stage</label>
+              <div class="stage-selector" role="radiogroup" aria-label="Crop Stage Selector">
+                <button
+                  type="button"
+                  class="stage-btn active"
+                  data-stage="vegetative"
+                  id="stage-btn-vegetative"
+                  role="radio"
+                  aria-checked="true"
+                >
+                  <span class="stage-btn__name">Vegetative Stage</span>
+                  <span class="stage-btn__days">DAT 15 – 55 (Tillering)</span>
+                </button>
+                <button
+                  type="button"
+                  class="stage-btn"
+                  data-stage="flowering"
+                  id="stage-btn-flowering"
+                  role="radio"
+                  aria-checked="false"
+                >
+                  <span class="stage-btn__name">Flowering Window</span>
+                  <span class="stage-btn__days">DAT 56 – 75 (Anthesis)</span>
+                </button>
+                <button
+                  type="button"
+                  class="stage-btn"
+                  data-stage="ripening"
+                  id="stage-btn-ripening"
+                  role="radio"
+                  aria-checked="false"
+                >
+                  <span class="stage-btn__name">Ripening Stage</span>
+                  <span class="stage-btn__days">DAT 76 – 105 (Grain Fill)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 2. Water Depth Slider (+5cm down to -20cm) -->
+            <div class="control-block">
+              <div class="slider-header">
+                <label for="awd-depth-slider" class="control-block__label">
+                  2. Pani Pipe Water Depth Reading
+                </label>
+                <output id="awd-depth-output" for="awd-depth-slider" class="depth-pill">+2 cm</output>
+              </div>
+
+              <div class="depth-slider-wrap">
+                <input
+                  type="range"
+                  id="awd-depth-slider"
+                  min="-20"
+                  max="5"
+                  step="1"
+                  value="2"
+                  aria-label="Water Depth Slider from +5cm down to -20cm"
+                />
+                <div class="depth-slider-ticks">
+                  <span>-20cm (Deep Dry)</span>
+                  <span class="tick-amber">-15cm (AWD Limit)</span>
+                  <span>0cm (Surface)</span>
+                  <span class="tick-emerald">+5cm (Flooded)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Real-Time Advisory Badge -->
+            <div id="awd-advisory-box" class="advisory-banner advisory-banner--green" role="region" aria-live="polite">
+              <div class="advisory-banner__top">
+                <span id="awd-advisory-pill" class="advisory-pill advisory-pill--green">SAFE // HOLD IRRIGATION</span>
+                <span id="awd-methane-status" class="mono-tag">CH₄ FLUX: SUPPRESSED</span>
+              </div>
+              <p id="awd-advisory-text" class="advisory-banner__message">
+                SAFE: Roots hydrated. Hold irrigation, save water.
+              </p>
+            </div>
+          </div>
+
+          <!-- Metric Comparison & Visual Gauge Card -->
+          <div class="metrics-comparison-card">
+            <div class="metrics-card__header">
+              <span class="mono-tag">EMPIRICAL BENCHMARK // CONTINUOUS FLOODING VS SAFE AWD</span>
+              <h3 class="metrics-card__title">Validated Field Performance</h3>
+            </div>
+
+            <div class="metric-tiles">
+              <!-- Metric 1: Water Saved -->
+              <div class="metric-tile">
+                <div class="metric-tile__top">
+                  <span class="metric-tile__label">Water Saved</span>
+                  <span class="metric-tile__source">IRRI Validated</span>
+                </div>
+                <div class="metric-tile__value text-emerald">Up to 30%</div>
+                <div class="metric-tile__bar">
+                  <div class="metric-tile__fill fill-emerald" style="width: 78%;"></div>
+                </div>
+                <p class="metric-tile__note">Reduces irrigation pump hours &amp; canal drawdowns without root stress.</p>
+              </div>
+
+              <!-- Metric 2: Methane Cut -->
+              <div class="metric-tile">
+                <div class="metric-tile__top">
+                  <span class="metric-tile__label">Methane Cut</span>
+                  <span class="metric-tile__source">IPCC Average</span>
+                </div>
+                <div class="metric-tile__value text-cyan">48%</div>
+                <div class="metric-tile__bar">
+                  <div class="metric-tile__fill fill-cyan" style="width: 85%;"></div>
+                </div>
+                <p class="metric-tile__note">Periodic soil aeration halts methanogenic archaea activity in the rhizosphere.</p>
+              </div>
+
+              <!-- Metric 3: Yield Delta -->
+              <div class="metric-tile">
+                <div class="metric-tile__top">
+                  <span class="metric-tile__label">Yield Delta</span>
+                  <span class="metric-tile__source">Yield Neutral Parity</span>
+                </div>
+                <div class="metric-tile__value text-gold">0%</div>
+                <div class="metric-tile__bar">
+                  <div class="metric-tile__fill fill-gold" style="width: 100%;"></div>
+                </div>
+                <p class="metric-tile__note">Maintains 100% grain yield parity; oxygenating roots boosts productive tillering.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 5: SCENE 5 — GEOSPATIAL CLASSIFIER - PS 3.4 (LEAFLET.JS ENGINE)
+         ===================================================================== -->
+    <section id="scene-5" class="scene-5-section" aria-label="Geospatial Classifier Problem Statement 3.4">
+      <div class="container">
+        <div class="section-header-split">
+          <div>
+            <h2 class="section-title">Irrigated vs. Rain-Fed Agriculture Classifier</h2>
+          </div>
+          <p class="section-desc">
+            Interactive multi-temporal remote sensing map isolating canal-irrigated command zones (AWD deployment targets) from drought-vulnerable rain-fed tracts across the Cauvery Delta, Tamil Nadu.
+          </p>
+        </div>
+
+        <!-- Map Dashboard Frame -->
+        <div class="gis-dashboard">
+          <!-- Layer Controls Bar -->
+          <div class="gis-toolbar">
+            <div class="gis-toolbar__left">
+              <span class="gis-status-dot"></span>
+              <span class="mono-tag">AOI: CAUVERY DELTA [10.7870°N, 79.1378°E] // ZOOM: 9</span>
+            </div>
+            <div class="gis-layer-toggles" role="group" aria-label="Map Layer Toggles">
+              <button type="button" id="toggle-satellite" class="layer-btn active" data-layer="satellite">
+                [Satellite Base]
+              </button>
+              <button type="button" id="toggle-ndvi" class="layer-btn" data-layer="ndvi">
+                [Sentinel-2 NDVI View]
+              </button>
+              <button type="button" id="toggle-classification" class="layer-btn active" data-layer="classification">
+                [PS 3.4 Classification Overlay]
+              </button>
+            </div>
+          </div>
+
+          <!-- Map Viewport + Floating Legend/Telemetry -->
+          <div class="gis-map-wrapper">
+            <div id="ps34-map" class="leaflet-map-canvas" aria-label="Cauvery Delta Irrigated vs Rain-Fed Classification Map"></div>
+
+            <!-- NDVI Spectral Legend (Shown when Sentinel-2 NDVI View is active) -->
+            <div id="ndvi-spectral-hud" class="ndvi-hud" hidden>
+              <span class="mono-tag">SENTINEL-2 L2A // DRY-SEASON NDVI PERSISTENCE (JAN–APR)</span>
+              <div class="ndvi-gradient-bar"></div>
+              <div class="ndvi-labels">
+                <span>0.12 (Fallow / Dry Rain-Fed)</span>
+                <span>0.45 (Transitional)</span>
+                <span>0.82 (Active Canal Command)</span>
+              </div>
+            </div>
+
+            <!-- Floating Classification Legend -->
+            <div class="gis-legend-card">
+              <div class="gis-legend__title">PS 3.4 VECTOR CLASSIFICATION</div>
+              <div class="gis-legend__item">
+                <span class="polygon-swatch swatch--irrigated"></span>
+                <div>
+                  <strong>Irrigated Command Zone</strong>
+                  <small>Thanjavur, Tiruvarur, Mayiladuthurai (AWD Ready — 30% Water Savings)</small>
+                </div>
+              </div>
+              <div class="gis-legend__item">
+                <span class="polygon-swatch swatch--rainfed"></span>
+                <div>
+                  <strong>Rain-Fed Uplands</strong>
+                  <small>Pudukkottai Southern Border (Vulnerable to Drought Stress)</small>
+                </div>
+              </div>
+              <div class="gis-legend__hint">Click any polygon on the map to inspect spectral &amp; hydrological telemetry.</div>
+            </div>
+          </div>
+
+          <!-- Methodology Callout Card -->
+          <div class="methodology-callout">
+            <div class="methodology-callout__badge">
+              <span class="mono-tag">REMOTE SENSING METHODOLOGY // PS 3.4 PIPELINE</span>
+            </div>
+            <p class="methodology-callout__text">
+              Remote Sensing Methodology: Multi-temporal Sentinel-2 NDVI/NDMI dry-season persistence (Jan-April) combined with CHIRPS rainfall deficit isolates canal-fed command zones from rain-fed tracts across Tamil Nadu's 21.58 lakh hectares.
+            </p>
+            <div class="methodology-pills">
+              <span class="tech-chip">Sentinel-2 MSI (10m B4/B8/B11)</span>
+              <span class="tech-chip">NDMI Root-Zone Moisture Index</span>
+              <span class="tech-chip">CHIRPS Pentad Precipitation</span>
+              <span class="tech-chip">Cauvery Command Mask</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         SECTION 6: SCENE 6 — TAKE IT HOME & PROTOCOL EXPORT (Canvas 2: 160 frames)
+         ===================================================================== -->
+    <section id="scene-6" class="scrolly-canvas-section scene-6-wrapper" aria-label="Take It Home and Field Protocol Export">
+      <div class="sticky-canvas-container">
+        <canvas id="canvas-scene6" aria-label="Flourishing paddy harvest frame sequence"></canvas>
+        <div class="canvas-vignette canvas-vignette--rich"></div>
+        <div id="scene6-end-fade" class="scene6-end-fade"></div>
+
+        <!-- Foreground Protocol Content Overlay -->
+        <div class="scene6-content-overlay">
+          <div class="protocol-card" id="protocol-card">
+            <div class="protocol-card__header">
+              <h2 class="protocol-card__title">Take Safe-AWD to the Field</h2>
+              <p class="protocol-card__subtitle">
+                Three steps for Cauvery Delta cultivators to cut water use by 30% while protecting harvest yields.
+              </p>
+            </div>
+
+            <!-- 3-Step Practical Checklist -->
+            <ol class="protocol-checklist">
+              <li class="checklist-item">
+                <div class="checklist-item__num">01</div>
+                <div class="checklist-item__body">
+                  <h3>Install the ₹50 Pani Pipe (15 DAT)</h3>
+                  <p>
+                    Sink a 30 cm perforated PVC pipe 20 cm deep into the root zone, leaving a 10 cm collar above the mud.
+                  </p>
+                </div>
+              </li>
+              <li class="checklist-item">
+                <div class="checklist-item__num">02</div>
+                <div class="checklist-item__body">
+                  <h3>Re-Flood Only at -15 cm Depth</h3>
+                  <p>
+                    Let ponded water recede until the tube reads <strong>-15 cm</strong>, then re-irrigate to <strong>+5 cm</strong> throughout vegetative growth.
+                  </p>
+                </div>
+              </li>
+              <li class="checklist-item">
+                <div class="checklist-item__num">03</div>
+                <div class="checklist-item__body">
+                  <h3>Hold Standing Water at Flowering</h3>
+                  <p>
+                    Maintain <strong>2–5 cm standing water</strong> during peak flowering to protect grain set; drain 14 days before harvest.
+                  </p>
+                </div>
+              </li>
+            </ol>
+
+            <!-- Action Bar & Closing Banner -->
+            <div class="protocol-card__footer">
+              <div class="closing-banner">
+                <span class="closing-banner__quote">“Measure the water. Protect the harvest.”</span>
+              </div>
+              <button type="button" id="copy-protocol-btn" class="btn-primary-emerald">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span id="copy-btn-label">Copy Field Protocol</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast Notification -->
+  <div id="toast-notification" class="toast" role="status" aria-live="polite" aria-atomic="true">
+    <span class="toast__icon">✓</span>
+    <div class="toast__content">
+      <strong>Field Protocol Copied to Clipboard</strong>
+      <span>Ready to share via WhatsApp, SMS, or extension dispatch.</span>
+    </div>
+  </div>
+
+  <!-- Leaflet.js Script via CDN -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""
+  ></script>
+
+  <!-- Application Engine -->
+  <script src="app.js"></script>
+</body>
+</html>
