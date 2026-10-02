@@ -1639,8 +1639,10 @@ input[type='range']::-webkit-slider-thumb:hover {
 }
 
 /* =========================================================================
-   RESPONSIVE BREAKPOINTS
+   RESPONSIVE BREAKPOINTS (Mobile & Tablet Optimization)
+   Desktop (>1024px) styles remain completely untouched and pixel-perfect.
    ========================================================================= */
+
 @media (max-width: 1024px) {
   .scene-3-grid,
   .awd-engine-grid {
@@ -1664,28 +1666,321 @@ input[type='range']::-webkit-slider-thumb:hover {
 }
 
 @media (max-width: 768px) {
+  /* 1. Header Navigation Bar */
+  .hud-header {
+    top: 8px;
+    width: 95vw;
+    padding: 0.45rem 0.75rem;
+    gap: 8px;
+    justify-content: space-between;
+  }
+
   .hud-header__brand .hud-header__title,
   .hud-header__brand .hud-header__divider {
     display: none;
   }
 
-  .hud-nav-link {
-    font-size: 0.68rem;
-    padding: 5px 8px;
+  .hud-header__nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    max-width: calc(100vw - 110px);
   }
 
-  .frosted-glass-card__metrics,
-  .pani-specs-grid,
+  .hud-header__nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hud-nav-link {
+    flex-shrink: 0;
+    font-size: 0.68rem;
+    padding: 5px 9px;
+  }
+
+  /* 2. Preloader */
+  .preloader__content {
+    width: 92vw;
+    padding: 2.2rem 1.25rem;
+  }
+
+  .preloader__percent {
+    font-size: clamp(3.2rem, 11vw, 4.2rem);
+  }
+
+  .preloader__title {
+    font-size: 0.88rem;
+  }
+
+  /* 3. Sticky Canvas Containers (Scene 1 & 2, Scene 6) */
+  .sticky-canvas-container {
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  .canvas-hud {
+    bottom: 14px;
+    width: 94vw;
+    justify-content: center;
+  }
+
+  .canvas-hud__pill {
+    font-size: 0.68rem;
+    padding: 6px 12px;
+  }
+
+  .canvas-hud__scroll-hint {
+    display: none;
+  }
+
+  /* 4. Scene 1 & 2 Overlays */
+  .scrolly-overlay {
+    padding: 1.25rem 1rem;
+  }
+
+  .hero-headline {
+    font-size: clamp(1.85rem, 7.5vw, 2.75rem);
+    line-height: 1.12;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-subtext {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 92vw;
+  }
+
+  .frosted-glass-card {
+    width: 94vw;
+    max-width: 440px;
+    padding: 1.35rem 1.1rem;
+  }
+
+  .frosted-glass-card__header {
+    margin-bottom: 0.75rem;
+  }
+
+  .frosted-glass-card__title {
+    font-size: 1.35rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .frosted-glass-card__body {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+
+  .frosted-glass-card__metrics {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding-top: 0.9rem;
+  }
+
+  .mini-stat {
+    padding: 0.6rem 0.8rem;
+  }
+
+  /* 5. Scene 3: The ₹50 Truth-Teller */
+  .scene-3-section {
+    padding: 4rem 0 3rem;
+  }
+
+  .scene-3-grid {
+    gap: 1.75rem;
+  }
+
+  .microcopy-quote {
+    font-size: 1.15rem;
+    margin: 0.8rem 0;
+    padding-left: 0.75rem;
+  }
+
+  .pani-telemetry-card {
+    padding: 1.1rem 1rem;
+    margin-top: 1rem;
+  }
+
+  .pani-specs-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .telemetry-big-val {
+    font-size: 1.8rem;
+  }
+
+  .svg-card__top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 0.75rem 1rem;
+  }
+
+  /* 6. Scene 4: AWD Decision Engine */
+  .scene-4-section {
+    padding: 4rem 0 3rem;
+  }
+
+  .section-header-centered {
+    margin-bottom: 2rem;
+  }
+
+  .awd-engine-grid {
+    gap: 1.5rem;
+  }
+
+  .engine-card,
+  .metrics-comparison-card {
+    padding: 1.35rem 1.1rem;
+  }
+
   .stage-selector {
     grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .stage-btn {
+    min-height: 48px;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .advisory-banner {
+    padding: 1.1rem 1rem;
+  }
+
+  .advisory-banner__message {
+    font-size: 1rem;
+  }
+
+  .metrics-card__title {
+    font-size: 1.25rem;
+  }
+
+  .metric-tile {
+    padding: 1rem;
+  }
+
+  .metric-tile__value {
+    font-size: 1.65rem;
+  }
+
+  /* 7. Scene 5: Geospatial Classifier (Leaflet.js) */
+  .scene-5-section {
+    padding: 4rem 0 3rem;
+  }
+
+  .section-header-split {
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+  }
+
+  .gis-toolbar {
+    padding: 0.85rem 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .gis-layer-toggles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    width: 100%;
+  }
+
+  .layer-btn {
+    padding: 8px 4px;
+    font-size: 0.68rem;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.3;
   }
 
   .gis-map-wrapper {
-    height: 440px;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .leaflet-map-canvas {
+    height: 380px;
+    width: 100%;
+  }
+
+  .gis-legend-card {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    width: 100%;
+    border-radius: 0;
+    border-top: 1px solid var(--border-muted);
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    background: rgba(8, 13, 10, 0.95);
+    padding: 1.1rem 1.25rem;
+    box-shadow: none;
+  }
+
+  .ndvi-hud {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-width: none;
+    padding: 8px 10px;
+  }
+
+  .methodology-callout {
+    padding: 1.25rem 1rem;
+  }
+
+  /* 8. Scene 6: Protocol Export */
+  .scene6-content-overlay {
+    padding: 3.5rem 1rem 1.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .protocol-card {
+    width: 95vw;
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 1.15rem 1rem;
+    max-height: 82vh;
+    max-height: 82dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .protocol-card__title {
+    font-size: 1.25rem;
+  }
+
+  .protocol-card__subtitle {
+    font-size: 0.78rem;
   }
 
   .checklist-item {
-    padding: 0.85rem 1rem;
+    padding: 0.6rem 0.75rem;
+    gap: 0.6rem;
+  }
+
+  .checklist-item__num {
+    font-size: 0.68rem;
+    padding: 2px 6px;
+  }
+
+  .checklist-item__body h3 {
+    font-size: 0.82rem;
+  }
+
+  .checklist-item__body p {
+    font-size: 0.72rem;
   }
 
   .protocol-card__footer {
@@ -1695,6 +1990,61 @@ input[type='range']::-webkit-slider-thumb:hover {
   }
 
   .btn-primary-emerald {
+    min-height: 48px;
+    padding: 0.85rem 1rem;
+    font-size: 0.9rem;
     justify-content: center;
   }
+
+  /* 9. Toast Notification */
+  .toast {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    padding: 0.85rem 1rem;
+    transform: translateY(140%);
+  }
+
+  .toast.is-visible {
+    transform: translateY(0);
+  }
 }
+
+@media (max-width: 480px) {
+  .container {
+    width: 94vw;
+  }
+
+  .section-title {
+    font-size: clamp(1.5rem, 6vw, 1.85rem);
+  }
+
+  .eyebrow-pill {
+    font-size: 0.68rem;
+    padding: 4px 10px;
+  }
+
+  .hud-header {
+    top: 6px;
+    padding: 0.35rem 0.55rem;
+    width: 97vw;
+  }
+
+  .hud-nav-link {
+    font-size: 0.64rem;
+    padding: 4px 6px;
+  }
+
+  .depth-slider-ticks {
+    font-size: 0.6rem;
+  }
+
+  .metric-tile__value {
+    font-size: 1.5rem;
+  }
+
+  .leaflet-map-canvas {
+    height: 320px;
+  }
+}
+

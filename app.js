@@ -780,6 +780,14 @@
       { threshold: 0.15 }
     );
     observer.observe(dom.mapContainer);
+
+    window.addEventListener(
+      'resize',
+      () => {
+        map.invalidateSize();
+      },
+      { passive: true }
+    );
   }
 
   /* --------------------------------------------------------------------------
