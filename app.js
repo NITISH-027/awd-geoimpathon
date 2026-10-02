@@ -87,6 +87,8 @@
     canvasScene6: document.getElementById('canvas-scene6'),
     scene6EndFade: document.getElementById('scene6-end-fade'),
     scene6FrameReadout: document.getElementById('scene6-frame-readout'),
+    scene6OverlayEarly: document.getElementById('scene6-overlay-early'),
+    protocolCard: document.getElementById('protocol-card'),
     copyProtocolBtn: document.getElementById('copy-protocol-btn'),
     copyBtnLabel: document.getElementById('copy-btn-label'),
     toast: document.getElementById('toast-notification'),
@@ -312,6 +314,24 @@
     const progress6 = getSectionScrollProgress(dom.scene6Section);
     scrubberState.scene6Target = progress6 * (CONFIG.scene6Count - 1);
 
+    // Scene 6 Part 1: Clean Cinematic Headline (0% to 42% scroll)
+    if (dom.scene6OverlayEarly) {
+      if (progress6 >= 0.04 && progress6 <= 0.42) {
+        dom.scene6OverlayEarly.classList.add('is-visible');
+      } else {
+        dom.scene6OverlayEarly.classList.remove('is-visible');
+      }
+    }
+
+    // Scene 6 Part 2: Grand Finale Protocol Card (55% to 100% scroll climax)
+    if (dom.protocolCard) {
+      if (progress6 >= 0.55) {
+        dom.protocolCard.classList.add('is-visible');
+      } else {
+        dom.protocolCard.classList.remove('is-visible');
+      }
+    }
+
     // 4. Update active top HUD navigation link
     updateActiveHudNav();
 
@@ -499,10 +519,10 @@
       lastDrawnFrame6 = frameIndex6;
     }
 
-    // Smooth cinematic fade over the end frames of Scene 6
+    // Smooth cinematic fade over the end frames of Scene 6 (emerges alongside protocol card)
     if (dom.scene6EndFade && isScene6Visible) {
       const normalizedScene6 = scrubberState.scene6Current / (CONFIG.scene6Count - 1);
-      const endFadeAlpha = clamp((normalizedScene6 - 0.62) / 0.38, 0, 0.88);
+      const endFadeAlpha = clamp((normalizedScene6 - 0.48) / 0.42, 0, 0.90);
       dom.scene6EndFade.style.opacity = endFadeAlpha.toFixed(3);
     }
 
