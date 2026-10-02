@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * GEOIMPATHON PROBLEM STATEMENT 3.4 — APPLICATION ENGINE (app.js)
+ * HYDROSAFE AWD — APPLICATION ENGINE (app.js)
  * Irrigated vs. Rain-Fed Agriculture Mapping & Safe-AWD Scrollytelling Engine
  * ============================================================================
  */
@@ -696,7 +696,7 @@
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
       {
         attribution:
-          'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, Sentinel-2 L2A &amp; GeoImpathon PS 3.4',
+          'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, Sentinel-2 L2A &amp; HydroSafe AWD',
         maxZoom: 17,
       }
     ).addTo(map);
@@ -718,7 +718,7 @@
           type: 'Feature',
           properties: {
             zoneType: 'irrigated',
-            tag: 'PS 3.4: Irrigated Agriculture (AWD Ready - 30% Water Savings Potential)',
+            tag: 'Canal-Irrigated Command (AWD Ready — 30% Water Savings Potential)',
             region: 'Grand Anicut / Vennar-Vettar Canal Command (Thanjavur, Tiruvarur, Mayiladuthurai)',
             ndviDrySeason: '0.74 (High Dry-Season Persistence)',
             ndmiMoisture: '+0.31 (Canal-Fed Subsoil Saturation)',
@@ -748,7 +748,7 @@
           type: 'Feature',
           properties: {
             zoneType: 'rainfed',
-            tag: 'PS 3.4: Rain-Fed Agriculture (Vulnerable to Drought Stress)',
+            tag: 'Rain-Fed Agriculture (Vulnerable to Drought Stress)',
             region: 'Pudukkottai Uplands & Southern Dry Tracts (Aranthangi - Gandarvakottai Belt)',
             ndviDrySeason: '0.21 (Rapid Post-Monsoon Senescence)',
             ndmiMoisture: '-0.18 (Root-Zone Moisture Deficit)',
@@ -874,8 +874,8 @@
    * 10. SCENE 6: COPY FIELD PROTOCOL & TOAST NOTIFICATION
    * -------------------------------------------------------------------------- */
   const FIELD_PROTOCOL_TEXT = [
-    'GEOIMPATHON PS 3.4 — SAFE-AWD FIELD PROTOCOL (CAUVERY DELTA)',
-    '============================================================',
+    'CLIMATE-SMART SAFE-AWD FIELD PROTOCOL (CAUVERY DELTA AGRO-ECOSYSTEM)',
+    '====================================================================',
     '1. INSTALL THE ₹50 PERFORATED PANI PIPE (15 DAT):',
     '   Sink a 30cm PVC pipe (15cm diameter) 20cm deep into the paddy plot 15 days after transplanting, leaving 10cm above ground. Drill 0.5cm holes spaced 2cm apart across the bottom 20cm root zone.',
     '',

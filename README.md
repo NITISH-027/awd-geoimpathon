@@ -1,13 +1,13 @@
 <div align="center">
 
-# 🌾 AWD GeoImpathon — Problem Statement 3.4
-### 🛰️ Multi-Temporal Satellite Agriculture Mapping & Smart Safe-AWD Scrollytelling Engine
+# 🌾 HydroSafe AWD
+### 🛰️ Multi-Temporal Satellite Agriculture Mapping & Smart Water Decision Platform
 
 <p align="center">
   <strong>Isolating Canal-Irrigated vs. Rain-Fed Paddy Tracts &amp; Scaling the ₹50 Pani Pipe Field Protocol across the Cauvery Delta, Tamil Nadu 🇮🇳</strong>
 </p>
 
-[![Live Deployment](https://img.shields.io/badge/⚡_Live_Demo-awd--geoimpathon.vercel.app-10b981?style=for-the-badge&logo=vercel&logoColor=white)](https://awd-geoimpathon.vercel.app/)
+[![Live Deployment](https://img.shields.io/badge/⚡_Live_Platform-awd--geoimpathon.vercel.app-10b981?style=for-the-badge&logo=vercel&logoColor=white)](https://awd-geoimpathon.vercel.app/)
 [![YouTube Demonstration](https://img.shields.io/badge/📺_Video_Demo-Watch_on_YouTube-ff0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/PbCwH14jl2g)
 [![GitHub Repository](https://img.shields.io/badge/📁_Source_Code-NITISH--027%2Fawd--geoimpathon-1b2e24?style=for-the-badge&logo=github&logoColor=10b981)](https://github.com/NITISH-027/awd-geoimpathon)
 
@@ -32,7 +32,7 @@
 
 ## 📖 Table of Contents
 - [🌟 Executive Summary](#-executive-summary)
-- [🎯 The Problem Statement (PS 3.4)](#-the-problem-statement-ps-34)
+- [🎯 Agronomic Challenge & Earth Observation Context](#-agronomic-challenge--earth-observation-context)
 - [🔬 Scientific & Empirical Grounding](#-scientific--empirical-grounding)
 - [✨ Key Features & Interactive Scenes](#-key-features--interactive-scenes)
   - [🎬 Scene 1 & 2: The Myth of Continuous Flooding](#-scene-1--2-the-myth-of-continuous-flooding)
@@ -53,19 +53,19 @@
 
 Paddy rice is the primary staple for over 3.5 billion people, yet traditional continuous ponding wastes up to **30–40% of irrigation water** and generates **12% of global agricultural methane ($CH_4$) emissions** due to anaerobic soil bacteria (*methanogenic archaea*).
 
-**AWD GeoImpathon (PS 3.4)** is an interactive, cinematic scrollytelling platform designed to demonstrate and deploy **Alternate Wetting and Drying (AWD)**:
+**HydroSafe AWD** is an interactive, cinematic scrollytelling platform designed to demonstrate and deploy **Alternate Wetting and Drying (AWD)**:
 - 🛰️ **Geospatial Intelligence:** Classifies irrigated canal command zones vs. rain-fed tracts across the Cauvery Delta using **Sentinel-2 L2A multi-temporal optical imagery and CHIRPS precipitation anomaly indices**.
 - 🪈 **Empirical Science:** Demystifies the subterranean root zone through a physics-based **SVG Pani Pipe simulator** that tracks water table drops from $+5\text{ cm}$ down to the critical $-15\text{ cm}$ threshold.
 - ⚡ **High-Performance Web Tech:** Handcrafted using **Vanilla JavaScript, HTML5 Canvas frame scrubbing, Leaflet.js, and dark emerald glassmorphism**, running at 60 FPS even on 2GB RAM laptops and mobile phones.
 
 ---
 
-## 🎯 The Problem Statement (PS 3.4)
+## 🎯 Agronomic Challenge & Earth Observation Context
 
 | Attribute | Specification |
 | :--- | :--- |
-| **🏆 Hackathon** | GeoImpathon |
-| **📌 Problem Statement** | **PS 3.4: Irrigated vs. Rain-Fed Agriculture Classifier & AWD Protocol** |
+| **🌱 Application Domain** | Climate-Smart Agriculture & Agro-Hydrological Remote Sensing |
+| **📌 Platform Focus** | **Irrigated vs. Rain-Fed Agriculture Mapping & Safe-AWD Deployment** |
 | **📍 Area of Interest (AOI)** | **Cauvery Delta, Tamil Nadu, India** `[10.7870°N, 79.1378°E]` |
 | **🛰️ Earth Observation Sensors** | European Space Agency (ESA) Sentinel-2 L2A (10m Multi-Spectral) |
 | **💧 Hydrological Indices** | NDVI Dry-Season Persistence, NDWI Moisture Decay, CHIRPS Rainfall Anomalies |
@@ -74,7 +74,7 @@ Paddy rice is the primary staple for over 3.5 billion people, yet traditional co
 ```mermaid
 graph TD
     A["🛰️ Sentinel-2 L2A & CHIRPS Satellite Feeds"] --> B["🧩 Multi-Temporal Spectral Processing (NDVI / NDWI)"]
-    B --> C["🗺️ PS 3.4 GIS Classifier: Irrigated vs Rain-Fed Polygons"]
+    B --> C["🗺️ GIS Agro-Classifier: Irrigated vs Rain-Fed Polygons"]
     C --> D{"🌾 Field Readiness"}
     D -->|"Canal Command Zones"| E["🪈 Deploy ₹50 Pani Pipe & Safe-AWD Protocol"]
     D -->|"Rain-Fed Tracts"| F["🌧️ Micro-Water Harvesting & Drought Advisory"]
@@ -129,7 +129,7 @@ Traditional farmers believe paddy requires constant standing water. Soil scienti
 ### 🛰️ Scene 5: Leaflet GIS Classification Dashboard
 - 🗺️ **High-Resolution Satellite Basemap:** Esri World Imagery with Cauvery Delta AOI zoom and coordinate tracking.
 - 🌈 **Sentinel-2 NDVI View:** Live multi-spectral HUD visualization tracking dry-season canopy persistence (January–April).
-- 🏷️ **PS 3.4 Vector Overlay:** Spatial polygons isolating **Canal-Irrigated Command Zones** (emerald) from **Rain-Fed Agriculture** (amber).
+- 🏷️ **Agri-Classification Vector Overlay:** Spatial polygons isolating **Canal-Irrigated Command Zones** (emerald) from **Rain-Fed Agriculture** (amber).
 - 👆 **Touch-Friendly & Non-Obstructive:** Map gestures (pan, pinch, zoom) remain completely clear on mobile with legends docked neatly beneath.
 
 ---
@@ -152,7 +152,7 @@ Traditional farmers believe paddy requires constant standing water. Soil scienti
    └───────────────────────┴───────────────────────┴───────────────────────┘
 ```
 
-| Metric | Continuous Flooding (Conventional) | Safe-AWD (PS 3.4 Protocol) | Delta & Benefit |
+| Metric | Continuous Flooding (Conventional) | Safe-AWD Protocol | Delta & Benefit |
 | :--- | :--- | :--- | :--- |
 | **💧 Irrigation Water** | $12,000\text{--}15,000\text{ m}^3/\text{ha}$ | $8,500\text{--}10,500\text{ m}^3/\text{ha}$ | **$-30\%$ freshwater withdrawal** |
 | **💨 CH₄ Emissions** | High ($1.2\text{--}2.5\text{ kg } CH_4/\text{ha/day}$) | Low ($0.6\text{--}1.2\text{ kg } CH_4/\text{ha/day}$) | **$-48\%$ greenhouse gas reduction** |
@@ -258,8 +258,7 @@ awd-geoimpathon/
 
 ## 👨‍💻 Team & Acknowledgments
 
-- **Developed for:** GeoImpathon — Problem Statement 3.4
-- **Lead Developer:** [Nitish](https://github.com/NITISH-027)
+- **Lead Developer & System Architect:** [Nitish](https://github.com/NITISH-027)
 - **Deployment Platform:** [Vercel](https://vercel.com/)
 - **Live Link:** [https://awd-geoimpathon.vercel.app/](https://awd-geoimpathon.vercel.app/)
 - **Demo Link:** [https://youtu.be/PbCwH14jl2g](https://youtu.be/PbCwH14jl2g)
