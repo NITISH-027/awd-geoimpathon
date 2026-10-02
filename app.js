@@ -952,7 +952,41 @@
   }
 
   /* --------------------------------------------------------------------------
-   * 11. BOOTSTRAP APPLICATION
+   * 11. DUAL-LANGUAGE TOGGLE (TAMIL PRIMARY / ENGLISH SECONDARY)
+   * -------------------------------------------------------------------------- */
+  function initLanguageToggle() {
+    const langBtns = document.querySelectorAll('.lang-btn');
+    if (!langBtns.length) return;
+
+    function applyLanguage(lang) {
+      document.documentElement.setAttribute('data-lang', lang);
+      try {
+        localStorage.setItem('awd_pref_lang', lang);
+      } catch (_) {}
+
+      langBtns.forEach((btn) => {
+        const isActive = btn.dataset.lang === lang;
+        btn.classList.toggle('active', isActive);
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+    }
+
+    langBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        applyLanguage(btn.dataset.lang);
+      });
+    });
+
+    // Default to Tamil (or load existing user preference)
+    let savedLang = 'ta';
+    try {
+      savedLang = localStorage.getItem('awd_pref_lang') || 'ta';
+    } catch (_) {}
+    applyLanguage(savedLang);
+  }
+
+  /* --------------------------------------------------------------------------
+   * 12. BOOTSTRAP APPLICATION
    * -------------------------------------------------------------------------- */
   function init() {
     resizeCanvases();
@@ -962,6 +996,7 @@
     }, { passive: true });
     window.addEventListener('scroll', handleScroll, { passive: true });
 
+    initLanguageToggle();
     initVisibilityObservers();
     preloadAllFrames();
     initScene3Controls();

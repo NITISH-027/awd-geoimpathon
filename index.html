@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta" data-lang="ta">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -66,6 +66,10 @@
       <a href="#scene-5" class="hud-nav-link" data-scene="5">04. Satellite GIS</a>
       <a href="#scene-6" class="hud-nav-link" data-scene="6">05. Protocol</a>
     </nav>
+    <div class="hud-lang-toggle" id="hud-lang-toggle" role="group" aria-label="Language selection">
+      <button type="button" class="lang-btn active" data-lang="ta" aria-pressed="true" title="தமிழ் பார்வை (Default)">தமிழ்</button>
+      <button type="button" class="lang-btn" data-lang="en" aria-pressed="false" title="English view">ENG</button>
+    </div>
   </header>
 
   <main>
@@ -85,20 +89,27 @@
           </div>
         </div>
 
-        <!-- 0 - 35% Scroll Overlay: Centered Typography -->
+        <!-- 0 - 35% Scroll Overlay: Centered Typography (Tamil Dominant + English Sub-Caption) -->
         <div id="scene1-overlay-early" class="scrolly-overlay overlay-centered is-visible">
-          <h1 class="hero-headline">
-            This looks healthy.<br />
-            <span class="text-emerald-glow">It isn't.</span>
+          <!-- Primary Grand Headline (Tamil Dominant) -->
+          <h1 class="hero-headline--dominant">
+            <span>பசுமையாய் தெரியும்...</span><br />
+            <span class="text-emerald-glow">ஆனால் அது நலம் அல்ல.</span>
           </h1>
-          <p class="hero-tamil-headline">
-            “பசுமையாய் தெரியும்... ஆனால் அது நலம் அல்ல.”
+
+          <!-- English Refined Subtitle Caption -->
+          <p class="hero-translation-caption">
+            “This looks healthy. It isn't.”
           </p>
-          <p class="hero-subtext">
-            Across 21.58 lakh hectares of Tamil Nadu's rice belt, standing water is mistaken for crop vitality.
-          </p>
-          <p class="hero-tamil-subtext">
+
+          <!-- Primary Narrative Subtext (Tamil Dominant) -->
+          <p class="hero-subtext--dominant">
             தமிழகத்தின் 21.58 லட்சம் ஹெக்டேர் வயல்களில், தேங்கி நிற்கும் நீரே பயிரின் பலம் என தவறாக நம்புகிறோம்.
+          </p>
+
+          <!-- English Translation Caption -->
+          <p class="hero-translation-caption--sub">
+            Across 21.58 lakh hectares of Tamil Nadu's rice belt, standing water is mistaken for crop vitality.
           </p>
         </div>
 
