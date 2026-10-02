@@ -33,6 +33,7 @@
   --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --font-tamil-luxury: 'Tiro Tamil', 'Noto Serif Tamil', serif;
 
   --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.65);
   --radius-lg: 18px;
@@ -513,6 +514,32 @@ body {
   color: #d1fae5;
   max-width: 56ch;
   text-shadow: 0 4px 18px rgba(0, 0, 0, 0.9);
+}
+
+/* Luxury Tamil Typography */
+.hero-tamil-headline {
+  font-family: var(--font-tamil-luxury);
+  font-size: clamp(1.15rem, 2.2vw, 1.8rem);
+  font-weight: 400;
+  font-style: italic;
+  color: #a7f3d0;
+  letter-spacing: 0.02em;
+  margin-top: -0.35rem;
+  margin-bottom: 1.35rem;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95), 0 0 28px rgba(16, 185, 129, 0.35);
+  line-height: 1.38;
+}
+
+.hero-tamil-subtext {
+  font-family: var(--font-tamil-luxury);
+  font-size: clamp(0.92rem, 1.3vw, 1.14rem);
+  font-weight: 400;
+  color: #e2e8f0;
+  line-height: 1.65;
+  max-width: 60ch;
+  margin: 0.65rem auto 0;
+  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.95);
+  opacity: 0.92;
 }
 
 /* 55 - 90% Frosted Glass Card */
@@ -1757,6 +1784,20 @@ input[type='range']::-webkit-slider-thumb:hover {
   .hero-subtext {
     font-size: 0.95rem;
     line-height: 1.5;
+    max-width: 92vw;
+  }
+
+  .hero-tamil-headline {
+    font-size: 1.05rem;
+    margin-top: -0.2rem;
+    margin-bottom: 0.85rem;
+    line-height: 1.4;
+  }
+
+  .hero-tamil-subtext {
+    font-size: 0.84rem;
+    line-height: 1.55;
+    margin-top: 0.45rem;
     max-width: 92vw;
   }
 
