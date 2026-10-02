@@ -19,12 +19,13 @@
     mapZoom: 9,
   };
 
-  const totalFramesToLoad = CONFIG.scene1Count + CONFIG.scene6Count;
+  const totalFramesToLoad = CONFIG.scene1Count;
   const scene1Images = new Array(CONFIG.scene1Count);
   const scene6Images = new Array(CONFIG.scene6Count);
 
   let loadedCount = 0;
   let preloaderDismissed = false;
+  let scene6LoadingStarted = false;
 
   // Scrubber state (1-indexed frame numbers in float for lerp)
   const scrubberState = {
@@ -115,13 +116,16 @@
   }
 
   function resizeCanvases() {
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Keep desktop retina fidelity up to 2x; optimize mobile viewports at 1.25x for 3x fill-rate savings
+    const isMobile = window.innerWidth <= 768;
+    const maxDpr = isMobile ? 1.25 : 2;
+    const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
     const width = window.innerWidth;
     const height = window.innerHeight;
 
     [dom.canvasScene1, dom.canvasScene6].forEach((canvas) => {
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
     });
 
     // Redraw current frames immediately on resize
@@ -166,7 +170,7 @@
   }
 
   /* --------------------------------------------------------------------------
-   * 4. FRAME PRELOADER ENGINE
+   * 4. FRAME PRELOADER & BACKGROUND STREAM ENGINE
    * -------------------------------------------------------------------------- */
   function onFrameSettled() {
     loadedCount++;
@@ -180,7 +184,7 @@
     }
     if (dom.preloaderDetail) {
       dom.preloaderDetail.textContent =
-        'Loading optical & hydrological frame sequences (' + loadedCount + ' / ' + totalFramesToLoad + ')';
+        'Calibrating optical & hydrological frame sequences (' + loadedCount + ' / ' + totalFramesToLoad + ')';
     }
 
     // Draw first frames as soon as frame 1 arrives
@@ -193,38 +197,60 @@
     }
   }
 
+  function preloadScene6InBackground() {
+    if (scene6LoadingStarted) return;
+    scene6LoadingStarted = true;
+
+    // Stream Scene 6 frames in gentle idle batches of 10 so CPU/network remain completely free
+    let idx = 1;
+    function loadBatch() {
+      const batchSize = 10;
+      const end = Math.min(idx + batchSize, CONFIG.scene6Count + 1);
+      for (let i = idx; i < end; i++) {
+        const img = new Image();
+        img.decoding = 'async';
+        img.src = getScene6FramePath(i);
+        scene6Images[i - 1] = img;
+      }
+      idx = end;
+      if (idx <= CONFIG.scene6Count) {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(loadBatch);
+        } else {
+          setTimeout(loadBatch, 50);
+        }
+      } else {
+        if (scene6Images[0]?.complete) {
+          drawFrameCover(ctx6, dom.canvasScene6, scene6Images[0], 0, 6);
+        }
+      }
+    }
+    loadBatch();
+  }
+
   function dismissPreloader() {
     if (preloaderDismissed) return;
     preloaderDismissed = true;
 
     drawFrameCover(ctx1, dom.canvasScene1, scene1Images[0], 0, 1);
-    drawFrameCover(ctx6, dom.canvasScene6, scene6Images[0], 0, 6);
 
     setTimeout(() => {
       dom.preloader.classList.add('is-loaded');
+      // Quietly stream Scene 6 in the background during idle time
+      setTimeout(preloadScene6InBackground, 300);
     }, 220);
   }
 
   function preloadAllFrames() {
-    // Safety timeout in case of slow network so user is never permanently blocked
+    // Safety timeout in case of slow network so user is never blocked
     const safetyTimer = setTimeout(() => {
       if (!preloaderDismissed) {
         dismissPreloader();
       }
-    }, 8000);
+    }, 6000);
 
-    // Preload Scene 1 (1 to 115)
+    // Preload Scene 1 frames (fast initial startup)
     for (let i = 1; i <= CONFIG.scene1Count; i++) {
-      const img = new Image();
-      img.decoding = 'async';
-      img.onload = onFrameSettled;
-      img.onerror = onFrameSettled;
-      img.src = getScene1FramePath(i);
-      scene1Images[i - 1] = img;
-    }
-
-    // Preload Scene 6 (1 to 160)
-    for (let i = 1; i <= CONFIG.scene6Count; i++) {
       const img = new Image();
       img.decoding = 'async';
       img.onload = () => {
@@ -232,8 +258,8 @@
         if (loadedCount >= totalFramesToLoad) clearTimeout(safetyTimer);
       };
       img.onerror = onFrameSettled;
-      img.src = getScene6FramePath(i);
-      scene6Images[i - 1] = img;
+      img.src = getScene1FramePath(i);
+      scene1Images[i - 1] = img;
     }
   }
 
@@ -288,6 +314,9 @@
 
     // 4. Update active top HUD navigation link
     updateActiveHudNav();
+
+    // Trigger RAF tick on scroll
+    requestTick();
   }
 
   function updateActiveHudNav() {
@@ -319,11 +348,15 @@
   /* --------------------------------------------------------------------------
    * 6. SCENE 3: INTERACTIVE SOIL CROSS-SECTION & PANI PIPE RENDERER
    * -------------------------------------------------------------------------- */
+  let lastRenderedWaterCm = -999;
   function renderSoilCrossSection(progress) {
     // Progress 0.0 -> +5.0 cm (y = 160)
     // Progress 0.25 -> 0.0 cm surface (y = 210)
     // Progress 1.0 -> -15.0 cm AWD threshold (y = 360)
     const waterCm = 5 - progress * 20; // +5.0 down to -15.0
+    if (Math.abs(waterCm - lastRenderedWaterCm) < 0.04) return;
+    lastRenderedWaterCm = waterCm;
+
     const waterY = 210 - waterCm * 10; // 1cm = 10px, 0cm is at y=210
     const formattedCm = (waterCm >= 0 ? '+' : '') + waterCm.toFixed(1) + ' cm';
 
@@ -379,6 +412,7 @@
       scrubberState.manualSoilOverride = true;
       const val = parseFloat(e.target.value) / 100;
       scrubberState.soilProgressTarget = clamp(val, 0, 1);
+      requestTick();
     });
 
     // Release manual override if user scrolls significantly
@@ -386,16 +420,49 @@
       'wheel',
       () => {
         scrubberState.manualSoilOverride = false;
+        requestTick();
       },
       { passive: true }
     );
   }
 
   /* --------------------------------------------------------------------------
-   * 7. MAIN REQUESTANIMATIONFRAME LOOP (LERP 0.08)
+   * 7. MAIN REQUESTANIMATIONFRAME LOOP (LERP 0.08 & IDLE SLEEP ENGINE)
    * -------------------------------------------------------------------------- */
   let lastDrawnFrame1 = -1;
   let lastDrawnFrame6 = -1;
+  let isRafRunning = false;
+  let isScene1Visible = true;
+  let isScene6Visible = false;
+
+  function requestTick() {
+    if (!isRafRunning) {
+      isRafRunning = true;
+      requestAnimationFrame(tick);
+    }
+  }
+
+  function initVisibilityObservers() {
+    if (!('IntersectionObserver' in window)) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.target === dom.scene1Section) {
+            isScene1Visible = entry.isIntersecting;
+            if (isScene1Visible) requestTick();
+          }
+          if (entry.target === dom.scene6Section) {
+            isScene6Visible = entry.isIntersecting;
+            if (isScene6Visible) requestTick();
+          }
+        });
+      },
+      { threshold: 0.01 }
+    );
+
+    if (dom.scene1Section) observer.observe(dom.scene1Section);
+    if (dom.scene6Section) observer.observe(dom.scene6Section);
+  }
 
   function tick() {
     // Lerp Scene 1 frame
@@ -406,7 +473,7 @@
     );
     const frameIndex1 = clamp(Math.round(scrubberState.scene1Current), 0, CONFIG.scene1Count - 1);
 
-    if (frameIndex1 !== lastDrawnFrame1) {
+    if (isScene1Visible && frameIndex1 !== lastDrawnFrame1) {
       drawFrameCover(ctx1, dom.canvasScene1, scene1Images[frameIndex1], frameIndex1, 1);
       if (dom.scene1FrameReadout) {
         dom.scene1FrameReadout.textContent =
@@ -423,7 +490,7 @@
     );
     const frameIndex6 = clamp(Math.round(scrubberState.scene6Current), 0, CONFIG.scene6Count - 1);
 
-    if (frameIndex6 !== lastDrawnFrame6) {
+    if (isScene6Visible && frameIndex6 !== lastDrawnFrame6) {
       drawFrameCover(ctx6, dom.canvasScene6, scene6Images[frameIndex6], frameIndex6, 6);
       if (dom.scene6FrameReadout) {
         dom.scene6FrameReadout.textContent =
@@ -433,7 +500,7 @@
     }
 
     // Smooth cinematic fade over the end frames of Scene 6
-    if (dom.scene6EndFade) {
+    if (dom.scene6EndFade && isScene6Visible) {
       const normalizedScene6 = scrubberState.scene6Current / (CONFIG.scene6Count - 1);
       const endFadeAlpha = clamp((normalizedScene6 - 0.62) / 0.38, 0, 0.88);
       dom.scene6EndFade.style.opacity = endFadeAlpha.toFixed(3);
@@ -446,6 +513,19 @@
       CONFIG.lerpFactor
     );
     renderSoilCrossSection(scrubberState.soilProgressCurrent);
+
+    // Dynamic sleep: Pause RAF loop when motion settles to save CPU and battery
+    const delta1 = Math.abs(scrubberState.scene1Current - scrubberState.scene1Target);
+    const delta6 = Math.abs(scrubberState.scene6Current - scrubberState.scene6Target);
+    const deltaSoil = Math.abs(scrubberState.soilProgressCurrent - scrubberState.soilProgressTarget);
+
+    if (delta1 < 0.015 && delta6 < 0.015 && deltaSoil < 0.001) {
+      scrubberState.scene1Current = scrubberState.scene1Target;
+      scrubberState.scene6Current = scrubberState.scene6Target;
+      scrubberState.soilProgressCurrent = scrubberState.soilProgressTarget;
+      isRafRunning = false;
+      return; // Sleep until user scrolls or touches controls
+    }
 
     requestAnimationFrame(tick);
   }
@@ -856,9 +936,13 @@
    * -------------------------------------------------------------------------- */
   function init() {
     resizeCanvases();
-    window.addEventListener('resize', resizeCanvases, { passive: true });
+    window.addEventListener('resize', () => {
+      resizeCanvases();
+      requestTick();
+    }, { passive: true });
     window.addEventListener('scroll', handleScroll, { passive: true });
 
+    initVisibilityObservers();
     preloadAllFrames();
     initScene3Controls();
     initScene4Engine();
@@ -866,7 +950,7 @@
     initProtocolCopy();
 
     handleScroll();
-    requestAnimationFrame(tick);
+    requestTick();
   }
 
   if (document.readyState === 'loading') {

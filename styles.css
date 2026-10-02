@@ -1673,6 +1673,9 @@ input[type='range']::-webkit-slider-thumb:hover {
     padding: 0.45rem 0.75rem;
     gap: 8px;
     justify-content: space-between;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(8, 13, 10, 0.92);
   }
 
   .hud-header__brand .hud-header__title,
@@ -1757,6 +1760,9 @@ input[type='range']::-webkit-slider-thumb:hover {
     width: 94vw;
     max-width: 440px;
     padding: 1.35rem 1.1rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(10, 19, 14, 0.90);
   }
 
   .frosted-glass-card__header {
@@ -1955,6 +1961,9 @@ input[type='range']::-webkit-slider-thumb:hover {
     max-height: 82dvh;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(10, 20, 15, 0.88);
   }
 
   .protocol-card__title {
