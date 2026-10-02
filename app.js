@@ -82,6 +82,20 @@
     toggleNdvi: document.getElementById('toggle-ndvi'),
     toggleClassification: document.getElementById('toggle-classification'),
     ndviHud: document.getElementById('ndvi-spectral-hud'),
+    tabZoneIrrigated: document.getElementById('tab-zone-irrigated'),
+    tabZoneRainfed: document.getElementById('tab-zone-rainfed'),
+    inspectorBadge: document.getElementById('inspector-badge'),
+    inspectorRegionTitle: document.getElementById('inspector-region-title'),
+    inspectorDistricts: document.getElementById('inspector-districts'),
+    inspectorNdvi: document.getElementById('inspector-ndvi'),
+    inspectorNdviSub: document.getElementById('inspector-ndvi-sub'),
+    inspectorNdmi: document.getElementById('inspector-ndmi'),
+    inspectorNdmiSub: document.getElementById('inspector-ndmi-sub'),
+    inspectorChirps: document.getElementById('inspector-chirps'),
+    inspectorChirpsSub: document.getElementById('inspector-chirps-sub'),
+    inspectorArea: document.getElementById('inspector-area'),
+    inspectorAreaSub: document.getElementById('inspector-area-sub'),
+    inspectorActionDesc: document.getElementById('inspector-action-desc'),
 
     scene6Section: document.getElementById('scene-6'),
     canvasScene6: document.getElementById('canvas-scene6'),
@@ -737,6 +751,151 @@
       }
     ).addTo(map);
 
+    // Bilingual Telemetry Database for Cauvery Delta Agro-Ecosystems
+    const GIS_ZONES = {
+      irrigated: {
+        badge: {
+          en: 'AWD READY — 30% WATER SAVINGS',
+          ta: 'AWD முறைக்கு உகந்தது — 30% நீர் சேமிப்பு',
+        },
+        badgeClass: 'status-pill--success',
+        title: {
+          en: 'Grand Anicut / Vennar–Vettar Canal Command',
+          ta: 'கல்லணை / வெண்ணாறு–வெட்டாறு பாசனப் பகுதி',
+        },
+        districts: {
+          en: 'Thanjavur, Tiruvarur, Mayiladuthurai',
+          ta: 'தஞ்சாவூர், திருவாரூர், மயிலாடுதுறை',
+        },
+        ndviVal: '0.74',
+        ndviSub: {
+          en: 'High Dry-Season Persistence',
+          ta: 'நிலையான பயிர் பசுமை குறியீடு',
+        },
+        ndmiVal: '+0.31',
+        ndmiSub: {
+          en: 'Canal-Fed Subsoil Saturation',
+          ta: 'வாய்க்கால் வழி மண் ஈரப்பதம்',
+        },
+        chirpsVal: '-42%',
+        chirpsSub: {
+          en: 'Buffered by Mettur Release',
+          ta: 'மேட்டூர் நீரால் சமன் செய்யப்பட்டது',
+        },
+        areaVal: '4.82 L Ha',
+        areaSub: {
+          en: 'Primary AWD Deployment Zone',
+          ta: 'முதன்மை AWD பாசன மண்டலம்',
+        },
+        action: {
+          en: 'Optimal AWD Target: Sinking ₹50 Pani Pipes allows farmers to stretch Mettur dam releases by 30%, preventing tail-end water deficits in Nagapattinam & Karaikal.',
+          ta: 'பாசன வழிகாட்டுதல்: ₹50 பாணி குழாய் அமைப்பதன் மூலம் மேட்டூர் அணை நீர்த் தேவையை 30% மிச்சப்படுத்தி, கடைமடைப் பகுதிகளான நாகப்பட்டினம் மற்றும் காரைக்காலுக்கு தடையின்றி நீர் கொண்டு செல்லலாம்.',
+        },
+        bounds: [
+          [10.36, 78.82],
+          [11.18, 79.85],
+        ],
+      },
+      rainfed: {
+        badge: {
+          en: 'DROUGHT VULNERABLE // RAIN-FED',
+          ta: 'வறட்சி அபாயம் // மானாவாரி பகுதி',
+        },
+        badgeClass: 'status-pill--danger',
+        title: {
+          en: 'Pudukkottai Uplands & Southern Dry Tracts',
+          ta: 'புதுக்கோட்டை மேட்டு நிலங்கள் & தெற்கு வறண்ட பரப்பு',
+        },
+        districts: {
+          en: 'Aranthangi, Gandarvakottai, Alangudi',
+          ta: 'அறந்தாங்கி, கந்தர்வக்கோட்டை, ஆலங்குடி',
+        },
+        ndviVal: '0.21',
+        ndviSub: {
+          en: 'Rapid Post-Monsoon Senescence',
+          ta: 'பருவமழைக்குப் பின் வறளும் நிலை',
+        },
+        ndmiVal: '-0.18',
+        ndmiSub: {
+          en: 'Root-Zone Moisture Deficit',
+          ta: 'வேர் மண்டல ஈரப்பதப் பற்றாக்குறை',
+        },
+        chirpsVal: 'High Stress',
+        chirpsSub: {
+          en: 'Sensitive to NE Monsoon Failure',
+          ta: 'வடகிழக்கு பருவமழை பொய்த்தால் பாதிப்பு',
+        },
+        areaVal: '1.94 L Ha',
+        areaSub: {
+          en: 'Rain-Fed Uplands & Minor Tanks',
+          ta: 'மானாவாரி & சிறு பாசனக் கண்மாய்கள்',
+        },
+        action: {
+          en: 'Drought Strategy: Highly vulnerable to rainfall deficit. AWD is not suited for unbunded rain-fed tracts; prioritize farm ponds, direct-seeded rice (DSR), and micro-irrigation.',
+          ta: 'வறட்சி மேலாண்மை: மழையை மட்டுமே நம்பியுள்ள மானாவாரி நிலங்களுக்கு நேரடி AWD முறை உகந்ததல்ல; பண்ணைக் குட்டைகள் மற்றும் நேரடி நெல் விதைப்பு (DSR) முறைகளுக்கு முன்னுரிமை அளிக்க வேண்டும்.',
+        },
+        bounds: [
+          [10.02, 78.52],
+          [10.60, 79.28],
+        ],
+      },
+    };
+
+    let activeGisZone = 'irrigated';
+
+    function renderGisTelemetry() {
+      const data = GIS_ZONES[activeGisZone];
+      if (!data) return;
+
+      const lang = currentLang || 'ta';
+
+      if (dom.inspectorBadge) {
+        dom.inspectorBadge.textContent = data.badge[lang];
+        dom.inspectorBadge.className = 'status-pill ' + data.badgeClass;
+      }
+      if (dom.inspectorRegionTitle) {
+        dom.inspectorRegionTitle.textContent = data.title[lang];
+      }
+      if (dom.inspectorDistricts) {
+        dom.inspectorDistricts.textContent = data.districts[lang];
+      }
+      if (dom.inspectorNdvi) {
+        dom.inspectorNdvi.textContent = data.ndviVal;
+      }
+      if (dom.inspectorNdviSub) {
+        dom.inspectorNdviSub.textContent = data.ndviSub[lang];
+      }
+      if (dom.inspectorNdmi) {
+        dom.inspectorNdmi.textContent = data.ndmiVal;
+      }
+      if (dom.inspectorNdmiSub) {
+        dom.inspectorNdmiSub.textContent = data.ndmiSub[lang];
+      }
+      if (dom.inspectorChirps) {
+        dom.inspectorChirps.textContent = data.chirpsVal;
+      }
+      if (dom.inspectorChirpsSub) {
+        dom.inspectorChirpsSub.textContent = data.chirpsSub[lang];
+      }
+      if (dom.inspectorArea) {
+        dom.inspectorArea.textContent = data.areaVal;
+      }
+      if (dom.inspectorAreaSub) {
+        dom.inspectorAreaSub.textContent = data.areaSub[lang];
+      }
+      if (dom.inspectorActionDesc) {
+        dom.inspectorActionDesc.textContent = data.action[lang];
+      }
+
+      if (dom.tabZoneIrrigated && dom.tabZoneRainfed) {
+        dom.tabZoneIrrigated.classList.toggle('active', activeGisZone === 'irrigated');
+        dom.tabZoneRainfed.classList.toggle('active', activeGisZone === 'rainfed');
+      }
+    }
+
+    // Expose for language toggle
+    window.__updateGisTelemetry = renderGisTelemetry;
+
     // GeoJSON Vector Polygons for Problem Statement 3.4
     const ps34GeoJSON = {
       type: 'FeatureCollection',
@@ -745,12 +904,6 @@
           type: 'Feature',
           properties: {
             zoneType: 'irrigated',
-            tag: 'Canal-Irrigated Command (AWD Ready — 30% Water Savings Potential)',
-            region: 'Grand Anicut / Vennar-Vettar Canal Command (Thanjavur, Tiruvarur, Mayiladuthurai)',
-            ndviDrySeason: '0.74 (High Dry-Season Persistence)',
-            ndmiMoisture: '+0.31 (Canal-Fed Subsoil Saturation)',
-            chirpsDeficit: '-42% Rainfall Anomaly (Buffered by Mettur Release)',
-            areaHa: '4.82 Lakh Hectares',
             fillColor: '#10b981',
             borderColor: '#34d399',
           },
@@ -775,12 +928,6 @@
           type: 'Feature',
           properties: {
             zoneType: 'rainfed',
-            tag: 'Rain-Fed Agriculture (Vulnerable to Drought Stress)',
-            region: 'Pudukkottai Uplands & Southern Dry Tracts (Aranthangi - Gandarvakottai Belt)',
-            ndviDrySeason: '0.21 (Rapid Post-Monsoon Senescence)',
-            ndmiMoisture: '-0.18 (Root-Zone Moisture Deficit)',
-            chirpsDeficit: 'High Sensitivity to NE Monsoon Failure',
-            areaHa: '1.94 Lakh Hectares',
             fillColor: '#f59e0b',
             borderColor: '#fbbf24',
           },
@@ -802,50 +949,78 @@
       ],
     };
 
+    let polygonLayers = {};
+
     const classificationLayer = L.geoJSON(ps34GeoJSON, {
       style: (feature) => ({
         color: feature.properties.borderColor,
         weight: 2.5,
         opacity: 0.95,
         fillColor: feature.properties.fillColor,
-        fillOpacity: 0.34,
+        fillOpacity: feature.properties.zoneType === activeGisZone ? 0.45 : 0.22,
       }),
       onEachFeature: (feature, layer) => {
-        const p = feature.properties;
-        const badgeClass =
-          p.zoneType === 'irrigated' ? 'popup-tag--irrigated' : 'popup-tag--rainfed';
+        const zType = feature.properties.zoneType;
+        polygonLayers[zType] = layer;
 
-        const popupHtml = `
-          <div>
-            <span class="popup-tag ${badgeClass}">${p.tag}</span>
-            <h4 style="margin: 4px 0 6px; font-size: 0.95rem; color: #f0fdf4;">${p.region}</h4>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.74rem; color: #a7f3d0; display: grid; gap: 3px;">
-              <div><strong>Jan–Apr NDVI:</strong> ${p.ndviDrySeason}</div>
-              <div><strong>NDMI Index:</strong> ${p.ndmiMoisture}</div>
-              <div><strong>CHIRPS Signal:</strong> ${p.chirpsDeficit}</div>
-              <div><strong>Mapped Extent:</strong> ${p.areaHa}</div>
-            </div>
-          </div>
-        `;
-
-        layer.bindPopup(popupHtml, { maxWidth: 320 });
+        layer.on('click', () => {
+          selectGisZone(zType, false);
+        });
 
         layer.on('mouseover', function () {
-          this.setStyle({ weight: 4, fillOpacity: 0.52 });
+          this.setStyle({ weight: 4, fillOpacity: 0.55 });
         });
         layer.on('mouseout', function () {
-          classificationLayer.resetStyle(this);
+          if (zType !== activeGisZone) {
+            this.setStyle({ weight: 2.5, fillOpacity: 0.22 });
+          } else {
+            this.setStyle({ weight: 3.5, fillOpacity: 0.45 });
+          }
         });
       },
     }).addTo(map);
 
-    // Open the Canal-Irrigated Command popup initially so the user immediately sees the PS 3.4 classification
-    const allLayers = classificationLayer.getLayers();
-    if (allLayers.length > 0) {
-      allLayers[0].openPopup();
+    function selectGisZone(zoneKey, shouldFly = true) {
+      activeGisZone = zoneKey;
+      renderGisTelemetry();
+
+      // Highlight active polygon
+      Object.keys(polygonLayers).forEach((key) => {
+        const lyr = polygonLayers[key];
+        if (lyr) {
+          if (key === activeGisZone) {
+            lyr.setStyle({ weight: 3.5, fillOpacity: 0.45 });
+          } else {
+            lyr.setStyle({ weight: 2, fillOpacity: 0.18 });
+          }
+        }
+      });
+
+      if (shouldFly && GIS_ZONES[zoneKey]) {
+        map.flyToBounds(GIS_ZONES[zoneKey].bounds, {
+          padding: [30, 30],
+          maxZoom: 10,
+          duration: 0.9,
+        });
+      }
     }
 
-    // Layer Toggle Controls: [Satellite Base], [Sentinel-2 NDVI View], [PS 3.4 Classification Overlay]
+    if (dom.tabZoneIrrigated) {
+      dom.tabZoneIrrigated.addEventListener('click', () => {
+        selectGisZone('irrigated', true);
+      });
+    }
+
+    if (dom.tabZoneRainfed) {
+      dom.tabZoneRainfed.addEventListener('click', () => {
+        selectGisZone('rainfed', true);
+      });
+    }
+
+    // Initial telemetry render (default: irrigated zone)
+    renderGisTelemetry();
+
+    // Layer Toggle Controls: Satellite Base, Sentinel-2 NDVI, AWD Zones
     let overlayVisible = true;
 
     dom.toggleSatellite.addEventListener('click', () => {
@@ -1038,15 +1213,32 @@
       // Scene 5
       scene5Title: 'Irrigated vs. Rain-Fed Agriculture Classifier',
       scene5Desc: 'Interactive multi-temporal remote sensing map isolating canal-irrigated command zones (AWD deployment targets) from drought-vulnerable rain-fed tracts across the Cauvery Delta, Tamil Nadu.',
-      satelliteBase: '[Satellite Base]',
-      ndviView: '[Sentinel-2 NDVI View]',
-      classificationOverlay: '[Agri-Classification Overlay]',
-      gisLegendTitle: 'SPECTRAL CANOPY CLASSIFICATION',
-      irrigatedZoneTitle: 'Irrigated Command Zone',
-      irrigatedZoneSub: 'Thanjavur, Tiruvarur, Mayiladuthurai (AWD Ready — 30% Water Savings)',
+      gisAoiTag: 'AOI: CAUVERY DELTA [10.7870°N, 79.1378°E] // ZOOM: 9',
+      satelliteBase: 'Satellite Base',
+      ndviView: 'Sentinel-2 NDVI',
+      classificationOverlay: 'AWD Zones',
+      ndviHudTitle: 'SENTINEL-2 L2A // DRY-SEASON NDVI PERSISTENCE (JAN–APR)',
+      ndviLabelFallow: '0.12 (Fallow / Dry)',
+      ndviLabelTrans: '0.45 (Transitional)',
+      ndviLabelCommand: '0.82 (Canal Command)',
+      gisTelemetryTitle: 'GEOSPATIAL TELEMETRY',
+      gisLivePill: 'LIVE SYNC',
+      gisSelectHint: 'Select a zone below or click the map polygon to inspect:',
+      irrigatedZoneTitle: 'Irrigated Command',
       rainfedZoneTitle: 'Rain-Fed Uplands',
-      rainfedZoneSub: 'Pudukkottai Southern Border (Vulnerable to Drought Stress)',
-      gisHint: 'Click any polygon on the map to inspect spectral & hydrological telemetry.',
+      inspectorBadgeIrrigated: 'AWD READY — 30% WATER SAVINGS',
+      inspectorTitleIrrigated: 'Grand Anicut / Vennar–Vettar Canal Command',
+      inspectorDistrictsIrrigated: 'Thanjavur, Tiruvarur, Mayiladuthurai',
+      metricNdviLabel: 'Jan–Apr NDVI',
+      metricNdviSubIrrigated: 'High Dry-Season Persistence',
+      metricNdmiLabel: 'NDMI Moisture',
+      metricNdmiSubIrrigated: 'Canal-Fed Subsoil Saturation',
+      metricChirpsLabel: 'CHIRPS Anomaly',
+      metricChirpsSubIrrigated: 'Buffered by Mettur Release',
+      metricAreaLabel: 'Mapped Extent',
+      metricAreaSubIrrigated: 'Primary AWD Deployment Zone',
+      advisoryNoteTag: 'AGRONOMIC ADVISORY',
+      inspectorActionIrrigated: 'Optimal AWD Target: Sinking ₹50 Pani Pipes allows farmers to stretch Mettur dam releases by 30%, preventing tail-end water deficits in Nagapattinam & Karaikal.',
       methodologyTag: 'REMOTE SENSING METHODOLOGY // EARTH OBSERVATION PIPELINE',
       methodologyDesc: 'Remote Sensing Methodology: Multi-temporal Sentinel-2 NDVI/NDMI dry-season persistence (Jan-April) combined with CHIRPS rainfall deficit isolates canal-fed command zones from rain-fed tracts across Tamil Nadu\'s 21.58 lakh hectares.',
 
@@ -1131,15 +1323,32 @@
       // Scene 5
       scene5Title: 'காவிரி டெல்டா: பாசன vs மானாவாரி நெல் வகைப்பாடு',
       scene5Desc: 'காவிரி டெல்டாவில் தொடர் பாசனம் பெறும் வாய்க்கால் பாசன வயல்களையும், மழையை மட்டுமே நம்பியுள்ள மானாவாரி வயல்களையும் செயற்கைக்கோள் வழி வகைப்படுத்தும் புவிசார் தளம்.',
-      satelliteBase: '[செயற்கைக்கோள் நிலப்பரப்பு]',
-      ndviView: '[சென்டினல்-2 NDVI பயிர் பசுமை சுட்டெண்]',
-      classificationOverlay: '[பாசன வகைப்பாடு அடுக்கு]',
-      gisLegendTitle: 'செயற்கைக்கோள் பயிர் வகைப்பாடு',
+      gisAoiTag: 'ஆய்வுப் பகுதி: காவிரி டெல்டா [10.7870°N, 79.1378°E] // அளவு: 9',
+      satelliteBase: 'செயற்கைக்கோள்',
+      ndviView: 'பயிர் செழிப்பு (NDVI)',
+      classificationOverlay: 'AWD பாசன மண்டலம்',
+      ndviHudTitle: 'சென்டினல்-2 L2A // வறண்ட கால பயிர் பசுமை குறியீடு (NDVI)',
+      ndviLabelFallow: '0.12 (தரிசு / வறண்ட நிலம்)',
+      ndviLabelTrans: '0.45 (இடைநிலை)',
+      ndviLabelCommand: '0.82 (தொடர் பாசனப் பகுதி)',
+      gisTelemetryTitle: 'புவிசார் கள ஆய்வுத் தரவுகள்',
+      gisLivePill: 'நேரடித் தரவு',
+      gisSelectHint: 'விவரங்களைக் காண கீழே உள்ள பகுதியைத் தேர்வு செய்க அல்லது வரைபடத்தில் சொடுக்கவும்:',
       irrigatedZoneTitle: 'வாய்க்கால் பாசனப் பரப்பு',
-      irrigatedZoneSub: 'தஞ்சாவூர், திருவாரூர், மயிலாடுதுறை (காய்ச்சலும் பாய்ச்சலும் முறைக்கு மிகவும் உகந்தது — 30% நீர் சேமிப்பு)',
       rainfedZoneTitle: 'மானாவாரி மெட்டு நிலங்கள்',
-      rainfedZoneSub: 'புதுக்கோட்டை தெற்கு எல்லைப் பகுதி (வறட்சி அபாயம் கொண்டது)',
-      gisHint: 'விவரங்களைக் காண வரைபடத்தில் உள்ள வட்டங்களைக் கிளிக் செய்யவும்.',
+      inspectorBadgeIrrigated: 'AWD முறைக்கு உகந்தது — 30% நீர் சேமிப்பு',
+      inspectorTitleIrrigated: 'கல்லணை / வெண்ணாறு–வெட்டாறு பாசனப் பகுதி',
+      inspectorDistrictsIrrigated: 'தஞ்சாவூர், திருவாரூர், மயிலாடுதுறை',
+      metricNdviLabel: 'ஜன-ஏப் NDVI',
+      metricNdviSubIrrigated: 'நிலையான பயிர் பசுமை குறியீடு',
+      metricNdmiLabel: 'NDMI ஈரப்பதம்',
+      metricNdmiSubIrrigated: 'வாய்க்கால் வழி மண் ஈரப்பதம்',
+      metricChirpsLabel: 'மழையளவு பற்றாக்குறை',
+      metricChirpsSubIrrigated: 'மேட்டூர் நீரால் சமன் செய்யப்பட்டது',
+      metricAreaLabel: 'பாசனப் பரப்பு',
+      metricAreaSubIrrigated: 'முதன்மை AWD பாசன மண்டலம்',
+      advisoryNoteTag: 'வேளாண் வழிகாட்டுதல்',
+      inspectorActionIrrigated: 'பாசன வழிகாட்டுதல்: ₹50 பாணி குழாய் அமைப்பதன் மூலம் மேட்டூர் அணை நீர்த் தேவையை 30% மிச்சப்படுத்தி, கடைமடைப் பகுதிகளான நாகப்பட்டினம் மற்றும் காரைக்காலுக்கு தடையின்றி நீர் கொண்டு செல்லலாம்.',
       methodologyTag: 'தொலை உணர்வு வழிமுறை // புவி கண்காணிப்பு கட்டமைப்பு',
       methodologyDesc: 'சென்டினல்-2 செயற்கைக்கோள் மற்றும் CHIRPS மழைப்பொழிவு தரவுகள் மூலம், காவிரி டெல்டாவின் 21.58 லட்சம் ஹெக்டேர் பரப்பில் வாய்க்கால் பாசன வயல்களையும் மானாவாரிப் பகுதிகளையும் துல்லியமாகப் பிரிக்கிறது.',
 
@@ -1202,6 +1411,9 @@
       // Trigger dynamic readouts update
       renderSoilCrossSection(scrubberState.soilProgressCurrent);
       evaluateAwdDecision();
+      if (window.__updateGisTelemetry) {
+        window.__updateGisTelemetry();
+      }
     }
 
     langBtns.forEach((btn) => {

@@ -686,73 +686,133 @@
          ===================================================================== -->
     <section id="scene-5" class="scene-5-section" aria-label="Geospatial Agriculture Classifier">
       <div class="container">
+        <!-- Section Header with Meta Badges -->
         <div class="section-header-split">
-          <div>
+          <div class="section-header-main">
             <h2 class="section-title" data-i18n="scene5Title">Irrigated vs. Rain-Fed Agriculture Classifier</h2>
+            <p class="section-desc" data-i18n="scene5Desc">
+              Interactive multi-temporal remote sensing map isolating canal-irrigated command zones (AWD deployment targets) from drought-vulnerable rain-fed tracts across the Cauvery Delta, Tamil Nadu.
+            </p>
           </div>
-          <p class="section-desc" data-i18n="scene5Desc">
-            Interactive multi-temporal remote sensing map isolating canal-irrigated command zones (AWD deployment targets) from drought-vulnerable rain-fed tracts across the Cauvery Delta, Tamil Nadu.
-          </p>
+          <div class="gis-header-chips">
+            <span class="tech-chip">🛰️ Sentinel-2 MSI (10m)</span>
+            <span class="tech-chip">💧 NDMI Root Moisture</span>
+            <span class="tech-chip">🌧️ CHIRPS Deficit</span>
+          </div>
         </div>
 
-        <!-- Map Dashboard Frame -->
+        <!-- Unified GIS Dashboard Frame -->
         <div class="gis-dashboard">
           <!-- Layer Controls Bar -->
           <div class="gis-toolbar">
             <div class="gis-toolbar__left">
               <span class="gis-status-dot"></span>
-              <span class="mono-tag">AOI: CAUVERY DELTA [10.7870°N, 79.1378°E] // ZOOM: 9</span>
+              <span class="mono-tag" data-i18n="gisAoiTag">AOI: CAUVERY DELTA [10.7870°N, 79.1378°E] // ZOOM: 9</span>
             </div>
             <div class="gis-layer-toggles" role="group" aria-label="Map Layer Toggles">
-              <button type="button" id="toggle-satellite" class="layer-btn active" data-layer="satellite" data-i18n="satelliteBase">
-                [Satellite Base]
+              <button type="button" id="toggle-satellite" class="layer-btn active" data-layer="satellite">
+                <span class="btn-dot btn-dot--satellite"></span>
+                <span data-i18n="satelliteBase">Satellite Base</span>
               </button>
-              <button type="button" id="toggle-ndvi" class="layer-btn" data-layer="ndvi" data-i18n="ndviView">
-                [Sentinel-2 NDVI View]
+              <button type="button" id="toggle-ndvi" class="layer-btn" data-layer="ndvi">
+                <span class="btn-dot btn-dot--ndvi"></span>
+                <span data-i18n="ndviView">Sentinel-2 NDVI</span>
               </button>
-              <button type="button" id="toggle-classification" class="layer-btn active" data-layer="classification" data-i18n="classificationOverlay">
-                [Agri-Classification Overlay]
+              <button type="button" id="toggle-classification" class="layer-btn active" data-layer="classification">
+                <span class="btn-dot btn-dot--zones"></span>
+                <span data-i18n="classificationOverlay">AWD Zones</span>
               </button>
             </div>
           </div>
 
-          <!-- Map Viewport + Floating Legend/Telemetry -->
-          <div class="gis-map-wrapper">
-            <div id="ps34-map" class="leaflet-map-canvas" aria-label="Cauvery Delta Irrigated vs Rain-Fed Classification Map"></div>
+          <!-- Split Workspace: Map on Left, Telemetry & Legend Sidebar on Right -->
+          <div class="gis-workspace">
+            <!-- Left: Unobstructed Satellite Map -->
+            <div class="gis-map-viewport">
+              <div id="ps34-map" class="leaflet-map-canvas" aria-label="Cauvery Delta Irrigated vs Rain-Fed Classification Map"></div>
 
-            <!-- NDVI Spectral Legend (Shown when Sentinel-2 NDVI View is active) -->
-            <div id="ndvi-spectral-hud" class="ndvi-hud" hidden>
-              <span class="mono-tag">SENTINEL-2 L2A // DRY-SEASON NDVI PERSISTENCE (JAN–APR)</span>
-              <div class="ndvi-gradient-bar"></div>
-              <div class="ndvi-labels">
-                <span>0.12 (Fallow / Dry Rain-Fed)</span>
-                <span>0.45 (Transitional)</span>
-                <span>0.82 (Active Canal Command)</span>
+              <!-- NDVI Spectral Legend (Overlay when Sentinel-2 NDVI is toggled) -->
+              <div id="ndvi-spectral-hud" class="ndvi-hud" hidden>
+                <span class="mono-tag" data-i18n="ndviHudTitle">SENTINEL-2 L2A // DRY-SEASON NDVI PERSISTENCE (JAN–APR)</span>
+                <div class="ndvi-gradient-bar"></div>
+                <div class="ndvi-labels">
+                  <span data-i18n="ndviLabelFallow">0.12 (Fallow / Dry)</span>
+                  <span data-i18n="ndviLabelTrans">0.45 (Transitional)</span>
+                  <span data-i18n="ndviLabelCommand">0.82 (Canal Command)</span>
+                </div>
               </div>
             </div>
 
-            <!-- Floating Classification Legend -->
-            <div class="gis-legend-card">
-              <div class="gis-legend__title" data-i18n="gisLegendTitle">SPECTRAL CANOPY CLASSIFICATION</div>
-              <div class="gis-legend__item">
-                <span class="polygon-swatch swatch--irrigated"></span>
-                <div>
-                  <strong data-i18n="irrigatedZoneTitle">Irrigated Command Zone</strong>
-                  <small data-i18n="irrigatedZoneSub">Thanjavur, Tiruvarur, Mayiladuthurai (AWD Ready — 30% Water Savings)</small>
+            <!-- Right: Interactive Geospatial Telemetry & Legend Panel -->
+            <div class="gis-sidebar" id="gis-sidebar">
+              <div class="gis-sidebar__header">
+                <div class="gis-sidebar__title-row">
+                  <span class="mono-tag" data-i18n="gisTelemetryTitle">GEOSPATIAL TELEMETRY</span>
+                  <span class="live-pill" data-i18n="gisLivePill">LIVE SYNC</span>
+                </div>
+                <p class="gis-sidebar__hint" data-i18n="gisSelectHint">Select a zone below or click the map polygon to inspect:</p>
+              </div>
+
+              <!-- Interactive Zone Switcher Pills (Acts as Interactive Legend) -->
+              <div class="gis-zone-tabs" role="tablist">
+                <button type="button" class="zone-tab-btn active" id="tab-zone-irrigated" data-zone="irrigated">
+                  <span class="polygon-swatch swatch--irrigated"></span>
+                  <span class="zone-tab-text" data-i18n="irrigatedZoneTitle">Irrigated Command</span>
+                </button>
+                <button type="button" class="zone-tab-btn" id="tab-zone-rainfed" data-zone="rainfed">
+                  <span class="polygon-swatch swatch--rainfed"></span>
+                  <span class="zone-tab-text" data-i18n="rainfedZoneTitle">Rain-Fed Uplands</span>
+                </button>
+              </div>
+
+              <!-- Active Zone Inspection Card -->
+              <div class="gis-inspector-card" id="gis-inspector-card">
+                <div class="inspector-badge-row">
+                  <span class="status-pill status-pill--success" id="inspector-badge" data-i18n="inspectorBadgeIrrigated">AWD READY — 30% WATER SAVINGS</span>
+                </div>
+                <h3 class="inspector-title" id="inspector-region-title" data-i18n="inspectorTitleIrrigated">
+                  Grand Anicut / Vennar–Vettar Canal Command
+                </h3>
+                <p class="inspector-districts" id="inspector-districts" data-i18n="inspectorDistrictsIrrigated">
+                  Thanjavur, Tiruvarur, Mayiladuthurai
+                </p>
+
+                <!-- 4 Metrics Grid -->
+                <div class="inspector-metrics-grid">
+                  <div class="inspector-metric-box">
+                    <span class="inspector-metric-label" data-i18n="metricNdviLabel">Jan–Apr NDVI</span>
+                    <strong class="inspector-metric-val text-emerald" id="inspector-ndvi">0.74</strong>
+                    <small class="inspector-metric-sub" id="inspector-ndvi-sub" data-i18n="metricNdviSubIrrigated">High Dry-Season Persistence</small>
+                  </div>
+                  <div class="inspector-metric-box">
+                    <span class="inspector-metric-label" data-i18n="metricNdmiLabel">NDMI Moisture</span>
+                    <strong class="inspector-metric-val text-cyan" id="inspector-ndmi">+0.31</strong>
+                    <small class="inspector-metric-sub" id="inspector-ndmi-sub" data-i18n="metricNdmiSubIrrigated">Canal-Fed Subsoil Saturation</small>
+                  </div>
+                  <div class="inspector-metric-box">
+                    <span class="inspector-metric-label" data-i18n="metricChirpsLabel">CHIRPS Anomaly</span>
+                    <strong class="inspector-metric-val text-amber" id="inspector-chirps">-42%</strong>
+                    <small class="inspector-metric-sub" id="inspector-chirps-sub" data-i18n="metricChirpsSubIrrigated">Buffered by Mettur Release</small>
+                  </div>
+                  <div class="inspector-metric-box">
+                    <span class="inspector-metric-label" data-i18n="metricAreaLabel">Mapped Extent</span>
+                    <strong class="inspector-metric-val text-white" id="inspector-area">4.82 L Ha</strong>
+                    <small class="inspector-metric-sub" id="inspector-area-sub" data-i18n="metricAreaSubIrrigated">Primary AWD Deployment Zone</small>
+                  </div>
+                </div>
+
+                <!-- Agricultural Advisory / Action Note -->
+                <div class="inspector-advisory-note" id="inspector-advisory-note">
+                  <span class="advisory-note-tag" data-i18n="advisoryNoteTag">AGRONOMIC ADVISORY</span>
+                  <p id="inspector-action-desc" data-i18n="inspectorActionIrrigated">
+                    Optimal AWD Target: Sinking ₹50 Pani Pipes allows farmers to stretch Mettur dam releases by 30%, preventing tail-end water deficits in Nagapattinam &amp; Karaikal.
+                  </p>
                 </div>
               </div>
-              <div class="gis-legend__item">
-                <span class="polygon-swatch swatch--rainfed"></span>
-                <div>
-                  <strong data-i18n="rainfedZoneTitle">Rain-Fed Uplands</strong>
-                  <small data-i18n="rainfedZoneSub">Pudukkottai Southern Border (Vulnerable to Drought Stress)</small>
-                </div>
-              </div>
-              <div class="gis-legend__hint" data-i18n="gisHint">Click any polygon on the map to inspect spectral &amp; hydrological telemetry.</div>
             </div>
           </div>
 
-          <!-- Methodology Callout Card -->
+          <!-- Methodology Callout Card (Bottom Strip) -->
           <div class="methodology-callout">
             <div class="methodology-callout__badge">
               <span class="mono-tag" data-i18n="methodologyTag">REMOTE SENSING METHODOLOGY // EARTH OBSERVATION PIPELINE</span>
