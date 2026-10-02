@@ -410,7 +410,8 @@
 
     // Move floating callout pointer with the tube meniscus
     dom.svgWaterPointer.setAttribute('transform', 'translate(0, ' + waterY.toFixed(1) + ')');
-    dom.svgPointerText.textContent = 'TUBE LEVEL: ' + formattedCm;
+    const pointerPrefix = currentLang === 'ta' ? 'குழாய் நீர்மட்டம்: ' : 'TUBE LEVEL: ';
+    dom.svgPointerText.textContent = pointerPrefix + formattedCm;
 
     // Topsoil cracks & dry crust appear as water drops below 0 cm (progress > 0.25)
     const crackOpacity = clamp((progress - 0.25) / 0.45, 0, 1);
@@ -663,6 +664,16 @@
       evaluateAwdDecision();
     });
 
+    function updateReplayButton() {
+      const isRunning = Boolean(awdState.replayTimer);
+      const icon = isRunning ? '■' : '↻';
+      const text = isRunning
+        ? (currentLang === 'ta' ? 'சுழற்சியை நிறுத்து' : 'Stop Replay')
+        : (I18N[currentLang] && I18N[currentLang].replayCycle ? I18N[currentLang].replayCycle : 'Replay Drying Cycle');
+      dom.awdReplayBtn.innerHTML = '<span class="replay-icon">' + icon + '</span> <span>' + text + '</span>';
+    }
+    window.__updateReplayButton = updateReplayButton;
+
     // Replay Drying Cycle button
     dom.awdReplayBtn.addEventListener('click', () => {
       if (awdState.replayTimer) {
@@ -681,7 +692,7 @@
       dom.awdDepthSlider.value = '5';
       evaluateAwdDecision();
 
-      dom.awdReplayBtn.innerHTML = '<span class="replay-icon">■</span> Stop Replay';
+      updateReplayButton();
 
       let direction = -1;
       awdState.replayTimer = setInterval(() => {
@@ -1155,6 +1166,10 @@
    * -------------------------------------------------------------------------- */
   const I18N = {
     en: {
+      preloaderBadge: 'AGRO-HYDROLOGICAL EARTH OBSERVATION PLATFORM',
+      preloaderDetail: 'Calibrating Multi-Temporal Canopy & Sub-Surface Telemetry',
+      preloaderChip: 'SENTINEL-2 L2A + AWD ENGINE',
+
       hudTitle: 'Cauvery Delta Agro-Hydrology',
       nav1: '01. The Lie',
       nav2: '02. ₹50 Pipe',
@@ -1190,29 +1205,50 @@
       specRootPerforation: 'Root Zone Perforation',
       specRootPerforationVal: '20 cm (0.5 cm holes)',
       scrubLabel: 'Scroll page or drag to inspect water table drop:',
+      svgCardTitle: 'CROSS-SECTION // PADDY RHIZOSPHERE & PANI PIPE',
+      svgLegendWater: 'Perched Water',
+      svgLegendRoots: 'Active Roots',
+      svgLabelAbove: '10cm Above',
+      svgLabelPerforated: '20cm Perforated',
+      svgThresholdTag: '-15cm AWD TRIGGER',
+      svgBottomCaption: 'Even when topsoil cracks at 0 cm, roots actively draw moisture from the -15 cm perched water table.',
 
       // Scene 4
       scene4Title: 'Proof It Works: Safe AWD Simulator',
       scene4Desc: 'Test how crop growth stage and Pani pipe depth govern irrigation scheduling under International Rice Research Institute (IRRI) Safe-AWD guidelines.',
       decisionStatus: 'INTERACTIVE FIELD ADVISORY ENGINE',
-      replayCycle: '↻ Replay Drying Cycle',
+      replayCycle: 'Replay Drying Cycle',
       selectStage: '1. Select Crop Phenology Stage',
       stageVeg: 'Vegetative Stage',
+      stageVegDays: 'DAT 15 – 55 (Tillering)',
       stageFlowering: 'Flowering Window',
+      stageFloweringDays: 'DAT 56 – 75 (Anthesis)',
       stagePreHarvest: 'Ripening Stage',
+      stageRipeningDays: 'DAT 76 – 105 (Grain Fill)',
       inspectDepth: '2. Pani Pipe Water Depth Reading',
+      tickDeepDry: '-20cm (Deep Dry)',
+      tickAwdLimit: '-15cm (AWD Limit)',
+      tickSurface: '0cm (Surface)',
+      tickFlooded: '+5cm (Flooded)',
       benchmarkTag: 'EMPIRICAL BENCHMARK // CONTINUOUS FLOODING VS SAFE AWD',
       validatedTitle: 'Validated Field Performance',
       metricWater: 'Water Saved',
+      metricWaterSource: 'IRRI Validated',
+      metricWaterVal: 'Up to 30%',
       metricWaterNote: 'Reduces irrigation pump hours & canal drawdowns without root stress.',
       metricMethane: 'Methane Cut',
+      metricMethaneSource: 'IPCC Average',
       metricMethaneNote: 'Periodic soil aeration halts methanogenic archaea activity in the rhizosphere.',
       metricYield: 'Yield Delta',
+      metricYieldSource: 'Yield Neutral Parity',
       metricYieldNote: 'Maintains 100% grain yield parity; oxygenating roots boosts productive tillering.',
 
       // Scene 5
       scene5Title: 'Irrigated vs. Rain-Fed Agriculture Classifier',
       scene5Desc: 'Interactive multi-temporal remote sensing map isolating canal-irrigated command zones (AWD deployment targets) from drought-vulnerable rain-fed tracts across the Cauvery Delta, Tamil Nadu.',
+      chipSentinel: '🛰️ Sentinel-2 MSI (10m)',
+      chipNdmi: '💧 NDMI Root Moisture',
+      chipChirps: '🌧️ CHIRPS Deficit',
       gisAoiTag: 'AOI: CAUVERY DELTA [10.7870°N, 79.1378°E] // ZOOM: 9',
       satelliteBase: 'Satellite Base',
       ndviView: 'Sentinel-2 NDVI',
@@ -1241,6 +1277,10 @@
       inspectorActionIrrigated: 'Optimal AWD Target: Sinking ₹50 Pani Pipes allows farmers to stretch Mettur dam releases by 30%, preventing tail-end water deficits in Nagapattinam & Karaikal.',
       methodologyTag: 'REMOTE SENSING METHODOLOGY // EARTH OBSERVATION PIPELINE',
       methodologyDesc: 'Remote Sensing Methodology: Multi-temporal Sentinel-2 NDVI/NDMI dry-season persistence (Jan-April) combined with CHIRPS rainfall deficit isolates canal-fed command zones from rain-fed tracts across Tamil Nadu\'s 21.58 lakh hectares.',
+      methodChipMsi: 'Sentinel-2 MSI (10m B4/B8/B11)',
+      methodChipNdmi: 'NDMI Root-Zone Moisture Index',
+      methodChipChirps: 'CHIRPS Pentad Precipitation',
+      methodChipMask: 'Cauvery Command Mask',
 
       // Scene 6
       scene6EarlyPill: 'The Proven Harvest',
@@ -1265,6 +1305,10 @@
     },
 
     ta: {
+      preloaderBadge: 'புவிசார் வேளாண்-நீரியல் கண்காணிப்பு தளம்',
+      preloaderDetail: 'செயற்கைக்கோள் பயிர் வளர்ச்சி மற்றும் நிலத்தடி நீர்மட்டத் தரவுகள் கணக்கிடப்படுகின்றன',
+      preloaderChip: 'சென்டினல்-2 L2A + AWD மாதிரி இயக்கி',
+
       hudTitle: 'காவிரி டெல்டா நீர் மேலாண்மை',
       nav1: '01. நீரின் மாயை',
       nav2: '02. ₹50 பாணி குழாய்',
@@ -1300,29 +1344,50 @@
       specRootPerforation: 'வேர் மண்டலத் துளைகள்',
       specRootPerforationVal: '20 செ.மீ ஆழத்தில் (0.5 செ.மீ துளைகள்)',
       scrubLabel: 'நீர் மட்டம் மாறுவதைக் காண உருட்டவும் அல்லது இழுக்கவும்:',
+      svgCardTitle: 'குறுக்குவெட்டுத் தோற்றம் // நெல் வேர் மண்டலம் & பாணி குழாய்',
+      svgLegendWater: 'தேங்கிய நீர்',
+      svgLegendRoots: 'உயிர் வேர்கள்',
+      svgLabelAbove: '10 செ.மீ தரைக்கு மேல்',
+      svgLabelPerforated: '20 செ.மீ துளையிடப்பட்ட பகுதி',
+      svgThresholdTag: '-15 செ.மீ மறுபாசன எல்லை',
+      svgBottomCaption: 'மண் மேற்பரப்பு வெடித்தாலும், வேர்கள் -15 செ.மீ ஆழத்தில் உள்ள ஈரப்பதத்தை உறிஞ்சுகின்றன.',
 
       // Scene 4
       scene4Title: 'அறிவியல் பூர்வமான முறை: காய்ச்சலும் பாய்ச்சலும் மாதிரி இயக்கி',
       scene4Desc: 'சர்வதேச நெல் ஆராய்ச்சி நிறுவனம் (IRRI) மற்றும் தமிழ்நாடு வேளாண்மைப் பல்கலைக்கழக (TNAU) வழிகாட்டுதலின்படி, பயிர் பருவத்திற்கும் பாணி குழாய் நீர் மட்டத்திற்கும் ஏற்ப பாசனத்தை எவ்வாறு நிர்வகிப்பது என்பதைப் பரிசோதிக்கவும்.',
       decisionStatus: 'களப் பாசன வழிகாட்டுதல்',
-      replayCycle: '↻ நீர் வடிதல் சுழற்சியை மீண்டும் இயக்கு',
+      replayCycle: 'நீர் வடிதல் சுழற்சி',
       selectStage: '1. பயிர் வளர்ச்சிப் பருவம்',
-      stageVeg: 'தூர்கட்டும் பருவம் (நடவு 15–40 நாள்)',
-      stageFlowering: 'பூக்கும் பருவம் (40–75 நாள்)',
-      stagePreHarvest: 'முதிர்ச்சிப் பருவம் (75–100+ நாள்)',
+      stageVeg: 'தூர்கட்டும் பருவம்',
+      stageVegDays: 'நடவு 15–40 நாள் (தூர்கட்டுதல்)',
+      stageFlowering: 'பூக்கும் பருவம்',
+      stageFloweringDays: 'நடவு 40–75 நாள் (பூக்கும் தருணம்)',
+      stagePreHarvest: 'முதிர்ச்சிப் பருவம்',
+      stageRipeningDays: 'நடவு 75–100+ நாள் (பால் பிடித்தல் & முதிர்ச்சி)',
       inspectDepth: '2. பாணி குழாய் நீர் மட்டம்',
+      tickDeepDry: '-20 செ.மீ (கடுமையான வறட்சி)',
+      tickAwdLimit: '-15 செ.மீ (மறுபாசன எல்லை)',
+      tickSurface: '0 செ.மீ (மண் மேற்பரப்பு)',
+      tickFlooded: '+5 செ.மீ (தேங்கிய நீர்)',
       benchmarkTag: 'ஆராய்ச்சி ஒப்பீடு // தொடர் நீர் தேக்கம் vs காய்ச்சலும் பாய்ச்சலும் (AWD)',
       validatedTitle: 'களத்தில் நிரூபிக்கப்பட்ட நன்மைகள்',
       metricWater: 'பாசன நீர் சேமிப்பு',
+      metricWaterSource: 'IRRI சான்று',
+      metricWaterVal: '30% வரை',
       metricWaterNote: 'பயிரின் வேர்களுக்குப் பாதிப்பின்றி, கிணற்று நீர் மற்றும் மின்சாரத் தேவையை 30% வரை குறைக்கிறது.',
       metricMethane: 'மீத்தேன் வாயு குறைப்பு',
+      metricMethaneSource: 'IPCC மதிப்பீடு',
       metricMethaneNote: 'மண்ணில் அவ்வப்போது காற்று புகுந்து காய்வதால் தீவிர வெப்பத்தை உண்டாக்கும் மீத்தேன் வாயு 48% வரை தடுக்கப்படுகிறது.',
       metricYield: 'முழு மகசூல் உறுதி',
+      metricYieldSource: 'முழு மகசூல் உறுதி',
       metricYieldNote: '100% மகசூல் முழுமையாகப் பாதுகாக்கப்படுகிறது; வேர்களுக்குக் காற்று கிடைப்பதால் தூர் எண்ணிக்கை கூடுகிறது.',
 
       // Scene 5
       scene5Title: 'காவிரி டெல்டா: பாசன vs மானாவாரி நெல் வகைப்பாடு',
       scene5Desc: 'காவிரி டெல்டாவில் தொடர் பாசனம் பெறும் வாய்க்கால் பாசன வயல்களையும், மழையை மட்டுமே நம்பியுள்ள மானாவாரி வயல்களையும் செயற்கைக்கோள் வழி வகைப்படுத்தும் புவிசார் தளம்.',
+      chipSentinel: '🛰️ சென்டினல்-2 MSI (10மீ)',
+      chipNdmi: '💧 NDMI வேர் ஈரப்பதம்',
+      chipChirps: '🌧️ CHIRPS மழையளவு பற்றாக்குறை',
       gisAoiTag: 'ஆய்வுப் பகுதி: காவிரி டெல்டா [10.7870°N, 79.1378°E] // அளவு: 9',
       satelliteBase: 'செயற்கைக்கோள்',
       ndviView: 'பயிர் செழிப்பு (NDVI)',
@@ -1351,6 +1416,10 @@
       inspectorActionIrrigated: 'பாசன வழிகாட்டுதல்: ₹50 பாணி குழாய் அமைப்பதன் மூலம் மேட்டூர் அணை நீர்த் தேவையை 30% மிச்சப்படுத்தி, கடைமடைப் பகுதிகளான நாகப்பட்டினம் மற்றும் காரைக்காலுக்கு தடையின்றி நீர் கொண்டு செல்லலாம்.',
       methodologyTag: 'தொலை உணர்வு வழிமுறை // புவி கண்காணிப்பு கட்டமைப்பு',
       methodologyDesc: 'சென்டினல்-2 செயற்கைக்கோள் மற்றும் CHIRPS மழைப்பொழிவு தரவுகள் மூலம், காவிரி டெல்டாவின் 21.58 லட்சம் ஹெக்டேர் பரப்பில் வாய்க்கால் பாசன வயல்களையும் மானாவாரிப் பகுதிகளையும் துல்லியமாகப் பிரிக்கிறது.',
+      methodChipMsi: 'சென்டினல்-2 MSI (10மீ அலைவரிசை)',
+      methodChipNdmi: 'NDMI வேர் மண்டல ஈரப்பதக் குறியீடு',
+      methodChipChirps: 'CHIRPS மழைப்பொழிவுத் தரவு',
+      methodChipMask: 'காவிரி பாசன எல்லை வரைபடம்',
 
       // Scene 6
       scene6EarlyPill: 'நிரூபிக்கப்பட்ட நன்மைகள்',
@@ -1375,7 +1444,7 @@
     }
   };
 
-  function initLanguageToggle() {
+    function initLanguageToggle() {
     const langBtns = document.querySelectorAll('.lang-btn');
     if (!langBtns.length) return;
 

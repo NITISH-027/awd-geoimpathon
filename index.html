@@ -32,19 +32,19 @@
     <div class="preloader__content">
       <div class="preloader__badge">
         <span class="pulse-dot"></span>
-        <span>AGRO-HYDROLOGICAL EARTH OBSERVATION PLATFORM</span>
+        <span data-i18n="preloaderBadge">AGRO-HYDROLOGICAL EARTH OBSERVATION PLATFORM</span>
       </div>
       <div class="preloader__percentage-wrap">
         <span id="preloader-percent" class="preloader__percent">0</span>
         <span class="preloader__unit">%</span>
       </div>
-      <p class="preloader__title">Calibrating Multi-Temporal Canopy &amp; Sub-Surface Telemetry</p>
+      <p class="preloader__title" data-i18n="preloaderDetail">Calibrating Multi-Temporal Canopy &amp; Sub-Surface Telemetry</p>
       <div class="preloader__bar-track">
         <div id="preloader-bar" class="preloader__bar-fill"></div>
       </div>
       <div class="preloader__meta">
         <span id="preloader-detail">Loading optical &amp; hydrological frame sequences (0 / 115)</span>
-        <span class="mono-tag">SENTINEL-2 L2A + AWD ENGINE</span>
+        <span class="mono-tag" data-i18n="preloaderChip">SENTINEL-2 L2A + AWD ENGINE</span>
       </div>
     </div>
   </div>
@@ -221,10 +221,10 @@
           <div class="scene-3-diagram-wrap">
             <div class="svg-card">
               <div class="svg-card__top-bar">
-                <span class="mono-tag">CROSS-SECTION // PADDY RHIZOSPHERE &amp; PANI PIPE</span>
+                <span class="mono-tag" data-i18n="svgCardTitle">CROSS-SECTION // PADDY RHIZOSPHERE &amp; PANI PIPE</span>
                 <span class="svg-legend-inline">
-                  <span class="legend-dot legend-dot--water"></span>Perched Water
-                  <span class="legend-dot legend-dot--roots"></span>Active Roots
+                  <span class="legend-dot legend-dot--water"></span><span data-i18n="svgLegendWater">Perched Water</span>
+                  <span class="legend-dot legend-dot--roots"></span><span data-i18n="svgLegendRoots">Active Roots</span>
                 </span>
               </div>
 
@@ -424,13 +424,13 @@
                   <line x1="276" y1="110" x2="276" y2="208" stroke="#94a3b8" stroke-width="1.5" />
                   <line x1="271" y1="110" x2="281" y2="110" stroke="#94a3b8" stroke-width="1.5" />
                   <line x1="271" y1="208" x2="281" y2="208" stroke="#94a3b8" stroke-width="1.5" />
-                  <text x="266" y="163" text-anchor="end" fill="#cbd5e1" font-family="JetBrains Mono" font-size="11">10cm Above</text>
+                  <text id="svg-label-above" data-i18n="svgLabelAbove" x="266" y="163" text-anchor="end" fill="#cbd5e1" font-family="JetBrains Mono" font-size="11">10cm Above</text>
 
                   <!-- Below-ground Perforated Root Zone (y:210 to y:410 = 20cm) -->
                   <line x1="276" y1="212" x2="276" y2="410" stroke="#10b981" stroke-width="1.5" />
                   <line x1="271" y1="212" x2="281" y2="212" stroke="#10b981" stroke-width="1.5" />
                   <line x1="271" y1="410" x2="281" y2="410" stroke="#10b981" stroke-width="1.5" />
-                  <text x="266" y="315" text-anchor="end" fill="#10b981" font-family="JetBrains Mono" font-size="11">20cm Perforated</text>
+                  <text id="svg-label-perforated" data-i18n="svgLabelPerforated" x="266" y="315" text-anchor="end" fill="#10b981" font-family="JetBrains Mono" font-size="11">20cm Perforated</text>
 
                   <!-- Perforation Holes in Root Zone (5 rows x 3 cols + sidewall slots) -->
                   <g fill="#38bdf8" stroke="#1e293b" stroke-width="1">
@@ -471,14 +471,14 @@
 
                   <!-- -15cm Threshold Marker Line across the Pipe -->
                   <line x1="284" y1="360" x2="415" y2="360" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 2" />
-                  <rect x="418" y="349" width="146" height="22" rx="4" fill="#271a05" stroke="#f59e0b" stroke-width="1" />
-                  <text x="426" y="364" fill="#fbbf24" font-family="JetBrains Mono" font-size="10.5" font-weight="600">-15cm AWD TRIGGER</text>
+                  <rect x="418" y="349" width="170" height="22" rx="4" fill="#271a05" stroke="#f59e0b" stroke-width="1" />
+                  <text id="svg-threshold-tag" data-i18n="svgThresholdTag" x="426" y="364" fill="#fbbf24" font-family="JetBrains Mono" font-size="10.5" font-weight="600">-15cm AWD TRIGGER</text>
 
                   <!-- Dynamic Floating Callout Pointer Attached to Water Meniscus -->
                   <g id="svg-water-pointer" transform="translate(0, 160)">
                     <line x1="340" y1="0" x2="415" y2="0" stroke="#38bdf8" stroke-width="2" />
                     <circle cx="340" cy="0" r="4" fill="#e0f2fe" />
-                    <rect x="415" y="-13" width="165" height="26" rx="5" fill="#082f49" stroke="#38bdf8" stroke-width="1.5" />
+                    <rect x="415" y="-13" width="180" height="26" rx="5" fill="#082f49" stroke="#38bdf8" stroke-width="1.5" />
                     <text id="svg-pointer-text" x="425" y="4" fill="#e0f2fe" font-family="JetBrains Mono" font-size="11" font-weight="700">TUBE LEVEL: +5.0 cm</text>
                   </g>
                 </g>
@@ -517,7 +517,7 @@
                 </g>
 
                 <!-- Bottom Caption Inside SVG -->
-                <text x="340" y="495" text-anchor="middle" fill="#94a3b8" font-family="Plus Jakarta Sans" font-size="12.5">
+                <text id="svg-bottom-caption" data-i18n="svgBottomCaption" x="340" y="495" text-anchor="middle" fill="#94a3b8" font-family="Plus Jakarta Sans" font-size="12">
                   Even when topsoil cracks at 0 cm, roots actively draw moisture from the -15 cm perched water table.
                 </text>
               </svg>
@@ -544,8 +544,9 @@
           <div class="engine-card">
             <div class="engine-card__header">
               <span class="mono-tag" data-i18n="decisionStatus">INTERACTIVE FIELD ADVISORY ENGINE</span>
-              <button type="button" id="awd-replay-btn" class="btn-replay" data-i18n="replayCycle">
-                <span class="replay-icon">↻</span> Replay Drying Cycle
+              <button type="button" id="awd-replay-btn" class="btn-replay">
+                <span class="replay-icon" id="awd-replay-icon">↻</span>
+                <span id="awd-replay-text" data-i18n="replayCycle">Replay Drying Cycle</span>
               </button>
             </div>
 
@@ -562,7 +563,7 @@
                   aria-checked="true"
                 >
                   <span class="stage-btn__name" data-i18n="stageVeg">Vegetative Stage</span>
-                  <span class="stage-btn__days">DAT 15 – 55 (Tillering)</span>
+                  <span class="stage-btn__days" data-i18n="stageVegDays">DAT 15 – 55 (Tillering)</span>
                 </button>
                 <button
                   type="button"
@@ -573,7 +574,7 @@
                   aria-checked="false"
                 >
                   <span class="stage-btn__name" data-i18n="stageFlowering">Flowering Window</span>
-                  <span class="stage-btn__days">DAT 56 – 75 (Anthesis)</span>
+                  <span class="stage-btn__days" data-i18n="stageFloweringDays">DAT 56 – 75 (Anthesis)</span>
                 </button>
                 <button
                   type="button"
@@ -584,7 +585,7 @@
                   aria-checked="false"
                 >
                   <span class="stage-btn__name" data-i18n="stagePreHarvest">Ripening Stage</span>
-                  <span class="stage-btn__days">DAT 76 – 105 (Grain Fill)</span>
+                  <span class="stage-btn__days" data-i18n="stageRipeningDays">DAT 76 – 105 (Grain Fill)</span>
                 </button>
               </div>
             </div>
@@ -609,10 +610,10 @@
                   aria-label="Water Depth Slider from +5cm down to -20cm"
                 />
                 <div class="depth-slider-ticks">
-                  <span>-20cm (Deep Dry)</span>
-                  <span class="tick-amber">-15cm (AWD Limit)</span>
-                  <span>0cm (Surface)</span>
-                  <span class="tick-emerald">+5cm (Flooded)</span>
+                  <span data-i18n="tickDeepDry">-20cm (Deep Dry)</span>
+                  <span class="tick-amber" data-i18n="tickAwdLimit">-15cm (AWD Limit)</span>
+                  <span data-i18n="tickSurface">0cm (Surface)</span>
+                  <span class="tick-emerald" data-i18n="tickFlooded">+5cm (Flooded)</span>
                 </div>
               </div>
             </div>
@@ -641,9 +642,9 @@
               <div class="metric-tile">
                 <div class="metric-tile__top">
                   <span class="metric-tile__label" data-i18n="metricWater">Water Saved</span>
-                  <span class="metric-tile__source">IRRI Validated</span>
+                  <span class="metric-tile__source" data-i18n="metricWaterSource">IRRI Validated</span>
                 </div>
-                <div class="metric-tile__value text-emerald">Up to 30%</div>
+                <div class="metric-tile__value text-emerald" data-i18n="metricWaterVal">Up to 30%</div>
                 <div class="metric-tile__bar">
                   <div class="metric-tile__fill fill-emerald" style="width: 78%;"></div>
                 </div>
@@ -654,7 +655,7 @@
               <div class="metric-tile">
                 <div class="metric-tile__top">
                   <span class="metric-tile__label" data-i18n="metricMethane">Methane Cut</span>
-                  <span class="metric-tile__source">IPCC Average</span>
+                  <span class="metric-tile__source" data-i18n="metricMethaneSource">IPCC Average</span>
                 </div>
                 <div class="metric-tile__value text-cyan">48%</div>
                 <div class="metric-tile__bar">
@@ -667,7 +668,7 @@
               <div class="metric-tile">
                 <div class="metric-tile__top">
                   <span class="metric-tile__label" data-i18n="metricYield">Yield Delta</span>
-                  <span class="metric-tile__source">Yield Neutral Parity</span>
+                  <span class="metric-tile__source" data-i18n="metricYieldSource">Yield Neutral Parity</span>
                 </div>
                 <div class="metric-tile__value text-gold">0%</div>
                 <div class="metric-tile__bar">
@@ -695,9 +696,9 @@
             </p>
           </div>
           <div class="gis-header-chips">
-            <span class="tech-chip">🛰️ Sentinel-2 MSI (10m)</span>
-            <span class="tech-chip">💧 NDMI Root Moisture</span>
-            <span class="tech-chip">🌧️ CHIRPS Deficit</span>
+            <span class="tech-chip" data-i18n="chipSentinel">🛰️ Sentinel-2 MSI (10m)</span>
+            <span class="tech-chip" data-i18n="chipNdmi">💧 NDMI Root Moisture</span>
+            <span class="tech-chip" data-i18n="chipChirps">🌧️ CHIRPS Deficit</span>
           </div>
         </div>
 
@@ -821,10 +822,10 @@
               Remote Sensing Methodology: Multi-temporal Sentinel-2 NDVI/NDMI dry-season persistence (Jan-April) combined with CHIRPS rainfall deficit isolates canal-fed command zones from rain-fed tracts across Tamil Nadu's 21.58 lakh hectares.
             </p>
             <div class="methodology-pills">
-              <span class="tech-chip">Sentinel-2 MSI (10m B4/B8/B11)</span>
-              <span class="tech-chip">NDMI Root-Zone Moisture Index</span>
-              <span class="tech-chip">CHIRPS Pentad Precipitation</span>
-              <span class="tech-chip">Cauvery Command Mask</span>
+              <span class="tech-chip" data-i18n="methodChipMsi">Sentinel-2 MSI (10m B4/B8/B11)</span>
+              <span class="tech-chip" data-i18n="methodChipNdmi">NDMI Root-Zone Moisture Index</span>
+              <span class="tech-chip" data-i18n="methodChipChirps">CHIRPS Pentad Precipitation</span>
+              <span class="tech-chip" data-i18n="methodChipMask">Cauvery Command Mask</span>
             </div>
           </div>
         </div>
