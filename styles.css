@@ -553,101 +553,51 @@ body {
   box-shadow: 0 2px 10px rgba(16, 185, 129, 0.4);
 }
 
-/* Default State: TAMIL IS DOMINANT */
-#scene1-overlay-early {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* --------------------------------------------------------------------------
+   EXCLUSIVE SINGLE-LANGUAGE ENGINE
+   -------------------------------------------------------------------------- */
+/* Strict Visibility Separation */
+html[data-lang="ta"] .lang-view--en,
+html[data-lang="ta"] [data-lang-content="en"] {
+  display: none !important;
 }
 
-.hero-headline--dominant {
-  order: 1;
+html[data-lang="ta"] .lang-view--ta,
+html[data-lang="ta"] [data-lang-content="ta"] {
+  display: block;
+}
+
+html[data-lang="en"] .lang-view--ta,
+html[data-lang="en"] [data-lang-content="ta"] {
+  display: none !important;
+}
+
+html[data-lang="en"] .lang-view--en,
+html[data-lang="en"] [data-lang-content="en"] {
+  display: block;
+}
+
+/* Tamil Typography */
+.hero-headline--tamil {
   font-family: var(--font-tamil-luxury);
-  font-size: clamp(2.4rem, 5.8vw, 4.8rem);
+  font-size: clamp(2.5rem, 5.8vw, 4.8rem);
   font-weight: 700;
-  line-height: 1.15;
+  line-height: 1.18;
   letter-spacing: -0.01em;
   color: var(--text-primary);
   text-shadow: 0 12px 40px rgba(0, 0, 0, 0.95);
-  margin-bottom: 0.45rem;
-  transition: font-size 0.35s ease, color 0.35s ease, margin 0.35s ease;
+  margin-bottom: 1.1rem;
 }
 
-.hero-translation-caption {
-  order: 2;
-  font-family: var(--font-display);
-  font-size: clamp(1rem, 1.5vw, 1.25rem);
-  font-weight: 600;
-  color: #a7f3d0;
-  letter-spacing: 0.04em;
-  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.95);
-  margin-bottom: 1.45rem;
-  transition: font-size 0.35s ease, color 0.35s ease, margin 0.35s ease;
-}
-
-.hero-subtext--dominant {
-  order: 3;
+.hero-subtext--tamil {
   font-family: var(--font-tamil-luxury);
-  font-size: clamp(1.12rem, 1.8vw, 1.38rem);
+  font-size: clamp(1.15rem, 1.85vw, 1.4rem);
   font-weight: 400;
   color: #d1fae5;
-  line-height: 1.62;
+  line-height: 1.68;
   max-width: 58ch;
-  margin: 0 auto 0.45rem;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95);
-  transition: font-size 0.35s ease, color 0.35s ease, margin 0.35s ease;
-}
-
-.hero-translation-caption--sub {
-  order: 4;
-  font-family: var(--font-sans);
-  font-size: clamp(0.88rem, 1.2vw, 1.02rem);
-  color: #94a3b8;
-  max-width: 62ch;
   margin: 0 auto;
-  line-height: 1.5;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
-  transition: font-size 0.35s ease, color 0.35s ease, margin 0.35s ease;
-}
-
-/* English Dominant Mode (when toggled via HUD) */
-html[data-lang="en"] .hero-translation-caption {
-  order: 1;
-  font-family: var(--font-display);
-  font-size: clamp(2.8rem, 6.5vw, 5.5rem);
-  font-weight: 800;
-  line-height: 1.05;
-  color: var(--text-primary);
-  text-shadow: 0 12px 40px rgba(0, 0, 0, 0.85);
-  margin-bottom: 0.45rem;
-}
-
-html[data-lang="en"] .hero-headline--dominant {
-  order: 2;
-  font-family: var(--font-tamil-luxury);
-  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
-  font-weight: 400;
-  font-style: italic;
-  color: #a7f3d0;
-  margin-bottom: 1.35rem;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95), 0 0 28px rgba(16, 185, 129, 0.35);
-}
-
-html[data-lang="en"] .hero-translation-caption--sub {
-  order: 3;
-  font-family: var(--font-sans);
-  font-size: clamp(1.05rem, 1.8vw, 1.3rem);
-  color: #d1fae5;
-  line-height: 1.55;
-  margin-bottom: 0.35rem;
-}
-
-html[data-lang="en"] .hero-subtext--dominant {
-  order: 4;
-  font-family: var(--font-tamil-luxury);
-  font-size: clamp(0.92rem, 1.25vw, 1.08rem);
-  color: #94a3b8;
-  margin-top: 0.35rem;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95);
 }
 
 /* 55 - 90% Frosted Glass Card */
@@ -1909,47 +1859,16 @@ input[type='range']::-webkit-slider-thumb:hover {
     padding: 3px 8px;
   }
 
-  .hero-headline--dominant {
-    font-size: clamp(1.65rem, 6.8vw, 2.35rem);
+  .hero-headline--tamil {
+    font-size: clamp(1.75rem, 7.2vw, 2.5rem);
     line-height: 1.2;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.75rem;
   }
 
-  .hero-translation-caption {
-    font-size: 0.88rem;
-    margin-bottom: 1rem;
-  }
-
-  .hero-subtext--dominant {
-    font-size: 0.95rem;
-    line-height: 1.55;
-    margin-bottom: 0.35rem;
+  .hero-subtext--tamil {
+    font-size: 0.96rem;
+    line-height: 1.6;
     max-width: 92vw;
-  }
-
-  .hero-translation-caption--sub {
-    font-size: 0.78rem;
-    line-height: 1.45;
-    max-width: 92vw;
-  }
-
-  html[data-lang="en"] .hero-translation-caption {
-    font-size: clamp(1.85rem, 7.5vw, 2.75rem);
-    line-height: 1.12;
-    margin-bottom: 0.35rem;
-  }
-
-  html[data-lang="en"] .hero-headline--dominant {
-    font-size: 1.05rem;
-    margin-bottom: 0.85rem;
-  }
-
-  html[data-lang="en"] .hero-translation-caption--sub {
-    font-size: 0.92rem;
-  }
-
-  html[data-lang="en"] .hero-subtext--dominant {
-    font-size: 0.82rem;
   }
 
   .frosted-glass-card {

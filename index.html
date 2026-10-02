@@ -84,33 +84,35 @@
         <!-- HUD Scroll Hint -->
         <div class="canvas-hud">
           <div class="canvas-hud__scroll-hint" id="scroll-hint">
-            <span>Scroll to inspect sub-surface hydrology</span>
+            <span class="lang-view lang-view--ta">நிலத்தடி நீரியலை ஆராய கீழ்நோக்கி உருட்டவும்</span>
+            <span class="lang-view lang-view--en">Scroll to inspect sub-surface hydrology</span>
             <div class="scroll-chevron"></div>
           </div>
         </div>
 
-        <!-- 0 - 35% Scroll Overlay: Centered Typography (Tamil Dominant + English Sub-Caption) -->
+        <!-- 0 - 35% Scroll Overlay: Centered Typography (Exclusive Single-Language View) -->
         <div id="scene1-overlay-early" class="scrolly-overlay overlay-centered is-visible">
-          <!-- Primary Grand Headline (Tamil Dominant) -->
-          <h1 class="hero-headline--dominant">
-            <span>பசுமையாய் தெரியும்...</span><br />
-            <span class="text-emerald-glow">ஆனால் அது நலம் அல்ல.</span>
-          </h1>
+          <!-- Tamil Exclusive View (Shown ONLY when Tamil is active) -->
+          <div class="lang-view lang-view--ta">
+            <h1 class="hero-headline hero-headline--tamil">
+              <span>பசுமையாய் தெரியும்...</span><br />
+              <span class="text-emerald-glow">ஆனால் அது நலம் அல்ல.</span>
+            </h1>
+            <p class="hero-subtext hero-subtext--tamil">
+              தமிழகத்தின் 21.58 லட்சம் ஹெக்டேர் வயல்களில், தேங்கி நிற்கும் நீரே பயிரின் பலம் என தவறாக நம்புகிறோம்.
+            </p>
+          </div>
 
-          <!-- English Refined Subtitle Caption -->
-          <p class="hero-translation-caption">
-            “This looks healthy. It isn't.”
-          </p>
-
-          <!-- Primary Narrative Subtext (Tamil Dominant) -->
-          <p class="hero-subtext--dominant">
-            தமிழகத்தின் 21.58 லட்சம் ஹெக்டேர் வயல்களில், தேங்கி நிற்கும் நீரே பயிரின் பலம் என தவறாக நம்புகிறோம்.
-          </p>
-
-          <!-- English Translation Caption -->
-          <p class="hero-translation-caption--sub">
-            Across 21.58 lakh hectares of Tamil Nadu's rice belt, standing water is mistaken for crop vitality.
-          </p>
+          <!-- English Exclusive View (Shown ONLY when English is active) -->
+          <div class="lang-view lang-view--en">
+            <h1 class="hero-headline">
+              This looks healthy.<br />
+              <span class="text-emerald-glow">It isn't.</span>
+            </h1>
+            <p class="hero-subtext">
+              Across 21.58 lakh hectares of Tamil Nadu's rice belt, standing water is mistaken for crop vitality.
+            </p>
+          </div>
         </div>
 
         <!-- 55 - 90% Scroll Overlay: Frosted Glass Card -->
