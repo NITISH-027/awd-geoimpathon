@@ -97,6 +97,7 @@
 
   const ctx1 = dom.canvasScene1.getContext('2d');
   const ctx6 = dom.canvasScene6.getContext('2d');
+  let currentLang = 'ta';
 
   /* --------------------------------------------------------------------------
    * 3. MATH HELPERS & CANVAS COVER-FIT ENGINE
@@ -414,13 +415,13 @@
 
     // State badge updates
     if (waterCm > 0.2) {
-      dom.soilStateBadge.textContent = 'SURFACE FLOODED (ANAEROBIC)';
+      dom.soilStateBadge.textContent = currentLang === 'ta' ? 'மேற்பரப்பில் நீர் தேக்கம்' : 'SURFACE FLOODED (ANAEROBIC)';
       dom.soilStateBadge.className = 'state-badge state-badge--flooded';
     } else if (waterCm > -14.5) {
-      dom.soilStateBadge.textContent = 'SURFACE CRACKED // ROOTS HYDRATED';
+      dom.soilStateBadge.textContent = currentLang === 'ta' ? 'மேற்பரப்பு உலர்தல் // வேர் மண்டலத்தில் நல் ஈரப்பதம்' : 'SURFACE CRACKED // ROOTS HYDRATED';
       dom.soilStateBadge.className = 'state-badge state-badge--aerated';
     } else {
-      dom.soilStateBadge.textContent = '-15cm REACHED // RE-FLOOD TRIGGER';
+      dom.soilStateBadge.textContent = currentLang === 'ta' ? '-15 செ.மீ எட்டியது // மறுபாசனம் செய்யும் நேரம்' : '-15cm REACHED // RE-FLOOD TRIGGER';
       dom.soilStateBadge.className = 'state-badge state-badge--trigger';
     }
   }
@@ -569,10 +570,11 @@
     if (stage === 'flowering') {
       dom.awdAdvisoryBox.className = 'advisory-banner advisory-banner--red';
       dom.awdAdvisoryPill.className = 'advisory-pill advisory-pill--red';
-      dom.awdAdvisoryPill.textContent = 'CRITICAL // ANTHESIS PROTECTION';
-      dom.awdMethaneStatus.textContent = 'SENSITIVE FLOWERING WINDOW';
-      dom.awdAdvisoryText.textContent =
-        'CRITICAL: Anthesis window. Maintain continuous 2-5cm standing water to prevent spikelet sterility.';
+      dom.awdAdvisoryPill.textContent = currentLang === 'ta' ? 'கவனம் // பூக்கும் பருவப் பாதுகாப்பு' : 'CRITICAL // ANTHESIS PROTECTION';
+      dom.awdMethaneStatus.textContent = currentLang === 'ta' ? 'பூக்கும் மற்றும் பால் பிடிக்கும் பருவம்' : 'SENSITIVE FLOWERING WINDOW';
+      dom.awdAdvisoryText.textContent = currentLang === 'ta'
+        ? 'கவனம்: பூக்கும் & பால் பிடிக்கும் முக்கிய பருவம். தானியங்கள் பதராவதைத் தவிர்க்க வயலில் 2 முதல் 5 செ.மீ வரை நீர் தொடர்ந்து தேங்கி நிற்க வேண்டும்.'
+        : 'CRITICAL: Anthesis window. Maintain continuous 2-5cm standing water to prevent spikelet sterility.';
       return;
     }
 
@@ -580,11 +582,13 @@
     if (stage === 'vegetative' && depth > -15) {
       dom.awdAdvisoryBox.className = 'advisory-banner advisory-banner--green';
       dom.awdAdvisoryPill.className = 'advisory-pill advisory-pill--green';
-      dom.awdAdvisoryPill.textContent = 'SAFE // HOLD IRRIGATION';
-      dom.awdMethaneStatus.textContent =
-        depth <= 0 ? 'CH₄ FLUX: SUPPRESSED (-48%)' : 'PONDED // ALLOW NATURAL RECESSION';
-      dom.awdAdvisoryText.textContent =
-        'SAFE: Roots hydrated. Hold irrigation, save water.';
+      dom.awdAdvisoryPill.textContent = currentLang === 'ta' ? 'பாதுகாப்பான ஈரப்பதம் // நீர் பாய்ச்ச வேண்டாம்' : 'SAFE // HOLD IRRIGATION';
+      dom.awdMethaneStatus.textContent = currentLang === 'ta'
+        ? (depth <= 0 ? 'மீத்தேன் வாயு உமிழ்வு கட்டுப்படுத்தப்பட்டது (-48%)' : 'நீர் வடியும் நிலை // இயற்கையாக வடிய விடவும்')
+        : (depth <= 0 ? 'CH₄ FLUX: SUPPRESSED (-48%)' : 'PONDED // ALLOW NATURAL RECESSION');
+      dom.awdAdvisoryText.textContent = currentLang === 'ta'
+        ? 'பாதுகாப்பான நிலை: வேர் மண்டலத்தில் போதுமான ஈரப்பதம் உள்ளது. இப்போது பாசனம் செய்யத் தேவையில்லை; நீரும் மின்சாரமும் சேமிக்கப்படுகிறது.'
+        : 'SAFE: Roots hydrated. Hold irrigation, save water.';
       return;
     }
 
@@ -592,10 +596,11 @@
     if (stage === 'vegetative' && depth <= -15) {
       dom.awdAdvisoryBox.className = 'advisory-banner advisory-banner--amber';
       dom.awdAdvisoryPill.className = 'advisory-pill advisory-pill--amber';
-      dom.awdAdvisoryPill.textContent = 'ACTION // IRRIGATION THRESHOLD';
-      dom.awdMethaneStatus.textContent = 'SOIL AERATED // RE-FLOOD NOW';
-      dom.awdAdvisoryText.textContent =
-        'ACTION: Water reached -15cm threshold. Re-flood field to +5cm depth.';
+      dom.awdAdvisoryPill.textContent = currentLang === 'ta' ? 'மறுபாசனம் செய்க // பாசன எல்லை எட்டியது' : 'ACTION // IRRIGATION THRESHOLD';
+      dom.awdMethaneStatus.textContent = currentLang === 'ta' ? 'வேர் காற்றோட்டம் பெற்றது // மறுபாசனம் தேவை' : 'SOIL AERATED // RE-FLOOD NOW';
+      dom.awdAdvisoryText.textContent = currentLang === 'ta'
+        ? 'மறுபாசனம் செய்க: பாணி குழாய் நீர் மட்டம் -15 செ.மீ ஆழத்தை எட்டியது. உடனடியாக வயலுக்கு +5 செ.மீ வரை நீர் பாய்ச்சவும்.'
+        : 'ACTION: Water reached -15cm threshold. Re-flood field to +5cm depth.';
       return;
     }
 
@@ -604,17 +609,19 @@
       if (depth > -15) {
         dom.awdAdvisoryBox.className = 'advisory-banner advisory-banner--green';
         dom.awdAdvisoryPill.className = 'advisory-pill advisory-pill--green';
-        dom.awdAdvisoryPill.textContent = 'SAFE // GRAIN FILLING & DRAINAGE';
-        dom.awdMethaneStatus.textContent = 'CH₄ FLUX: MINIMAL';
-        dom.awdAdvisoryText.textContent =
-          'SAFE: Roots hydrated. Hold irrigation, save water. Drain field 14 days before harvest.';
+        dom.awdAdvisoryPill.textContent = currentLang === 'ta' ? 'பாதுகாப்பான நிலை // கதிர் முதிர்ச்சி மற்றும் வடித்தல்' : 'SAFE // GRAIN FILLING & DRAINAGE';
+        dom.awdMethaneStatus.textContent = currentLang === 'ta' ? 'மீத்தேன் வாயு உமிழ்வு குறைவு' : 'CH₄ FLUX: MINIMAL';
+        dom.awdAdvisoryText.textContent = currentLang === 'ta'
+          ? 'பாதுகாப்பான நிலை: வேர் பகுதியில் போதிய ஈரப்பதம் உள்ளது. அறுவடைக்கு 14 நாட்களுக்கு முன்னதாக வயல் நீரை முழுமையாக வடிக்கவும்.'
+          : 'SAFE: Roots hydrated. Hold irrigation, save water. Drain field 14 days before harvest.';
       } else {
         dom.awdAdvisoryBox.className = 'advisory-banner advisory-banner--amber';
         dom.awdAdvisoryPill.className = 'advisory-pill advisory-pill--amber';
-        dom.awdAdvisoryPill.textContent = 'ACTION // MOISTURE CHECK';
-        dom.awdMethaneStatus.textContent = 'LATE RIPENING STAGE';
-        dom.awdAdvisoryText.textContent =
-          'ACTION: Water reached -15cm threshold. Apply light wetting if >14 days to harvest, else maintain terminal dry-down.';
+        dom.awdAdvisoryPill.textContent = currentLang === 'ta' ? 'கள ஆய்வு // ஈரப்பதம் சரிபார்ப்பு' : 'ACTION // MOISTURE CHECK';
+        dom.awdMethaneStatus.textContent = currentLang === 'ta' ? 'அறுவடைக்கு முந்தைய முதிர்ச்சிப் பருவம்' : 'LATE RIPENING STAGE';
+        dom.awdAdvisoryText.textContent = currentLang === 'ta'
+          ? 'கள ஆய்வு: நீர் மட்டம் -15 செ.மீ எட்டியது. அறுவடைக்கு 14 நாட்களுக்கு மேல் இருப்பின் லேசாக நீர் பாய்ச்சவும்; இல்லையேல் நிலத்தை முழுமையாக உலர விடவும்.'
+          : 'ACTION: Water reached -15cm threshold. Apply light wetting if >14 days to harvest, else maintain terminal dry-down.';
       }
     }
   }
@@ -893,7 +900,7 @@
   /* --------------------------------------------------------------------------
    * 10. SCENE 6: COPY FIELD PROTOCOL & TOAST NOTIFICATION
    * -------------------------------------------------------------------------- */
-  const FIELD_PROTOCOL_TEXT = [
+  const FIELD_PROTOCOL_EN = [
     'CLIMATE-SMART SAFE-AWD FIELD PROTOCOL (CAUVERY DELTA AGRO-ECOSYSTEM)',
     '====================================================================',
     '1. INSTALL THE ₹50 PERFORATED PANI PIPE (15 DAT):',
@@ -907,6 +914,22 @@
     '',
     'VALIDATED IMPACT: Up to 30% Water Saved (IRRI) | 48% Methane Cut (IPCC) | 0% Yield Loss.',
     'Measure the water. Protect the harvest.',
+  ].join('\n');
+
+  const FIELD_PROTOCOL_TA = [
+    'காய்ச்சலும் பாய்ச்சலும் (AWD) கள நெறிமுறை - காவிரி டெல்டா',
+    '====================================================================',
+    '1. ₹50 துளையிடப்பட்ட பாணி குழாயை நடுதல் (நடவு செய்த 15-ம் நாள்):',
+    '   30 செ.மீ நீளமும் 15 செ.மீ விட்டமும் கொண்ட பிவிசி பாணி குழாயை, நடவு நட்ட 15-ம் நாளில் 20 செ.மீ ஆழத்திற்கு வேர் மண்டலத்தில் புதைத்து, 10 செ.மீ பகுதி தரைக்கு மேல் தெரியுமாறு பொருத்தவும்.',
+    '',
+    '2. -15 செ.மீ நீர்மட்டத்தில் மறுபாசனம் (+5 செ.மீ வரை):',
+    '   வயல் நீர் வடியத் துவங்கி, குழாயினுள் நீர் மட்டம் -15 செ.மீ வரை குறையும் வரை காத்திருக்கவும். அதன் பின் மீண்டும் +5 செ.மீ வரை நீர் பாய்ச்சவும்.',
+    '',
+    '3. பூக்கும் தருணத்தில் தொடர் நீர் தேக்குதல்:',
+    '   பயிர் பூக்கும் பருவம் மற்றும் பால் பிடிக்கும் தருணத்தில் தொடர்ந்து 2–5 செ.மீ வரை நீர் தேக்கி வைக்கவும். அறுவடைக்கு 14 நாட்களுக்கு முன் நீரை முழுமையாக வடிக்கவும்.',
+    '',
+    'நிரூபிக்கப்பட்ட நன்மைகள்: 30% பாசன நீர் சேமிப்பு | 48% மீத்தேன் வாயு குறைப்பு | 100% முழு மகசூல் உறுதி.',
+    'நீரை அளந்து பாய்ச்சுவோம்! பயிரையும் வளத்தையும் காப்போம்!',
   ].join('\n');
 
   let toastTimer = null;
@@ -924,12 +947,13 @@
     if (!dom.copyProtocolBtn) return;
 
     dom.copyProtocolBtn.addEventListener('click', async () => {
+      const textToCopy = currentLang === 'ta' ? FIELD_PROTOCOL_TA : FIELD_PROTOCOL_EN;
       try {
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          await navigator.clipboard.writeText(FIELD_PROTOCOL_TEXT);
+          await navigator.clipboard.writeText(textToCopy);
         } else {
           const tempArea = document.createElement('textarea');
-          tempArea.value = FIELD_PROTOCOL_TEXT;
+          tempArea.value = textToCopy;
           tempArea.style.position = 'fixed';
           tempArea.style.opacity = '0';
           document.body.appendChild(tempArea);
@@ -942,9 +966,9 @@
       }
 
       if (dom.copyBtnLabel) {
-        dom.copyBtnLabel.textContent = 'Copied to Clipboard ✓';
+        dom.copyBtnLabel.textContent = currentLang === 'ta' ? 'நெறிமுறை நகலெடுக்கப்பட்டது ✓' : 'Copied to Clipboard ✓';
         setTimeout(() => {
-          dom.copyBtnLabel.textContent = 'Copy Field Protocol';
+          dom.copyBtnLabel.textContent = currentLang === 'ta' ? 'கள நெறிமுறையை நகலெடு' : 'Copy Field Protocol';
         }, 2500);
       }
       showToast();
@@ -952,13 +976,202 @@
   }
 
   /* --------------------------------------------------------------------------
-   * 11. DUAL-LANGUAGE TOGGLE (TAMIL PRIMARY / ENGLISH SECONDARY)
+   * 11. DUAL-LANGUAGE I18N ENGINE (TAMIL PRIMARY / ENGLISH SECONDARY)
    * -------------------------------------------------------------------------- */
+  const I18N = {
+    en: {
+      hudTitle: 'Cauvery Delta Agro-Hydrology',
+      nav1: '01. The Lie',
+      nav2: '02. ₹50 Pipe',
+      nav3: '03. AWD Engine',
+      nav4: '04. Satellite GIS',
+      nav5: '05. Protocol',
+
+      // Scene 1 Late
+      scene1Alert: 'BIO-GEOCHEMICAL ALERT // CH₄ FLUX',
+      scene1Gwp: 'GWP-20: 80x CO₂',
+      scene1LateTitle: 'Beneath the Mirror Surface',
+      scene1LateBody: 'A flooded paddy drowns its roots and brews methane (CH<sub>4</sub>) — a greenhouse gas <strong>80x worse than CO<sub>2</sub></strong> over 20 years. Flooding is weed management, not crop biology.',
+      statRootO2: 'Root Zone O₂',
+      statRootO2Val: 'Hypoxic (<0.5 mg/L)',
+      statMethane: 'Methanogenesis',
+      statMethaneVal: 'Active Anaerobic',
+      statWaterNeed: 'True Water Need',
+      statWaterNeedVal: 'Soil Moisture Only',
+
+      // Scene 3
+      scene3Title: 'The ₹50 Truth-Teller',
+      scene3Quote: '“The surface lies. The tube doesn\'t.”',
+      scene3Desc: 'A simple <strong>30 cm PVC Pani Pipe</strong>—with 10 cm protruding above the mud and 20 cm perforated inside the root zone—reveals the actual perched water table long after the surface dries and cracks.',
+      liveWaterTable: 'LIVE TUBE WATER TABLE',
+      badgeFlooded: 'SURFACE FLOODED',
+      paniLabelPonded: '+5 cm (Ponded)',
+      paniLabelSurface: '0 cm (Surface)',
+      paniLabelAwd: '-15 cm (AWD Trigger)',
+      specPipeLength: 'Total Pipe Length',
+      specPipeLengthVal: '30 cm PVC (Ø 15 cm)',
+      specAboveGround: 'Above Ground',
+      specAboveGroundVal: '10 cm Collar',
+      specRootPerforation: 'Root Zone Perforation',
+      specRootPerforationVal: '20 cm (0.5 cm holes)',
+      scrubLabel: 'Scroll page or drag to inspect water table drop:',
+
+      // Scene 4
+      scene4Title: 'Proof It Works: Safe AWD Simulator',
+      scene4Desc: 'Test how crop growth stage and Pani pipe depth govern irrigation scheduling under International Rice Research Institute (IRRI) Safe-AWD guidelines.',
+      decisionStatus: 'INTERACTIVE FIELD ADVISORY ENGINE',
+      replayCycle: '↻ Replay Drying Cycle',
+      selectStage: '1. Select Crop Phenology Stage',
+      stageVeg: 'Vegetative Stage',
+      stageFlowering: 'Flowering Window',
+      stagePreHarvest: 'Ripening Stage',
+      inspectDepth: '2. Pani Pipe Water Depth Reading',
+      benchmarkTag: 'EMPIRICAL BENCHMARK // CONTINUOUS FLOODING VS SAFE AWD',
+      validatedTitle: 'Validated Field Performance',
+      metricWater: 'Water Saved',
+      metricWaterNote: 'Reduces irrigation pump hours & canal drawdowns without root stress.',
+      metricMethane: 'Methane Cut',
+      metricMethaneNote: 'Periodic soil aeration halts methanogenic archaea activity in the rhizosphere.',
+      metricYield: 'Yield Delta',
+      metricYieldNote: 'Maintains 100% grain yield parity; oxygenating roots boosts productive tillering.',
+
+      // Scene 5
+      scene5Title: 'Irrigated vs. Rain-Fed Agriculture Classifier',
+      scene5Desc: 'Interactive multi-temporal remote sensing map isolating canal-irrigated command zones (AWD deployment targets) from drought-vulnerable rain-fed tracts across the Cauvery Delta, Tamil Nadu.',
+      satelliteBase: '[Satellite Base]',
+      ndviView: '[Sentinel-2 NDVI View]',
+      classificationOverlay: '[Agri-Classification Overlay]',
+      gisLegendTitle: 'SPECTRAL CANOPY CLASSIFICATION',
+      irrigatedZoneTitle: 'Irrigated Command Zone',
+      irrigatedZoneSub: 'Thanjavur, Tiruvarur, Mayiladuthurai (AWD Ready — 30% Water Savings)',
+      rainfedZoneTitle: 'Rain-Fed Uplands',
+      rainfedZoneSub: 'Pudukkottai Southern Border (Vulnerable to Drought Stress)',
+      gisHint: 'Click any polygon on the map to inspect spectral & hydrological telemetry.',
+      methodologyTag: 'REMOTE SENSING METHODOLOGY // EARTH OBSERVATION PIPELINE',
+      methodologyDesc: 'Remote Sensing Methodology: Multi-temporal Sentinel-2 NDVI/NDMI dry-season persistence (Jan-April) combined with CHIRPS rainfall deficit isolates canal-fed command zones from rain-fed tracts across Tamil Nadu\'s 21.58 lakh hectares.',
+
+      // Scene 6
+      scene6EarlyPill: 'The Proven Harvest',
+      scene6EarlyTitle: 'From ₹50 Pipe to a<br /><span class="text-emerald-glow">Flourishing Delta</span>',
+      scene6EarlySub: '30% less water extracted. 48% methane eliminated. 100% harvest yield preserved.',
+      scene6ProtocolPill: 'Practical Field Protocol',
+      scene6ProtocolTitle: 'Take Safe-AWD to the <span class="text-emerald-glow">Field</span>',
+      scene6ProtocolSub: 'Three simple rules for Cauvery Delta cultivators to cut water use by 30% while protecting harvest yields.',
+      step1Num: '01',
+      step1Title: 'Install ₹50 Pani Pipe',
+      step1Desc: 'Sink a 30 cm perforated PVC pipe 20 cm deep into root zone at 15 DAT, leaving 10 cm above mud.',
+      step2Num: '02',
+      step2Title: 'Re-Flood at -15 cm Depth',
+      step2Desc: 'Let ponded water recede until tube reads <strong>-15 cm</strong>, then re-irrigate to <strong>+5 cm</strong>.',
+      step3Num: '03',
+      step3Title: 'Hold Water at Flowering',
+      step3Desc: 'Maintain <strong>2–5 cm standing water</strong> during anthesis to protect grain set; drain 14 days before harvest.',
+      scene6Quote: '“Measure the water. Protect the harvest.”',
+      copyBtn: 'Copy Field Protocol',
+      toastTitle: 'Field Protocol Copied to Clipboard',
+      toastBody: 'Ready to share via WhatsApp, SMS, or extension dispatch.'
+    },
+
+    ta: {
+      hudTitle: 'காவிரி டெல்டா நீர் மேலாண்மை',
+      nav1: '01. நீரின் மாயை',
+      nav2: '02. ₹50 பாணி குழாய்',
+      nav3: '03. காய்ச்சலும் பாய்ச்சலும்',
+      nav4: '04. செயற்கைக்கோள் வரைபடம்',
+      nav5: '05. கள நெறிமுறை',
+
+      // Scene 1 Late
+      scene1Alert: 'சுற்றுச்சூழல் எச்சரிக்கை // மீத்தேன் வாயு உமிழ்வு',
+      scene1Gwp: 'GWP-20: CO₂-வை விட 80 மடங்கு தீவிர வெப்பம்',
+      scene1LateTitle: 'தேங்கிய நீர்ப்பரப்பிற்கு அடியில்...',
+      scene1LateBody: 'வயலில் தொடர்ந்து நீர் தேங்கி நிற்பதால் வேர் மண்டலத்திற்குப் பிராணவாயு (ஆக்சிஜன்) கிடைக்காமல் வேர்கள் அழுகுகின்றன. மேலும், கரியமில வாயுவை விட <strong>80 மடங்கு தீவிர வெப்பத்தை உருவாக்கும் மீத்தேன் (CH₄) வாயு</strong> காற்றில்லாச் சூழலில் உற்பத்தியாகிறது. வயலில் நீர் தேக்குவது களைகளைக் கட்டுப்படுத்தவே அன்றி, பயிரின் தொடர் வளர்ச்சிக்கு எப்போதும் நீர் தேங்கி நிற்கத் தேவையில்லை.',
+      statRootO2: 'வேர் மண்டல ஆக்சிஜன்',
+      statRootO2Val: 'மிகக் குறைவு (<0.5 மிகி/லி)',
+      statMethane: 'மீத்தேன் உற்பத்தி',
+      statMethaneVal: 'தீவிர காற்றில்லா நிலை',
+      statWaterNeed: 'உண்மையான நீர்த் தேவை',
+      statWaterNeedVal: 'மண் ஈரம் மட்டுமே',
+
+      // Scene 3
+      scene3Title: 'உண்மையை உரைக்கும் ₹50 பாணி குழாய்',
+      scene3Quote: '“நிலத்தின் மேற்பரப்பு ஏமாற்றும்; பாணி குழாய் வேரின் உண்மையை உணர்த்தும்.”',
+      scene3Desc: '30 செ.மீ நீளமுள்ள எளிய <strong>பிவிசி பாணி குழாய் (வயல் நீர்மானி)</strong>—மண் மட்டத்திற்கு மேல் 10 செ.மீ நீட்டியபடியும், வேர் மண்டலத்தில் 20 செ.மீ ஆழத்தில் துளையிடப்பட்டும் நிறுவப்படுகிறது. நிலத்தின் மேற்பகுதி காய்ந்து வெடித்தாலும், வேர் பகுதியில் உள்ள உண்மையான ஈரப்பதத்தை இது துல்லியமாகக் காட்டும்.',
+      liveWaterTable: 'குழாயினுள் நேரடி நீர் மட்டம்',
+      badgeFlooded: 'மேற்பரப்பில் நீர் தேக்கம்',
+      paniLabelPonded: '+5 செ.மீ (மண் மட்டத்திற்கு மேல் தேங்கிய நீர்)',
+      paniLabelSurface: '0 செ.மீ (மண் மட்டம் / தரை மட்டம்)',
+      paniLabelAwd: '-15 செ.மீ (மறுபாசன எல்லை - காய்ச்சலும் பாய்ச்சலும்)',
+      specPipeLength: 'மொத்தக் குழாய் நீளம்',
+      specPipeLengthVal: '30 செ.மீ PVC (விட்டம் 15 செ.மீ)',
+      specAboveGround: 'தரைக்கு மேல் நீளம்',
+      specAboveGroundVal: '10 செ.மீ பகுதி',
+      specRootPerforation: 'வேர் மண்டலத் துளைகள்',
+      specRootPerforationVal: '20 செ.மீ ஆழத்தில் (0.5 செ.மீ துளைகள்)',
+      scrubLabel: 'நீர் மட்டம் மாறுவதைக் காண உருட்டவும் அல்லது இழுக்கவும்:',
+
+      // Scene 4
+      scene4Title: 'அறிவியல் பூர்வமான முறை: காய்ச்சலும் பாய்ச்சலும் மாதிரி இயக்கி',
+      scene4Desc: 'சர்வதேச நெல் ஆராய்ச்சி நிறுவனம் (IRRI) மற்றும் தமிழ்நாடு வேளாண்மைப் பல்கலைக்கழக (TNAU) வழிகாட்டுதலின்படி, பயிர் பருவத்திற்கும் பாணி குழாய் நீர் மட்டத்திற்கும் ஏற்ப பாசனத்தை எவ்வாறு நிர்வகிப்பது என்பதைப் பரிசோதிக்கவும்.',
+      decisionStatus: 'களப் பாசன வழிகாட்டுதல்',
+      replayCycle: '↻ நீர் வடிதல் சுழற்சியை மீண்டும் இயக்கு',
+      selectStage: '1. பயிர் வளர்ச்சிப் பருவம்',
+      stageVeg: 'தூர்கட்டும் பருவம் (நடவு 15–40 நாள்)',
+      stageFlowering: 'பூக்கும் பருவம் (40–75 நாள்)',
+      stagePreHarvest: 'முதிர்ச்சிப் பருவம் (75–100+ நாள்)',
+      inspectDepth: '2. பாணி குழாய் நீர் மட்டம்',
+      benchmarkTag: 'ஆராய்ச்சி ஒப்பீடு // தொடர் நீர் தேக்கம் vs காய்ச்சலும் பாய்ச்சலும் (AWD)',
+      validatedTitle: 'களத்தில் நிரூபிக்கப்பட்ட நன்மைகள்',
+      metricWater: 'பாசன நீர் சேமிப்பு',
+      metricWaterNote: 'பயிரின் வேர்களுக்குப் பாதிப்பின்றி, கிணற்று நீர் மற்றும் மின்சாரத் தேவையை 30% வரை குறைக்கிறது.',
+      metricMethane: 'மீத்தேன் வாயு குறைப்பு',
+      metricMethaneNote: 'மண்ணில் அவ்வப்போது காற்று புகுந்து காய்வதால் தீவிர வெப்பத்தை உண்டாக்கும் மீத்தேன் வாயு 48% வரை தடுக்கப்படுகிறது.',
+      metricYield: 'முழு மகசூல் உறுதி',
+      metricYieldNote: '100% மகசூல் முழுமையாகப் பாதுகாக்கப்படுகிறது; வேர்களுக்குக் காற்று கிடைப்பதால் தூர் எண்ணிக்கை கூடுகிறது.',
+
+      // Scene 5
+      scene5Title: 'காவிரி டெல்டா: பாசன vs மானாவாரி நெல் வகைப்பாடு',
+      scene5Desc: 'காவிரி டெல்டாவில் தொடர் பாசனம் பெறும் வாய்க்கால் பாசன வயல்களையும், மழையை மட்டுமே நம்பியுள்ள மானாவாரி வயல்களையும் செயற்கைக்கோள் வழி வகைப்படுத்தும் புவிசார் தளம்.',
+      satelliteBase: '[செயற்கைக்கோள் நிலப்பரப்பு]',
+      ndviView: '[சென்டினல்-2 NDVI பயிர் பசுமை சுட்டெண்]',
+      classificationOverlay: '[பாசன வகைப்பாடு அடுக்கு]',
+      gisLegendTitle: 'செயற்கைக்கோள் பயிர் வகைப்பாடு',
+      irrigatedZoneTitle: 'வாய்க்கால் பாசனப் பரப்பு',
+      irrigatedZoneSub: 'தஞ்சாவூர், திருவாரூர், மயிலாடுதுறை (காய்ச்சலும் பாய்ச்சலும் முறைக்கு மிகவும் உகந்தது — 30% நீர் சேமிப்பு)',
+      rainfedZoneTitle: 'மானாவாரி மெட்டு நிலங்கள்',
+      rainfedZoneSub: 'புதுக்கோட்டை தெற்கு எல்லைப் பகுதி (வறட்சி அபாயம் கொண்டது)',
+      gisHint: 'விவரங்களைக் காண வரைபடத்தில் உள்ள வட்டங்களைக் கிளிக் செய்யவும்.',
+      methodologyTag: 'தொலை உணர்வு வழிமுறை // புவி கண்காணிப்பு கட்டமைப்பு',
+      methodologyDesc: 'சென்டினல்-2 செயற்கைக்கோள் மற்றும் CHIRPS மழைப்பொழிவு தரவுகள் மூலம், காவிரி டெல்டாவின் 21.58 லட்சம் ஹெக்டேர் பரப்பில் வாய்க்கால் பாசன வயல்களையும் மானாவாரிப் பகுதிகளையும் துல்லியமாகப் பிரிக்கிறது.',
+
+      // Scene 6
+      scene6EarlyPill: 'நிரூபிக்கப்பட்ட நன்மைகள்',
+      scene6EarlyTitle: '₹50 பாணி குழாயால்<br /><span class="text-emerald-glow">செழிக்கும் காவிரி டெல்டா</span>',
+      scene6EarlySub: '30% பாசன நீர் சேமிப்பு • 48% மீத்தேன் குறைப்பு • 100% முழு மகசூல்',
+      scene6ProtocolPill: 'விவசாயிகளுக்கான கள நெறிமுறை',
+      scene6ProtocolTitle: 'வயலில் கடைப்பிடிக்க வேண்டிய <span class="text-emerald-glow">3 எளிய விதிகள்</span>',
+      scene6ProtocolSub: 'காவிரி டெல்டா விவசாயிகள் மகசூல் குறையாமல் 30% நீரைச் சேமிக்க TNAU மற்றும் IRRI பரிந்துரைக்கும் எளிய வழிகாட்டி.',
+      step1Num: '01',
+      step1Title: '₹50 பாணி குழாய் நடுதல்',
+      step1Desc: 'நடவு நட்ட 15-ம் நாளில் 30 செ.மீ துளையிடப்பட்ட பிவிசி குழாயை 20 செ.மீ ஆழத்தில் வேர் மண்டலத்தில் புதைத்து, 10 செ.மீ பகுதி தரைக்கு மேலே தெரியுமாறு வைக்கவும்.',
+      step2Num: '02',
+      step2Title: '-15 செ.மீ நீர்மட்டத்தில் மறுபாசனம்',
+      step2Desc: 'குழாயினுள் நீர் மட்டம் <strong>-15 செ.மீ</strong> ஆழத்தை எட்டும் வரை காத்திருந்து, பின்னர் <strong>+5 செ.மீ</strong> அளவிற்கு மீண்டும் நீர் பாய்ச்சவும்.',
+      step3Num: '03',
+      step3Title: 'பூக்கும் பருவத்தில் தொடர் நீர் தேக்குதல்',
+      step3Desc: 'பயிர் பூக்கும் மற்றும் பால் பிடிக்கும் தருணத்தில் மட்டும் <strong>2–5 செ.மீ நீர் தேக்கி</strong> வைக்கவும்; அறுவடைக்கு 14 நாட்களுக்கு முன் நீரை முழுமையாக வடிக்கவும்.',
+      scene6Quote: '“நீரை அளந்து பாய்ச்சுவோம்! பயிரையும் வளத்தையும் காப்போம்!”',
+      copyBtn: 'கள நெறிமுறையை நகலெடு',
+      toastTitle: 'கள நெறிமுறை நினைவகத்தில் நகலெடுக்கப்பட்டது',
+      toastBody: 'விவசாயிகளுக்கு வாட்ஸ்அப் அல்லது குறுஞ்செய்தி வழி பகிரத் தயார்.'
+    }
+  };
+
   function initLanguageToggle() {
     const langBtns = document.querySelectorAll('.lang-btn');
     if (!langBtns.length) return;
 
     function applyLanguage(lang) {
+      currentLang = lang;
       document.documentElement.setAttribute('data-lang', lang);
       try {
         localStorage.setItem('awd_pref_lang', lang);
@@ -969,6 +1182,26 @@
         btn.classList.toggle('active', isActive);
         btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
       });
+
+      // Update text nodes
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (I18N[lang] && I18N[lang][key] !== undefined) {
+          el.textContent = I18N[lang][key];
+        }
+      });
+
+      // Update HTML nodes
+      document.querySelectorAll('[data-i18n-html]').forEach((el) => {
+        const key = el.getAttribute('data-i18n-html');
+        if (I18N[lang] && I18N[lang][key] !== undefined) {
+          el.innerHTML = I18N[lang][key];
+        }
+      });
+
+      // Trigger dynamic readouts update
+      renderSoilCrossSection(scrubberState.soilProgressCurrent);
+      evaluateAwdDecision();
     }
 
     langBtns.forEach((btn) => {

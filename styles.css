@@ -600,6 +600,34 @@ html[data-lang="en"] [data-lang-content="en"] {
   text-shadow: 0 4px 20px rgba(0, 0, 0, 0.95);
 }
 
+/* Site-Wide Luxury Tamil Typography */
+html[data-lang="ta"] .section-title,
+html[data-lang="ta"] .hero-headline,
+html[data-lang="ta"] .frosted-glass-card__title,
+html[data-lang="ta"] .metrics-card__title,
+html[data-lang="ta"] .protocol-step-card__content h3,
+html[data-lang="ta"] .closing-banner__quote {
+  font-family: var(--font-tamil-luxury);
+  letter-spacing: normal;
+}
+
+html[data-lang="ta"] .section-desc,
+html[data-lang="ta"] .hero-subtext,
+html[data-lang="ta"] .frosted-glass-card__body,
+html[data-lang="ta"] .protocol-step-card__content p,
+html[data-lang="ta"] .microcopy-quote,
+html[data-lang="ta"] .advisory-banner__message,
+html[data-lang="ta"] .methodology-callout__text {
+  font-family: var(--font-tamil-luxury);
+  line-height: 1.65;
+}
+
+html[data-lang="ta"] .hud-nav-link {
+  font-family: var(--font-tamil-luxury);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
 /* 55 - 90% Frosted Glass Card */
 .frosted-glass-card {
   width: min(680px, 92vw);

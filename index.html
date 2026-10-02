@@ -57,14 +57,14 @@
       <span class="hud-header__indicator"></span>
       <span class="hud-header__code">AWD-EO</span>
       <span class="hud-header__divider">/</span>
-      <span class="hud-header__title">Cauvery Delta Agro-Hydrology</span>
+      <span class="hud-header__title" data-i18n="hudTitle">Cauvery Delta Agro-Hydrology</span>
     </div>
     <nav class="hud-header__nav" aria-label="Scene navigation">
-      <a href="#scene-1" class="hud-nav-link active" data-scene="1">01. The Lie</a>
-      <a href="#scene-3" class="hud-nav-link" data-scene="3">02. ₹50 Pipe</a>
-      <a href="#scene-4" class="hud-nav-link" data-scene="4">03. AWD Engine</a>
-      <a href="#scene-5" class="hud-nav-link" data-scene="5">04. Satellite GIS</a>
-      <a href="#scene-6" class="hud-nav-link" data-scene="6">05. Protocol</a>
+      <a href="#scene-1" class="hud-nav-link active" data-scene="1" data-i18n="nav1">01. The Lie</a>
+      <a href="#scene-3" class="hud-nav-link" data-scene="3" data-i18n="nav2">02. ₹50 Pipe</a>
+      <a href="#scene-4" class="hud-nav-link" data-scene="4" data-i18n="nav3">03. AWD Engine</a>
+      <a href="#scene-5" class="hud-nav-link" data-scene="5" data-i18n="nav4">04. Satellite GIS</a>
+      <a href="#scene-6" class="hud-nav-link" data-scene="6" data-i18n="nav5">05. Protocol</a>
     </nav>
     <div class="hud-lang-toggle" id="hud-lang-toggle" role="group" aria-label="Language selection">
       <button type="button" class="lang-btn active" data-lang="ta" aria-pressed="true" title="தமிழ் பார்வை (Default)">தமிழ்</button>
@@ -84,7 +84,7 @@
         <!-- HUD Scroll Hint -->
         <div class="canvas-hud">
           <div class="canvas-hud__scroll-hint" id="scroll-hint">
-            <span class="lang-view lang-view--ta">நிலத்தடி நீரியலை ஆராய கீழ்நோக்கி உருட்டவும்</span>
+            <span class="lang-view lang-view--ta">மண்ணின் உண்மை நீர்மட்டத்தைக் காண கீழ்நோக்கி உருட்டவும்</span>
             <span class="lang-view lang-view--en">Scroll to inspect sub-surface hydrology</span>
             <div class="scroll-chevron"></div>
           </div>
@@ -95,11 +95,11 @@
           <!-- Tamil Exclusive View (Shown ONLY when Tamil is active) -->
           <div class="lang-view lang-view--ta">
             <h1 class="hero-headline hero-headline--tamil">
-              <span>பசுமையாய் தெரியும்...</span><br />
-              <span class="text-emerald-glow">ஆனால் அது நலம் அல்ல.</span>
+              <span>வெளிப்பார்வைக்குப் பசுமை...</span><br />
+              <span class="text-emerald-glow">ஆனால் வேர்களுக்கு நலம் அல்ல.</span>
             </h1>
             <p class="hero-subtext hero-subtext--tamil">
-              தமிழகத்தின் 21.58 லட்சம் ஹெக்டேர் வயல்களில், தேங்கி நிற்கும் நீரே பயிரின் பலம் என தவறாக நம்புகிறோம்.
+              தமிழகத்தின் 21.58 லட்சம் ஹெக்டேர் நெல் வயல்களில், வயலில் எப்போதும் நீர் தேங்கி நிற்பதே பயிரின் பலம் என்ற தவறான நம்பிக்கை நிலவுகிறது.
             </p>
           </div>
 
@@ -119,25 +119,25 @@
         <div id="scene1-overlay-late" class="scrolly-overlay overlay-glass-wrap">
           <article class="frosted-glass-card">
             <div class="frosted-glass-card__header">
-              <span class="status-pill status-pill--danger">BIO-GEOCHEMICAL ALERT // CH₄ FLUX</span>
-              <span class="mono-code">GWP-20: 80x CO₂</span>
+              <span class="status-pill status-pill--danger" data-i18n="scene1Alert">BIO-GEOCHEMICAL ALERT // CH₄ FLUX</span>
+              <span class="mono-code" data-i18n="scene1Gwp">GWP-20: 80x CO₂</span>
             </div>
-            <h2 class="frosted-glass-card__title">Beneath the Mirror Surface</h2>
-            <p class="frosted-glass-card__body">
+            <h2 class="frosted-glass-card__title" data-i18n="scene1LateTitle">Beneath the Mirror Surface</h2>
+            <p class="frosted-glass-card__body" data-i18n-html="scene1LateBody">
               A flooded paddy drowns its roots and brews methane (CH<sub>4</sub>) — a greenhouse gas <strong>80x worse than CO<sub>2</sub></strong> over 20 years. Flooding is weed management, not crop biology.
             </p>
             <div class="frosted-glass-card__metrics">
               <div class="mini-stat">
-                <span class="mini-stat__label">Root Zone O₂</span>
-                <span class="mini-stat__val text-danger">Hypoxic (&lt;0.5 mg/L)</span>
+                <span class="mini-stat__label" data-i18n="statRootO2">Root Zone O₂</span>
+                <span class="mini-stat__val text-danger" data-i18n="statRootO2Val">Hypoxic (&lt;0.5 mg/L)</span>
               </div>
               <div class="mini-stat">
-                <span class="mini-stat__label">Methanogenesis</span>
-                <span class="mini-stat__val text-warning">Active Anaerobic</span>
+                <span class="mini-stat__label" data-i18n="statMethane">Methanogenesis</span>
+                <span class="mini-stat__val text-warning" data-i18n="statMethaneVal">Active Anaerobic</span>
               </div>
               <div class="mini-stat">
-                <span class="mini-stat__label">True Water Need</span>
-                <span class="mini-stat__val text-emerald">Soil Moisture Only</span>
+                <span class="mini-stat__label" data-i18n="statWaterNeed">True Water Need</span>
+                <span class="mini-stat__val text-emerald" data-i18n="statWaterNeedVal">Soil Moisture Only</span>
               </div>
             </div>
           </article>
@@ -153,11 +153,11 @@
         <div class="container scene-3-grid">
           <!-- Narrative Column -->
           <div class="scene-3-narrative">
-            <h2 class="section-title">The ₹50 Truth-Teller</h2>
-            <p class="microcopy-quote" id="pani-microcopy">
+            <h2 class="section-title" data-i18n="scene3Title">The ₹50 Truth-Teller</h2>
+            <p class="microcopy-quote" id="pani-microcopy" data-i18n="scene3Quote">
               “The surface lies. The tube doesn't.”
             </p>
-            <p class="section-desc">
+            <p class="section-desc" data-i18n-html="scene3Desc">
               A simple <strong>30 cm PVC Pani Pipe</strong>—with 10 cm protruding above the mud and 20 cm perforated inside the root zone—reveals the actual perched water table long after the surface dries and cracks.
             </p>
 
@@ -165,19 +165,19 @@
             <div class="pani-telemetry-card">
               <div class="pani-telemetry__row">
                 <div>
-                  <span class="telemetry-label">LIVE TUBE WATER TABLE</span>
+                  <span class="telemetry-label" data-i18n="liveWaterTable">LIVE TUBE WATER TABLE</span>
                   <div class="telemetry-big-val" id="soil-water-readout">+5.0 cm</div>
                 </div>
                 <div class="telemetry-badge-wrap">
-                  <span id="soil-state-badge" class="state-badge state-badge--flooded">SURFACE FLOODED</span>
+                  <span id="soil-state-badge" class="state-badge state-badge--flooded" data-i18n="badgeFlooded">SURFACE FLOODED</span>
                 </div>
               </div>
 
               <div class="pani-progress-wrap">
                 <div class="pani-progress-labels">
-                  <span>+5 cm (Ponded)</span>
-                  <span>0 cm (Surface)</span>
-                  <span>-15 cm (AWD Trigger)</span>
+                  <span data-i18n="paniLabelPonded">+5 cm (Ponded)</span>
+                  <span data-i18n="paniLabelSurface">0 cm (Surface)</span>
+                  <span data-i18n="paniLabelAwd">-15 cm (AWD Trigger)</span>
                 </div>
                 <div class="pani-progress-track">
                   <div id="soil-progress-bar" class="pani-progress-fill" style="width: 0%;"></div>
@@ -186,23 +186,23 @@
 
               <div class="pani-specs-grid">
                 <div class="spec-box">
-                  <span class="spec-box__title">Total Pipe Length</span>
-                  <span class="spec-box__value">30 cm PVC (Ø 15 cm)</span>
+                  <span class="spec-box__title" data-i18n="specPipeLength">Total Pipe Length</span>
+                  <span class="spec-box__value" data-i18n="specPipeLengthVal">30 cm PVC (Ø 15 cm)</span>
                 </div>
                 <div class="spec-box">
-                  <span class="spec-box__title">Above Ground</span>
-                  <span class="spec-box__value">10 cm Collar</span>
+                  <span class="spec-box__title" data-i18n="specAboveGround">Above Ground</span>
+                  <span class="spec-box__value" data-i18n="specAboveGroundVal">10 cm Collar</span>
                 </div>
                 <div class="spec-box">
-                  <span class="spec-box__title">Root Zone Perforation</span>
-                  <span class="spec-box__value">20 cm (0.5 cm holes)</span>
+                  <span class="spec-box__title" data-i18n="specRootPerforation">Root Zone Perforation</span>
+                  <span class="spec-box__value" data-i18n="specRootPerforationVal">20 cm (0.5 cm holes)</span>
                 </div>
               </div>
 
               <!-- Manual scrub override / helper -->
               <div class="pani-interactive-control">
                 <label for="pani-manual-scrub" class="control-label">
-                  <span>Scroll page or drag to inspect water table drop:</span>
+                  <span data-i18n="scrubLabel">Scroll page or drag to inspect water table drop:</span>
                   <span id="pani-scrub-pct" class="mono-tag">0%</span>
                 </label>
                 <input
@@ -533,8 +533,8 @@
     <section id="scene-4" class="scene-4-section" aria-label="Proof It Works - AWD Decision Engine">
       <div class="container">
         <div class="section-header-centered">
-          <h2 class="section-title">Proof It Works: Safe AWD Simulator</h2>
-          <p class="section-desc">
+          <h2 class="section-title" data-i18n="scene4Title">Proof It Works: Safe AWD Simulator</h2>
+          <p class="section-desc" data-i18n="scene4Desc">
             Test how crop growth stage and Pani pipe depth govern irrigation scheduling under International Rice Research Institute (IRRI) Safe-AWD guidelines.
           </p>
         </div>
@@ -543,15 +543,15 @@
           <!-- Interactive Decision Simulator Card -->
           <div class="engine-card">
             <div class="engine-card__header">
-              <span class="mono-tag">INTERACTIVE FIELD ADVISORY ENGINE</span>
-              <button type="button" id="awd-replay-btn" class="btn-replay">
+              <span class="mono-tag" data-i18n="decisionStatus">INTERACTIVE FIELD ADVISORY ENGINE</span>
+              <button type="button" id="awd-replay-btn" class="btn-replay" data-i18n="replayCycle">
                 <span class="replay-icon">↻</span> Replay Drying Cycle
               </button>
             </div>
 
             <!-- 1. Crop Stage Selector -->
             <div class="control-block">
-              <label class="control-block__label">1. Select Crop Phenology Stage</label>
+              <label class="control-block__label" data-i18n="selectStage">1. Select Crop Phenology Stage</label>
               <div class="stage-selector" role="radiogroup" aria-label="Crop Stage Selector">
                 <button
                   type="button"
@@ -561,7 +561,7 @@
                   role="radio"
                   aria-checked="true"
                 >
-                  <span class="stage-btn__name">Vegetative Stage</span>
+                  <span class="stage-btn__name" data-i18n="stageVeg">Vegetative Stage</span>
                   <span class="stage-btn__days">DAT 15 – 55 (Tillering)</span>
                 </button>
                 <button
@@ -572,7 +572,7 @@
                   role="radio"
                   aria-checked="false"
                 >
-                  <span class="stage-btn__name">Flowering Window</span>
+                  <span class="stage-btn__name" data-i18n="stageFlowering">Flowering Window</span>
                   <span class="stage-btn__days">DAT 56 – 75 (Anthesis)</span>
                 </button>
                 <button
@@ -583,7 +583,7 @@
                   role="radio"
                   aria-checked="false"
                 >
-                  <span class="stage-btn__name">Ripening Stage</span>
+                  <span class="stage-btn__name" data-i18n="stagePreHarvest">Ripening Stage</span>
                   <span class="stage-btn__days">DAT 76 – 105 (Grain Fill)</span>
                 </button>
               </div>
@@ -592,7 +592,7 @@
             <!-- 2. Water Depth Slider (+5cm down to -20cm) -->
             <div class="control-block">
               <div class="slider-header">
-                <label for="awd-depth-slider" class="control-block__label">
+                <label for="awd-depth-slider" class="control-block__label" data-i18n="inspectDepth">
                   2. Pani Pipe Water Depth Reading
                 </label>
                 <output id="awd-depth-output" for="awd-depth-slider" class="depth-pill">+2 cm</output>
@@ -632,48 +632,48 @@
           <!-- Metric Comparison & Visual Gauge Card -->
           <div class="metrics-comparison-card">
             <div class="metrics-card__header">
-              <span class="mono-tag">EMPIRICAL BENCHMARK // CONTINUOUS FLOODING VS SAFE AWD</span>
-              <h3 class="metrics-card__title">Validated Field Performance</h3>
+              <span class="mono-tag" data-i18n="benchmarkTag">EMPIRICAL BENCHMARK // CONTINUOUS FLOODING VS SAFE AWD</span>
+              <h3 class="metrics-card__title" data-i18n="validatedTitle">Validated Field Performance</h3>
             </div>
 
             <div class="metric-tiles">
               <!-- Metric 1: Water Saved -->
               <div class="metric-tile">
                 <div class="metric-tile__top">
-                  <span class="metric-tile__label">Water Saved</span>
+                  <span class="metric-tile__label" data-i18n="metricWater">Water Saved</span>
                   <span class="metric-tile__source">IRRI Validated</span>
                 </div>
                 <div class="metric-tile__value text-emerald">Up to 30%</div>
                 <div class="metric-tile__bar">
                   <div class="metric-tile__fill fill-emerald" style="width: 78%;"></div>
                 </div>
-                <p class="metric-tile__note">Reduces irrigation pump hours &amp; canal drawdowns without root stress.</p>
+                <p class="metric-tile__note" data-i18n="metricWaterNote">Reduces irrigation pump hours &amp; canal drawdowns without root stress.</p>
               </div>
 
               <!-- Metric 2: Methane Cut -->
               <div class="metric-tile">
                 <div class="metric-tile__top">
-                  <span class="metric-tile__label">Methane Cut</span>
+                  <span class="metric-tile__label" data-i18n="metricMethane">Methane Cut</span>
                   <span class="metric-tile__source">IPCC Average</span>
                 </div>
                 <div class="metric-tile__value text-cyan">48%</div>
                 <div class="metric-tile__bar">
                   <div class="metric-tile__fill fill-cyan" style="width: 85%;"></div>
                 </div>
-                <p class="metric-tile__note">Periodic soil aeration halts methanogenic archaea activity in the rhizosphere.</p>
+                <p class="metric-tile__note" data-i18n="metricMethaneNote">Periodic soil aeration halts methanogenic archaea activity in the rhizosphere.</p>
               </div>
 
               <!-- Metric 3: Yield Delta -->
               <div class="metric-tile">
                 <div class="metric-tile__top">
-                  <span class="metric-tile__label">Yield Delta</span>
+                  <span class="metric-tile__label" data-i18n="metricYield">Yield Delta</span>
                   <span class="metric-tile__source">Yield Neutral Parity</span>
                 </div>
                 <div class="metric-tile__value text-gold">0%</div>
                 <div class="metric-tile__bar">
                   <div class="metric-tile__fill fill-gold" style="width: 100%;"></div>
                 </div>
-                <p class="metric-tile__note">Maintains 100% grain yield parity; oxygenating roots boosts productive tillering.</p>
+                <p class="metric-tile__note" data-i18n="metricYieldNote">Maintains 100% grain yield parity; oxygenating roots boosts productive tillering.</p>
               </div>
             </div>
           </div>
@@ -688,9 +688,9 @@
       <div class="container">
         <div class="section-header-split">
           <div>
-            <h2 class="section-title">Irrigated vs. Rain-Fed Agriculture Classifier</h2>
+            <h2 class="section-title" data-i18n="scene5Title">Irrigated vs. Rain-Fed Agriculture Classifier</h2>
           </div>
-          <p class="section-desc">
+          <p class="section-desc" data-i18n="scene5Desc">
             Interactive multi-temporal remote sensing map isolating canal-irrigated command zones (AWD deployment targets) from drought-vulnerable rain-fed tracts across the Cauvery Delta, Tamil Nadu.
           </p>
         </div>
@@ -704,13 +704,13 @@
               <span class="mono-tag">AOI: CAUVERY DELTA [10.7870°N, 79.1378°E] // ZOOM: 9</span>
             </div>
             <div class="gis-layer-toggles" role="group" aria-label="Map Layer Toggles">
-              <button type="button" id="toggle-satellite" class="layer-btn active" data-layer="satellite">
+              <button type="button" id="toggle-satellite" class="layer-btn active" data-layer="satellite" data-i18n="satelliteBase">
                 [Satellite Base]
               </button>
-              <button type="button" id="toggle-ndvi" class="layer-btn" data-layer="ndvi">
+              <button type="button" id="toggle-ndvi" class="layer-btn" data-layer="ndvi" data-i18n="ndviView">
                 [Sentinel-2 NDVI View]
               </button>
-              <button type="button" id="toggle-classification" class="layer-btn active" data-layer="classification">
+              <button type="button" id="toggle-classification" class="layer-btn active" data-layer="classification" data-i18n="classificationOverlay">
                 [Agri-Classification Overlay]
               </button>
             </div>
@@ -733,31 +733,31 @@
 
             <!-- Floating Classification Legend -->
             <div class="gis-legend-card">
-              <div class="gis-legend__title">SPECTRAL CANOPY CLASSIFICATION</div>
+              <div class="gis-legend__title" data-i18n="gisLegendTitle">SPECTRAL CANOPY CLASSIFICATION</div>
               <div class="gis-legend__item">
                 <span class="polygon-swatch swatch--irrigated"></span>
                 <div>
-                  <strong>Irrigated Command Zone</strong>
-                  <small>Thanjavur, Tiruvarur, Mayiladuthurai (AWD Ready — 30% Water Savings)</small>
+                  <strong data-i18n="irrigatedZoneTitle">Irrigated Command Zone</strong>
+                  <small data-i18n="irrigatedZoneSub">Thanjavur, Tiruvarur, Mayiladuthurai (AWD Ready — 30% Water Savings)</small>
                 </div>
               </div>
               <div class="gis-legend__item">
                 <span class="polygon-swatch swatch--rainfed"></span>
                 <div>
-                  <strong>Rain-Fed Uplands</strong>
-                  <small>Pudukkottai Southern Border (Vulnerable to Drought Stress)</small>
+                  <strong data-i18n="rainfedZoneTitle">Rain-Fed Uplands</strong>
+                  <small data-i18n="rainfedZoneSub">Pudukkottai Southern Border (Vulnerable to Drought Stress)</small>
                 </div>
               </div>
-              <div class="gis-legend__hint">Click any polygon on the map to inspect spectral &amp; hydrological telemetry.</div>
+              <div class="gis-legend__hint" data-i18n="gisHint">Click any polygon on the map to inspect spectral &amp; hydrological telemetry.</div>
             </div>
           </div>
 
           <!-- Methodology Callout Card -->
           <div class="methodology-callout">
             <div class="methodology-callout__badge">
-              <span class="mono-tag">REMOTE SENSING METHODOLOGY // EARTH OBSERVATION PIPELINE</span>
+              <span class="mono-tag" data-i18n="methodologyTag">REMOTE SENSING METHODOLOGY // EARTH OBSERVATION PIPELINE</span>
             </div>
-            <p class="methodology-callout__text">
+            <p class="methodology-callout__text" data-i18n="methodologyDesc">
               Remote Sensing Methodology: Multi-temporal Sentinel-2 NDVI/NDMI dry-season persistence (Jan-April) combined with CHIRPS rainfall deficit isolates canal-fed command zones from rain-fed tracts across Tamil Nadu's 21.58 lakh hectares.
             </p>
             <div class="methodology-pills">
@@ -782,18 +782,18 @@
 
         <!-- Cinematic Harvest Headline Overlay (0 - 45% scroll) -->
         <div id="scene6-overlay-early" class="scrolly-overlay overlay-centered">
-          <span class="eyebrow-pill">The Proven Harvest</span>
-          <h2 class="hero-headline">From ₹50 Pipe to a<br /><span class="text-emerald-glow">Flourishing Delta</span></h2>
-          <p class="hero-subtext">30% less water extracted. 48% methane eliminated. 100% harvest yield preserved.</p>
+          <span class="eyebrow-pill" data-i18n="scene6EarlyPill">The Proven Harvest</span>
+          <h2 class="hero-headline" data-i18n-html="scene6EarlyTitle">From ₹50 Pipe to a<br /><span class="text-emerald-glow">Flourishing Delta</span></h2>
+          <p class="hero-subtext" data-i18n="scene6EarlySub">30% less water extracted. 48% methane eliminated. 100% harvest yield preserved.</p>
         </div>
 
         <!-- Grand Finale: Take Safe-AWD to the Field (55 - 100% scroll climax) -->
         <div id="protocol-card" class="scrolly-overlay overlay-centered scene6-protocol-overlay">
           <div class="scene6-protocol-container">
             <div class="scene6-protocol-header">
-              <span class="eyebrow-pill">Practical Field Protocol</span>
-              <h2 class="hero-headline">Take Safe-AWD to the <span class="text-emerald-glow">Field</span></h2>
-              <p class="hero-subtext">
+              <span class="eyebrow-pill" data-i18n="scene6ProtocolPill">Practical Field Protocol</span>
+              <h2 class="hero-headline" data-i18n-html="scene6ProtocolTitle">Take Safe-AWD to the <span class="text-emerald-glow">Field</span></h2>
+              <p class="hero-subtext" data-i18n="scene6ProtocolSub">
                 Three simple rules for Cauvery Delta cultivators to cut water use by 30% while protecting harvest yields.
               </p>
             </div>
@@ -801,30 +801,30 @@
             <!-- 3-Step Horizontal Glass Grid -->
             <div class="protocol-steps-grid">
               <div class="protocol-step-card">
-                <div class="protocol-step-card__num">01</div>
+                <div class="protocol-step-card__num" data-i18n="step1Num">01</div>
                 <div class="protocol-step-card__content">
-                  <h3>Install ₹50 Pani Pipe</h3>
-                  <p>
+                  <h3 data-i18n="step1Title">Install ₹50 Pani Pipe</h3>
+                  <p data-i18n="step1Desc">
                     Sink a 30 cm perforated PVC pipe 20 cm deep into root zone at 15 DAT, leaving 10 cm above mud.
                   </p>
                 </div>
               </div>
 
               <div class="protocol-step-card">
-                <div class="protocol-step-card__num">02</div>
+                <div class="protocol-step-card__num" data-i18n="step2Num">02</div>
                 <div class="protocol-step-card__content">
-                  <h3>Re-Flood at -15 cm Depth</h3>
-                  <p>
+                  <h3 data-i18n="step2Title">Re-Flood at -15 cm Depth</h3>
+                  <p data-i18n-html="step2Desc">
                     Let ponded water recede until tube reads <strong>-15 cm</strong>, then re-irrigate to <strong>+5 cm</strong>.
                   </p>
                 </div>
               </div>
 
               <div class="protocol-step-card">
-                <div class="protocol-step-card__num">03</div>
+                <div class="protocol-step-card__num" data-i18n="step3Num">03</div>
                 <div class="protocol-step-card__content">
-                  <h3>Hold Water at Flowering</h3>
-                  <p>
+                  <h3 data-i18n="step3Title">Hold Water at Flowering</h3>
+                  <p data-i18n-html="step3Desc">
                     Maintain <strong>2–5 cm standing water</strong> during anthesis to protect grain set; drain 14 days before harvest.
                   </p>
                 </div>
@@ -833,13 +833,13 @@
 
             <!-- Action Bar & Closing Quote -->
             <div class="protocol-action-footer">
-              <span class="closing-banner__quote">“Measure the water. Protect the harvest.”</span>
+              <span class="closing-banner__quote" data-i18n="scene6Quote">“Measure the water. Protect the harvest.”</span>
               <button type="button" id="copy-protocol-btn" class="btn-primary-emerald btn-copy-centered">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                   <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                   <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
                 </svg>
-                <span id="copy-btn-label">Copy Field Protocol</span>
+                <span id="copy-btn-label" data-i18n="copyBtn">Copy Field Protocol</span>
               </button>
             </div>
           </div>
@@ -852,8 +852,8 @@
   <div id="toast-notification" class="toast" role="status" aria-live="polite" aria-atomic="true">
     <span class="toast__icon">✓</span>
     <div class="toast__content">
-      <strong>Field Protocol Copied to Clipboard</strong>
-      <span>Ready to share via WhatsApp, SMS, or extension dispatch.</span>
+      <strong id="toast-title" data-i18n="toastTitle">Field Protocol Copied to Clipboard</strong>
+      <span id="toast-desc" data-i18n="toastBody">Ready to share via WhatsApp, SMS, or extension dispatch.</span>
     </div>
   </div>
 
